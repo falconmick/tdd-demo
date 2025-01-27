@@ -110,12 +110,138 @@ But more about that later, back to my new job working with this seasoned veteran
 When I first joined the team we were still scaling out the team, as of such we were lucky enough to be in a phase of
 maintenance with the bigger jobs on the horizon I was able to have some wisdom departed upon me, the most important
 of which being
+-->
+
+---
+
+# RED
+# GREEN
+# REFACTOR
+
+<!--
 
 RED
 GREEN
 REFACTOR
 
-// todo: continue description or rgr, then go to mention as a note stutter testing, mocking, adapters.
+It doesn't matter what kinda of approach you take to test driven development, this one will remain consistent among them
+all. 
+-->
+
+---
+
+# RED
+
+<!--
+
+First you write a test that will fail, it should be small and easy to write. 
+It doesn't even have to compile, red can refer both to the test status bar or the syntax error caused by
+the non-existent piece of code your test is referring to.
+=== show the test with squigly: it('Should sum 2 plus 2 to equal 4', () => sum(2, 2).toEqual(4))
+-->
+
+---
+
+# GREEN
+
+<!--
+
+Now we need to make that test work with the minimal amount of changes as possible
+all sins permitted, was your test that two plus two equals four? Great stub out the method with
+the two arguments of the augend and the addend and return four. 
+
+=== transition in solution that shows var sum = (augend, addend) => 4 ===
+It does not matter that our implementation is obviously wrong, that is 100% ok!
+If you can look at an implementation and see that it is flawed that is a sign that you do not have
+enough tests yet, and you need to continue the red green refactor cycle until you come to a more concrete output.
+This approach is known as stutter testing and can often be used in conjugation with triangulation approaches.
+-->
+
+---
+
+# REFACTOR
+
+<!--
+Refactor is a key part of the "design" part of test driven design. If you have been following TDD correctly
+your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
+come into existence for free? Normally not, the refactor stage is to make code that you feel comfortable checking in 
+typically these changes are small, like extracting a method or variable to provide extra context through the name we 
+decide to give that extracted code but can also be moderately complicated as such as for each loop into a linq statement.
+The only condition is that once your refactor step is complete that all your test remain green as you may not implement
+new code that is not fist covered by the creation of a failing test.
+As a side note, your tests code is just as important as your production code. If there is duplication inside of your 
+tests that could be solved with refactoring, it is at the time in which your codebase is green that you can apply
+these fixes and should be keep up with as much rigor as your working code.
+-->
+
+---
+
+# Mocking
+
+<!--
+Another tool that was instilled upon me was mocking, in particular extensive mocking.
+
+Mocking sounds like a simple subject but depending on how you approach it you can get vastly different approaches to 
+test driven design. 
+
+One such approach is creating a new concrete implementation of an interface that is injected into your codebase that
+was designed purely for testing say for example a mock implementation of your databases repository interface. By implementing
+the provided interface you can either fully or partially re-create the methods which make external calls which cannot be 
+reliably created from within the context of testing as in-memory version, allowing for easy test data setup as we own the
+implementation and simplistic data access implementations on the getter/update endpoints the repository exposes.
+
+This is often seen with inside out development through Detroit School or classicist blackbox style testing. In such solutions we 
+strive to test code as close to realistic settings as we can, we still might be testing more internal layers to our codebase
+but we aim to keep the executing code that we are testing as fully fledged as possible.
+
+A second approach is to rely upon a mocking framework as such as Moq, fake it easy or nsubstitute in the world of languages like
+C#. These tools allow for expression to be written which get called in place of the interface or class, allowing us to
+define inline to our test what that call will return OR even allow us to assert that the call was made at all.
+
+A word of caution here, most of these frameworks will provide tooling that allows you to implement mocks of concrete, 
+implementations as such as classes in C# 
+however do note that these are limited quite often to virtual or abstract methods and even if they are not
+they can carry the risk of causing unrelated broken tests which are painful to fix.
+
+If your language of choice has a way to define the contract of your classes through ideas as such as interfaces in C# it is
+always best practice to do so, or at worst configure your mocks such that any un-mocked interaction with the substitute
+that your mock is defining will return a default or null value as to completely remove any concrete implementation details 
+from the execution of your tests. C# is perfect for this, but I have had a harder time in some more loose languages
+like javascript. Discipline is your friend here.
+
+These style mocks can also be used in Detroit School or classicist blackbox style tests, but they truly shine in the approach
+my mentor was instilling upon me, the London School or mockist outside in approach. When we are following this approach
+The one and only reason why a test should be failing is that the unit of work we are testing, 
+the method or function or whatever you want to call it
+is the only reason why that test should have failed. The implementation of the CartService does not concern our test,
+all that matters is the contract it exposes to us, AddToCart which gave us arguments of itemId and quantity and it's
+result of boolean. Our test will mock CartService fully and our assertions will ensure that when CartService's 
+AddToCart returns false, that the AlertService is called with InformUser, and that the string argument message
+has unable to add item to cart provided to it. 
+
+We will go further into the Detroit and London school and their pros and cons later, but to continue with the
+tools I was given for my assignment we have one last rather unique concept.
+-->
+
+---
+
+# Adapters
+
+<!--
+The adapter pattern is not too strict of an idea, in that third party code instead of being directly relied upon, is 
+instead abstracted away by an adapter layer, which can and often will help remove implementation details from our
+dependant codebase, say for example our adapter might provide a getter for the third party that both sets up a
+factory provided by the third party and then executes it all under the much simpler and relevant getter pattern.
+
+It is just important that this layer remain as simplistic as possible as it can often not be viable to test outside 
+of integration testing, so if your adapter grows too far you will end up having dangerously uncovered code.
+
+In the case of the code that was being developed for the company I was working for at the time, the use of adapters
+was alot more extreme than you might expect, we even adapted out DateTime, which gave our tests the ability to act as
+Pure functions which allowed us to have much less brittle testing and also made testing edge cases a cakewalk as we had
+full control over how much the time changes between each call to Now. When I go over a detailed example of how I think
+TDD should be implemented in my C# example I will dig into this further.
+
 // todo: from there go over the application that took files from one location, read them, then moved
 // todo: them based upon information inside of the file to the correct location and how it worked
 // todo: first time without flaw on the entire dataset. Normally this would have been allot harder.
