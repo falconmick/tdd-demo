@@ -76,6 +76,7 @@ My ego can't wait
 ---
 
 ## Before we ask what, we ask why?
+## Opening Statements (5 minutes)
 
 <!--
 Now before I start going over the basics of what testing is I thought it might be best to go over why?
@@ -98,6 +99,98 @@ I had my fair share of experiences like this up until one day when I was on a ne
 work with a seasoned veteran of the London School of Test Driven development overseeing the tech at my new employer. Having
 spent the majority of his career working on software for the stock exchange in england he was in and around all of the 
 thought leaders of the London School of Test driven development as those ideas were first maturing.
+
+There were three main tools he handed over to me that completely changed how I would approach writing code moving forward.
+Those three tools were:
+
+Red, Green, Refactor, which is the practice of never writing a single line of production code that doesn't first have
+a failing test.
+
+Mocking, which turned into the most valuable tool in how I architected code moving forward
+
+and finally Adapters, the practice of taking third party code that doesn't line up with your codebases patterns and
+making a small translation layer.
+
+With these three tools I was also handed the task of writing a fairly mundane console app that would use third party
+API's to explore a series of file systems, parse the data in it's legacy format, re-arrange the structure including 
+sorting into a new storage structure and then persisting. Basically a data migration project with a few bells and whistles.
+
+It was this project that I was first able to see the true power of Test Driven Development. Using mocking I discovered
+how the source code wanted to be layed out naturally through outside-in design. When I came across an impossible to
+mock third party API? Easy use an adapter to expose a more manageable interface.
+
+Finally the most powerful tool and how every line of code was written:
+
+RED
+I would write a small test that I knew would fail
+
+Green
+I implement the fix with as little effort as possible but importantly made the failing test pass, then finally
+
+Refactor
+Now that my new feature has been proven to be covered through both a failing test that we made pass
+I can take a short second to re-arrange and tidy up any mess left over by the previous two steps.
+
+I took a small sample of our data and flawlessly executed this validation migration. I then took
+my backup of prod (still not quite believing the results), ran the tool and had a flawless migration. No setting
+any breakpoints to debug a silly weird edge case, no last minute re-structuring after finding that the code just wasn't
+quite readable.
+
+It just worked. Perfectly. No effort. Only results.
+
+It was at that moment that I found out what perfection looked like, it had afternoon tea served in fine china...
+and a red-green rhythm you could set your watch to.
+
+Welcome to the London School of Test-Driven Development.
+
+
+-->
+
+---
+
+# Schools?
+
+<!-- 
+Before we go any further, what is all this school nonsense? Well the schools line up with the locations in which
+the approaches were first formalised.
+-->
+
+---
+
+# Detroit
+
+<!--
+Detroit supposedly came out of location of the C3 project, the Chrysler Comprehensive Compensation Project, 
+a payroll re-write being taken on notably by Kent Beck in which he founded extreme programming and went on to develop 
+both the books Extreme Programming Explained and Test-Driven Development by Example, of which that last book is coined
+as the origin of Detroit School.
+-->
+
+---
+
+# London
+
+<!--
+Following the explosion of interest in Extreme Programming many community groups were formed around learning and implementing
+these ideas, one such group was the London based Extreme Tuesday Club ===== NEED TO DOUBLE CHECK THIS ====. This group helped Steve Freeman
+and Nat Pryce form more techniques and approaches which eventually resulted in the other most well known testing bible,
+the book "Growing Object-Oriented Software, Guided by Tests. This book expanded upon Detroit but took was more focused around
+testing a singular unit with mocks, whereas Detroit was more focused on testing the combined interactions of our classes as a singular
+unit.
+-->
+
+---
+
+
+
+
+
+
+
+
+
+<!--
+// todo: re-arrange these
 
 =-=-=-= todo: improve =-=-=-= need to give actual origins and be sure theyre right
 A question you might all have now is, what is this London school and what's it doing in this testing talk? Well that
@@ -231,16 +324,24 @@ tools I was given for my assignment we have one last rather unique concept.
 The adapter pattern is not too strict of an idea, in that third party code instead of being directly relied upon, is 
 instead abstracted away by an adapter layer, which can and often will help remove implementation details from our
 dependant codebase, say for example our adapter might provide a getter for the third party that both sets up a
-factory provided by the third party and then executes it all under the much simpler and relevant getter pattern.
+factory provided by the third party and then executes it all under the much simpler and relevant to our codebase 
+getter pattern.
 
-It is just important that this layer remain as simplistic as possible as it can often not be viable to test outside 
-of integration testing, so if your adapter grows too far you will end up having dangerously uncovered code.
+It is only important that this layer remain as simplistic as possible as it can often not be viable to test it 
+without integration testing, so if your adapter grows too far you will end up having dangerously uncovered code.
 
 In the case of the code that was being developed for the company I was working for at the time, the use of adapters
-was alot more extreme than you might expect, we even adapted out DateTime, which gave our tests the ability to act as
+was alot more extreme than you might have expect, we even adapted out DateTime, which gave our tests the ability to act as
 Pure functions which allowed us to have much less brittle testing and also made testing edge cases a cakewalk as we had
 full control over how much the time changes between each call to Now. When I go over a detailed example of how I think
 TDD should be implemented in my C# example I will dig into this further.
+
+-->
+
+---
+
+<!--
+It was with these three key 
 
 // todo: from there go over the application that took files from one location, read them, then moved
 // todo: them based upon information inside of the file to the correct location and how it worked
@@ -248,16 +349,6 @@ TDD should be implemented in my C# example I will dig into this further.
 -->
 
 ---
-
-## Opening Statements (5 minutes)
-
-- **Relatable anecdote or question:**
-    - Example: "How many of you have felt the pain of spending days on a ticket, only to realize it could have been broken down into smaller, more manageable pieces?"
-    - Share a personal story about how TDD transformed your workflow or mindset.
-
-<!--
-
--->
 
 ---
 
