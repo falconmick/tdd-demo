@@ -7,8 +7,10 @@ layout: cover
 
 <!-- 
 Test Driven Development has largely being dismissed by large swaths of developers, and in some cases, it's applied 
-without a clear understanding of when and how to use its varying styles effectively. 
-In this session I will go into the origins TDD and how you can fully leverage its powers become a better developer. 
+without a clear understanding of when; and how; to use its varying tools effectively. 
+In this session I will go into the origins test-driven development;
+my personal approach;
+and how you can fully leverage its powers become a better developer. 
 
 But first of all, who am I?
 -->
@@ -27,16 +29,18 @@ Full-stack dotnet Contractor
 <!--
 Hi
 I’m Michael!
-I am a full stack dotnet contractor from Perth who spends his days working with dotnet to help plumb up all things
-data from across my teams many data sources.
-I would like to see myself as an overly passionate tech nerd who can’t stop getting excited about all things code and hardware, 
+I am a full stack developer from Perth who spends his most of his days working with dotnet as a glorious virtual data plumber.
+I would like to see myself as an overly passionate tech who can’t stop getting excited about tech, 
 You can find me under the handle falconmick just about everywhere where I talk mostly about coding and console modding.
 
-Throughout my career with all the teams I have had the opportunity to work with I have found the following to always be
-true: If you want to deliver high quality software testing your code is without a doubt the key deciding factor on
+Throughout my career; with all the teams I have had the opportunity to work with; I have found the following to always be
+true: If you want to deliver high quality software testing your code is; without a doubt; the key deciding factor on
 how likely you are to succeed. It is not the quality or quantity of developer that matters, but instead the discipline that the
 team takes to ensure they validate their code with tests that can be run with as minimal friction in both speed and 
 resilience to change.
+
+
+TIMING FOR SECTION ONE: 1m10s
 -->
 
 ---
@@ -45,22 +49,25 @@ resilience to change.
 
 <!--
 Before I start lets do a theoretical:
-The upper management is in a flurry, Product Y that our company produces's top competitor Product X has just announced
-AI chat-bot integration, a game changing feature that is going to send our company broke if we cannot match or beat
-their announced delivery date.
+Upper management is in a flurry, our product Y's top competitor Product X has just had an announcement.
+Coming in 6 months time is an all new AI chat-bot integration, a game changing feature that is going to send our company broke;
+That is, unless, we cannot match or beat their announced delivery date.
 
-In this project speed matters above all else, we have been promised that as soon as we get this live we will be given
-the time needed to go back around and clean up the implementation.
+In this project speed matters above all else, we have been promised that as soon as we get this live that
+We will be given the time necessary to take this beta implementation back to the workshop and made right.
+
+Because we all know that tech demo's don't ever become forever code the second we hand it over.
 
 So the question for the audience: 
-Hands down if we push back on our teams standard testing standards for the sake of the project
+you can leave your hands down if we push back on our normal testing requirements; and for the sake of the project 
+just get it done
 OR
-Hands up if we deliver the code with our standard and some would argue rather rigorous testing practices?
+Hands up if we deliver the project with our standard; and some would argue; rather expansive testing practices?
 
 === delay for hands ===
 
 By the end of this presentation I hope to have as many hands in the air when I ask this question again for all the
-reasons that I have coming up but it all boils down to one law of delivering software:
+reasons that I have coming up, but it all boils down to this one; important; law of delivering software:
 
 # Slow is Smooth. Smooth is Fast
 
@@ -71,6 +78,9 @@ the entire room!
 My ego can't wait
 
 
+
+TIMING FOR SECTION TWO: 1m25s
+
 -->
 
 ---
@@ -79,26 +89,27 @@ My ego can't wait
 ## Opening Statements (5 minutes)
 
 <!--
-Now before I start going over the basics of what testing is I thought it might be best to go over why?
+Now before I start going over the basics of what test-driven development is I thought it might be best to go over why?
 More specifically why did I get sucked into the world of testing in the first place!
 
 Like most of you I started out with a surface level appreciation but at the same time a slight disdain for tests. 
 After spending the last day or two on my PR and seeing that my 60% coverage was not acceptable to our automated
-code coverage Pull Request tool was the very last thing I wanted to see at 5pm on Friday.
+code coverage overlord; SonarQube; was the very last thing I wanted to see at 5pm on a Friday.
 
 Nevertheless, I would work late and add some basic tests that would cover all the new code, check in my PR and head
-home late for the weekend. It didn't help my morale when I came in on monday and the first thing I see is a PR with an
-obvious bug in it that made it feel like I shouldn't have bothered staying late as my PR is now going to take a hot
+home late for the weekend. It didn't help my morale when I came early that next monday and the first thing I see is a review
+for obvious bug I had missed. 
+I shouldn't have bothered staying late as my PR is now going to take a hot
 minute to fix and by then all the other developers will be busy working on their changes so my code won't get another 
-review until lunch.
+review until well after lunch.
 
-At times like this it can feel like test are there purely to make Sonar Qube happy and not to make my codebase any better.
-Not much good that tests was when It didn't even end up catching anything important.
+At times like this it can feel like test are there purely to make the Pull Request gates happy and not to make my codebase any better.
+Not much good that tests was; when It didn't even end up catching anything important.
 
-I had my fair share of experiences like this up until one day when I was on a new team and I had the great opportunity to
-work with a seasoned veteran of the London School of Test Driven development overseeing the tech at my new employer. Having
+I have had my fair share of experiences like this up until one day when I was on a new team and I had the great opportunity to
+work with a seasoned veteran of the London School of Test Driven development. Having
 spent the majority of his career working on software for the stock exchange in england he was in and around all of the 
-thought leaders of the London School of Test driven development as those ideas were first maturing.
+thought leaders of the London School of Test driven development; as those ideas were first maturing.
 
 There were three main tools he handed over to me that completely changed how I would approach writing code moving forward.
 Those three tools were:
@@ -106,14 +117,14 @@ Those three tools were:
 Red, Green, Refactor, which is the practice of never writing a single line of production code that doesn't first have
 a failing test.
 
-Mocking, which turned into the most valuable tool in how I architected code moving forward
+Mocking, which turned into the most valuable tool in how I designed my code moving forward
 
-and finally Adapters, the practice of taking third party code that doesn't line up with your codebases patterns and
+and finally Adapters, the practice of taking third party code that doesn't line up with your teams coding patterns and
 making a small translation layer.
 
 With these three tools I was also handed the task of writing a fairly mundane console app that would use third party
 API's to explore a series of file systems, parse the data in it's legacy format, re-arrange the structure including 
-sorting into a new storage structure and then persisting. Basically a data migration project with a few bells and whistles.
+sorting into a new storage approach and then persisting. Basically a data migration project with a few bells and whistles.
 
 It was this project that I was first able to see the true power of Test Driven Development. Using mocking I discovered
 how the source code wanted to be layed out naturally through outside-in design. When I came across an impossible to
@@ -128,20 +139,22 @@ Green
 I implement the fix with as little effort as possible but importantly made the failing test pass, then finally
 
 Refactor
-Now that my new feature has been proven to be covered through both a failing test that we made pass
+Now that my new feature has proven that the test will fail without it, but will succeed with it
 I can take a short second to re-arrange and tidy up any mess left over by the previous two steps.
 
 I took a small sample of our data and flawlessly executed this validation migration. I then took
-my backup of prod (still not quite believing the results), ran the tool and had a flawless migration. No setting
+my backup of prod (still not quite believing the results), ran the tool and had a perfect migration. No setting
 any breakpoints to debug a silly weird edge case, no last minute re-structuring after finding that the code just wasn't
 quite readable.
 
 It just worked. Perfectly. No effort. Only results.
 
-It was at that moment that I found out what perfection looked like, it had afternoon tea served in fine china...
-and a red-green rhythm you could set your watch to.
-
+It was at that moment that I found out what all coding could look like;
 Welcome to the London School of Test-Driven Development.
+
+
+
+TIMING FOR SECTION THREE: 4m 15s
 
 
 -->
@@ -160,8 +173,8 @@ the approaches were first formalised.
 # Detroit
 
 <!--
-Detroit supposedly came out of location of the C3 project, the Chrysler Comprehensive Compensation Project, 
-a payroll re-write being taken on notably by Kent Beck in which he founded extreme programming and went on to develop 
+the Detroit location came out of the C3 project, the Chrysler Comprehensive Compensation Project to be more precise, 
+a payroll re-write being taken on by a team including notably Kent Beck in which he founded extreme programming and went on to develop 
 both the books Extreme Programming Explained and Test-Driven Development by Example, of which that last book is coined
 as the origin of Detroit School.
 -->
@@ -174,36 +187,57 @@ as the origin of Detroit School.
 Following the explosion of interest in Extreme Programming many community groups were formed around learning and implementing
 these ideas, one such group was the London based Extreme Tuesday Club ===== NEED TO DOUBLE CHECK THIS ====. This group helped Steve Freeman
 and Nat Pryce form more techniques and approaches which eventually resulted in the other most well known testing bible,
-the book "Growing Object-Oriented Software, Guided by Tests. This book expanded upon Detroit but took was more focused around
-testing a singular unit with mocks, whereas Detroit was more focused on testing the combined interactions of our classes as a singular
+"Growing Object-Oriented Software, Guided by Tests". This book expanded upon Detroit School; but was more focused around
+testing a singular unit with mocks, whereas Detroit was all about testing the combined interactions of our classes as a singular
 unit.
+
+
+
+TIMING FOR SECTION FOUR: 1m 15s
 -->
 
 ---
 
-
-
-
-
-
-
-
+# Wait there are two schools?
+### Which one should I be following?
 
 <!--
-// todo: re-arrange these
+It can sometimes be hard to know what is the correct approach to take when writing tests for your codebase. Do I continue
+to write code mostly in the same way as I always have had with the Detroit approach in which I split out my feature into
+a series of isolated steps, building them will full integration between the many services, mappers, validators and a few
+strategically placed mocks of the persistence layers 
 
-=-=-=-= todo: improve =-=-=-= need to give actual origins and be sure theyre right
-A question you might all have now is, what is this London school and what's it doing in this testing talk? Well that
-is to do with the origins of the two main approaches to test driven development, the original classist approach known
-as the Detroit school of test driven development and the London school which is the mockist approach.
-=-=-=-==-=-=-==-=-=-==-=-=-=-
+OR
 
-But more about that later, back to my new job working with this seasoned veteran:
+do I tackle the feature from the point of ingress, for our codebase, strategically choosing to not only mock the persistence
+layers but also the services, mappers and validators leaving only the concerns of the individual class I am working on
+to be the subject of my tests.
 
-When I first joined the team we were still scaling out the team, as of such we were lucky enough to be in a phase of
-maintenance with the bigger jobs on the horizon I was able to have some wisdom departed upon me, the most important
-of which being
+The answer to this is everybody's favourite; it depends; however this time we get to complete that sentence by saying
+it depends on you team.
+
+One of the biggest mistake any new developer, no matter the seniority, can make when joining a new team is to try and 
+uproot an established team coding approach and replace it with their own.
+
+Does that mean if you join a team and they have no real testing strategy, just a few tests here and there that
+don't ever get ran during an automated validation steps during pull requests; that you cannot come in and improve things?
+
+No it does not, what it means is you have a team who is open to the idea of testing, they just need a little help.
+What that also means is more involved practices like the London school are a no-go, as chances are there are little
+landmines straggling all throughout the codebase that will refuse to be isolated with mocking, so you likely want to 
+minimise your mocking and focus less on writing unit tests and more on integration-ish tests.
+
+It is important to talk with your colleagues, get their feedback on a fix you want to make that makes the existing tests
+pass without needing to be configured because you simply mock out that third party.
+
+As somewhat dangerous as integration tests added after the fact to large codebases can be, sometimes you just need to take 
+what your given and do your best. What is important is that you work as a member of your team, not a member of your own 
+interests.
+
+I have had an experience in the past where a team had no tests on a small side utility, did I jump into the codebase;
+see there was zero tests and decide to just smash out the chan
 -->
+
 
 ---
 
