@@ -185,7 +185,7 @@ as the origin of Detroit School.
 
 <!--
 Following the explosion of interest in Extreme Programming many community groups were formed around learning and implementing
-these ideas, one such group was the London based Extreme Tuesday Club ===== NEED TO DOUBLE CHECK THIS ====. This group helped Steve Freeman
+these ideas, one such group was the London based Extreme Tuesday Club. This group helped Steve Freeman
 and Nat Pryce form more techniques and approaches which eventually resulted in the other most well known testing bible,
 "Growing Object-Oriented Software, Guided by Tests". This book expanded upon Detroit School; but was more focused around
 testing a singular unit with mocks, whereas Detroit was all about testing the combined interactions of our classes as a singular
@@ -198,20 +198,149 @@ TIMING FOR SECTION FOUR: 1m 15s
 
 ---
 
-# Wait there are two schools?
-### Which one should I be following?
+# Why should I use the Detroit School?
 
 <!--
-It can sometimes be hard to know what is the correct approach to take when writing tests for your codebase. Do I continue
-to write code mostly in the same way as I always have had with the Detroit approach in which I split out my feature into
-a series of isolated steps, building them will full integration between the many services, mappers, validators and a few
-strategically placed mocks of the persistence layers 
+Why would I pick the detroit school? Detroit just makes sense; if up until now you had been writing a few tests
+here and there around the important stuff; or to make the metrics look good you almost certainly have been writing
+test in a Detroit style. You were likely missing the red green part, but over all you made a point to take obvious
+chunks of functionality out of your codebase and made sure that they ended up working as you expected, maybe say for
+example you had some logic that would take an existing item, merge some new state into it and then persisted it back
+to the database. There is a very good chance that this functionality would be wrapped in a set of nice test that
+mocked the database out with an in-memory fake which you then asserted against in the final steps of your test methods.
+
+If this is your codebase now, then great you can transition into the detroit school with ease, just make sure to follow
+red green refactor and you're basically there! As soon as you start making this commitment to testing all the features
+your adding, as you add them, you will find that refactoring can be done with much greater speed and confidence as if
+a feature is important, you will have test around it. Then if you break that feature later on when applying a fix, those 
+test you wrote 6 months ago will be there to catch you before releasing broken functionality to your users.
+
+Another great use case for Detroit is code that takes in a series of inputs, transforms the data, applies complicated logic,
+then returns a result all without any side-effects from calling out to an external API. When you run into very self-contained
+coding exercises like this it can be a great opportunity to take full advantage of some more advanced testing techniques
+as such as triangulation and fake it's
+-->
+
+---
+
+# Why wouldn't I use the Detroit School?
+
+---
+
+# Test-Splosions 
+
+<!--
+One reason why you might not want to use this style of testing is the dreaded 1 line change that breaks multiple test suites.
+When our unit under test combines multiple shared snippets of code there is a large chance that eventually you will be
+writing a new feature or fixing a bug and out of nowhere all your tests start failing. When this happens, especially if
+you accidentally forgot to keep your red green refactor itterations small; or worse yet; you were not doing so the pure
+stress of having an entire set of test suites start failing can make it hard to find the code change that was at fault.
+
+There are workarounds for this issue, most importantly you can focus on making sure your entire set of suites run continuously
+so that any regressions are found at the same time as when changes are being made in the file that is responsible for the
+bug is still open and you can just control zed on that thang until you find the responsible line of code. But this also 
+just comes with the territory of testing collections of code in multiple locations and just is the price you pay for 
+simpler to write tests. Alternatively this type of hardship can be nearly eliminated by London school as you NEVER should
+be re-testing shared functionality between suites and the only thing that can break MoneyService's unit tests is a change
+that was made inside MoneyService.
+-->
+---
+
+# Short term speed loss
+
+<!--
+Some would argue that another reason to avoid the Detroit school and some would argue test driven development all together
+is the short term speed loss. This reasoning is only really true in very small scale changes to existing codebases that
+don't want to co-operate with tests. There is a very large change that in the long run taking the time to pay for the
+test now will save a lot of hear-ache in the future, but on occasion it's just not worth it. It's important to note here
+that if you are trying to stick to test driven development that the Detroit school is by far the quicker approach to take
+over London.
+
+If we compare this to London, the large up-front cost of fixing up your
+codebase and the un-realistic and very un-impactful job of re-writing the existing test to do so in isolation to the 
+classes they were made for realistically would just never happen and you would be stuck with large chunks of legacy
+code that is tested in one way (through a more Detroit style) and the newer parts which were extracted and most likely 
+don't play all to nice with the other code in our codebase.
+
+It's for this reason that quite often if your jumping into an existing codebase Detroit can just be the only logical
+approach.
+
+
+-->
+
+---
+
+# Why should I use the London School?
+
+<!--
+London school is bar far, so much harder to sell without first experiencing it, I can only say that it's worth taking
+the time to make a point to just try it out and see where the code takes you.
+
+That is actually one of it's largest draws, especially when compared to Detroit, when you write London there is no
+thinking out ahead of time of logical bundles of classes to combine into a scenario to form your tests around.
+
+Instead you grab a feature, you start at the very outside of your code, for example the API endpoint, and you
+just assert what needs to happen for this class to be completed. You don't need to implement every single
+requirement to get to a complete test, instead you simply write a test that asserts the inputs to your API are 
+are passed to your validator,
+this then produces a failing test, so we 
+define the interface for your validation, 
+mock this interface, 
+add the call inside your API to call this non-existant validator 
+and bam, you have a working test that proves the correct values were provided to the correct
+dependencies. This process repeats over and over, without any of the dependencies having a single line of code 
+implemented inside of them.
+
+This to most sane developers will sound outlandish, spending multiple coding iterations writing tests that prove
+obvious thing X was passed to other obvious thing Y, what exactly am I gaining??
+
+Well what you are gaining is software that is designed with a outside in style. I have found that if I work my way from 
+the outside of my code all the way in that I am able to discover shared responsibilities much sooner and can invest in 
+designing much more understandable API's.
+
+Because we always mock every single call and we never depend upon code external to our unit, we also leave our entire
+codebase open to substitution at any time. The best example of this is when you later on in the project run into
+a bad race condition bug that is due to fractions of a second differences in calls to a DateTime Now function. If 
+we had of been testing without mocks all of our time sensitive code that is causing us headaches will be un-mockable and
+near impossible to re-create as a test. When everything is injected anything can be mocked.
+-->
+---
+
+# Why wouldn't I use the London School?
+
+<!--
+Maintenance is by in far the largest reason why Detroit might be a better pick for you and your team over London.
+When you write 40 tests for a single class and a bunch of em are basic plumbing tests that don't really test much 
+you will find that a simple change that refactors a clump of code from one class into another can be excruciating to
+move.
+
+To do so correctly you would have to basically fully re-create the entire red green refactor for the entirety of the
+code being moved plus setup new tests in the old class to validate the refactored chunk of code's interface is being 
+correctly called.
+
+When your simply trying to just clean up this can be burdensome and might lead to less time spent refactoring.
+There is a silver lining here in that it can help if your suffering from premature re-fac-tile dysfunctions but realistically
+making it this hard to get work done can be a problem.
+
+With that said I have found that with a small amount of bending of the rules one can cut paste refactor the unit test
+such that the original tests magically move across without going through proper red-green-refactor. One other solution
+would be to once a unit test is complete to take the time to go back over the suite and remove the scaffolding test such
+that all that remains are tests that are validating the extremities of the test like that we return success once the
+API returns OR the tests that shows we return a validation error. This is the by the book approach to managing this 
+complexity, I just have always had a hard time getting rid of my babies and just tend to keep them all.
+-->
+---
+
+# Which one should I be following?
+
+<!--
+It can sometimes be hard to know what is the correct approach to take when writing tests for your codebase.
+Do I take the detroit approach which more closely matches up with how developers instinctively test
 
 OR
 
-do I tackle the feature from the point of ingress, for our codebase, strategically choosing to not only mock the persistence
-layers but also the services, mappers and validators leaving only the concerns of the individual class I am working on
-to be the subject of my tests.
+do I take a much more extreme route and allow my tests to define my API, choosing to chip away at the code one
+concern at a time through the isolation that mocking allows.
 
 The answer to this is everybody's favourite; it depends; however this time we get to complete that sentence by saying
 it depends on you team.
@@ -220,24 +349,33 @@ One of the biggest mistake any new developer, no matter the seniority, can make 
 uproot an established team coding approach and replace it with their own.
 
 Does that mean if you join a team and they have no real testing strategy, just a few tests here and there that
-don't ever get ran during an automated validation steps during pull requests; that you cannot come in and improve things?
+that you cannot come in and improve things?
 
 No it does not, what it means is you have a team who is open to the idea of testing, they just need a little help.
-What that also means is more involved practices like the London school are a no-go, as chances are there are little
+What that also means is more involved practices like the London school are more than likely; a no-go, as chances are there are
 landmines straggling all throughout the codebase that will refuse to be isolated with mocking, so you likely want to 
 minimise your mocking and focus less on writing unit tests and more on integration-ish tests.
 
-It is important to talk with your colleagues, get their feedback on a fix you want to make that makes the existing tests
-pass without needing to be configured because you simply mock out that third party.
+It is important to talk with your colleagues, get their feedback on how code is being written and also to provide some
+ideas too on how things could be improved to see how that works for the team. Most developers know deep down they 
+should be writing tests but just struggle to justify their time doing so. If you come in help make testing the norm
+you will likely find they come with you willing and happy.
 
-As somewhat dangerous as integration tests added after the fact to large codebases can be, sometimes you just need to take 
-what your given and do your best. What is important is that you work as a member of your team, not a member of your own 
-interests.
-
-I have had an experience in the past where a team had no tests on a small side utility, did I jump into the codebase;
-see there was zero tests and decide to just smash out the chan
+What this all mostly boils down to is there is a high chance you should just use Detroit even if deep down you really 
+wish you could be writing London which has been my reality for most of my recent engagements. If a new project is coming
+up and your confident with the London approach, why not start out with heavy mocking and see how it works for your team
+you can always pivot to detroit if it's not working out. By that point hopefully even if you do have to remove the London
+style your codebase will already have a bunch of clarity from the outside-in work done so far.
 -->
+---
 
+# Going deeper
+
+<!--
+Now that we know about the different approaches to test driven development I think it would be no better time than
+ever to go back to the key techniques that we must apply to our coding and give some better explanations and examples
+of what it looks like to properly implement them. Startin with Red Green Refactor.
+-->
 
 ---
 
@@ -377,48 +515,7 @@ TDD should be implemented in my C# example I will dig into this further.
 <!--
 It was with these three key 
 
-// todo: from there go over the application that took files from one location, read them, then moved
-// todo: them based upon information inside of the file to the correct location and how it worked
-// todo: first time without flaw on the entire dataset. Normally this would have been allot harder.
 -->
-
----
-
----
-
-- **Current state of TDD:**
-    - Misunderstood, dismissed, or misapplied.
-    - Gap in knowledge about its styles (Detroit vs. London).
-
-- **Set expectations:**
-    1. Origins and two schools of TDD.
-    2. Strengths and weaknesses of each approach.
-    3. Deep dive into leveraging one approach in C#.
-
-- **Teaser:**
-    - "By the end of this talk, you’ll walk away with actionable insights that could save you days of work and fundamentally change how you approach coding."
-
----
-
-## Section 1: The Origins and Two Schools of TDD (10 minutes)
-
-- **Brief history of TDD:**
-    - Origins: Kent Beck, Extreme Programming.
-    - Core philosophy: "Red-Green-Refactor."
-
-- **Detroit School (Classic TDD):**
-    - State-based testing.
-    - Simplicity and minimalism.
-    - Example: Testing a calculator app.
-
-- **London School (Mockist TDD):**
-    - Behavior-based testing and mocking dependencies.
-    - Emphasis on design and collaboration.
-    - **Critical point:** London allows for breadth-first development, enabling faster iteration and parallelization of work.
-    - Example: Testing a service layer with mocked dependencies.
-
-- **Transition:**
-    - "Understanding their strengths and weaknesses is key to unlocking TDD’s full potential."
 
 ---
 
