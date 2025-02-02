@@ -251,12 +251,13 @@ that was made inside MoneyService.
 <!--
 Some would argue that another reason to avoid the Detroit school and some would argue test driven development all together
 is the short term speed loss. This reasoning is only really true in very small scale changes to existing codebases that
-don't want to co-operate with tests. There is a very large change that in the long run taking the time to pay for the
+don't want to co-operate with tests. There is a very large chance that in the long run taking the time to pay for the
 test now will save a lot of hear-ache in the future, but on occasion it's just not worth it. It's important to note here
 that if you are trying to stick to test driven development that the Detroit school is by far the quicker approach to take
-over London.
+over London. === todo: maybe change that last bit ===
 
-If we compare this to London, the large up-front cost of fixing up your
+=== TODO: probably remove/rewrite this bit ===
+in the scenario in which you are trying to improve an existing codebase; If we compare this to London, the large up-front cost of fixing up your
 codebase and the un-realistic and very un-impactful job of re-writing the existing test to do so in isolation to the 
 classes they were made for realistically would just never happen and you would be stuck with large chunks of legacy
 code that is tested in one way (through a more Detroit style) and the newer parts which were extracted and most likely 
@@ -296,13 +297,49 @@ obvious thing X was passed to other obvious thing Y, what exactly am I gaining??
 
 Well what you are gaining is software that is designed with a outside in style. I have found that if I work my way from 
 the outside of my code all the way in that I am able to discover shared responsibilities much sooner and can invest in 
-designing much more understandable API's.
+designing much more understandable API's as I develop rather than coming back and re-working them later.
 
-Because we always mock every single call and we never depend upon code external to our unit, we also leave our entire
+Because we always mock every single call, and we never depend upon code external to our unit, we also leave our entire
 codebase open to substitution at any time. The best example of this is when you later on in the project run into
 a bad race condition bug that is due to fractions of a second differences in calls to a DateTime Now function. If 
 we had of been testing without mocks all of our time sensitive code that is causing us headaches will be un-mockable and
 near impossible to re-create as a test. When everything is injected anything can be mocked.
+
+I would say the final and possibly most impactful tool that the London School gives you is that it makes splitting up
+your features into smaller tickets a much more manageable process. I have found that most teams that I work with who
+don't use the London approach will typically find themselves having a single developer delivering an entire feature
+from start to end even if the ticket is split up into multiple steps. If a team does split the ticket up into say
+one developer working on mapping the user input into a domain model and a second developer
+that will persist our data CarInfo data into our SQL database, we sometimes will run into the unfortunate situation
+in which both developers implement their own version of the same file. For example the mapping ticket implements
+the CarInfo model as a record, which is basically a class that makes working with imutability really easy and
+convenient through C# language features as such as the with statements for updating fields. But then we have
+the SQL persistence ticket developer also implement CarInfo, but because they're using Entity Framework, a library
+that uses class mutation to track field updates to generate SQL queries their class is a plain old boring class
+that expects it can be mutated.
+
+One of them now needs to update their codebase, neither of them are happy. 
+This is why quite often when a team writes up their tickets they can very often turn the feature ticket
+into the entire ticket and not split up it into the individual steps required to complete the feature. If instead of
+6 small tickets we had a single big ticket, one developer can grab it and see it from start to end without conflicts.
+
+This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
+So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
+the basic interfaces as such as the validator, mapper, database layer and finally the response mapper. However because
+they write test where entire chunks of a feature are the unit they will not be able to write any tests for this code as
+we are yet to implement any of them. Through doing this we have gained a shared understanding on how we will integrate
+however we also made our code untestable and thus it won't be tested. 
+
+Instead of not testing this important upper layer what if we just for now mocked away all of the mappers, validators and
+persistence calls? Well now if later down the line we find a bug in this layer of the codebase we know for a fact
+that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through the
+green test pass. As you probably can tell, that was London School approach and just shows that the London school makes
+splitting up your tickets into smaller tickets to be much more reliable and approachable.
+
+If your team is finding that their tickets are taking more
+than a day to complete this is a good sign that you most likely need to split up your tickets into smaller more
+bite sized tickets that take at most half a day to complete, it is at that point that you also might find that
+swapping to the London approach will make all of that much manageable.
 -->
 ---
 
@@ -512,9 +549,82 @@ TDD should be implemented in my C# example I will dig into this further.
 
 ---
 
-<!--
-It was with these three key 
+# Example Time
 
+<!--
+For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
+Test Driven Development can look like. I will be taking all the three key concepts from above and combining
+them together to create a record inside CosmosDB.
+-->
+
+---
+
+# Demo
+
+````md magic-move
+```cs
+public class PersistCarInfoServiceTests
+{
+    [SetUp]
+    public void Setup()
+    {
+    }
+
+    [Test]
+    public void Test1()
+    {
+        Assert.Pass();
+    }
+}
+```
+```cs {all|3,8|all}
+public class PersistCarInfoServiceTests
+{
+    private IPersistCarInfoService _service; // compile error
+
+    [SetUp]
+    public void Setup()
+    {
+        _service = new PersistCarInfoService(); // compile error
+    }
+
+    [Test]
+    public void Insert_Should_Exist_Within_PersistCarInfoService()
+    {
+        await _service.InsertAsync();
+        
+        Assert.Pass();
+    }
+}
+```
+```cs {all}
+public class PersistCarInfoServiceTests
+{
+    private IPersistCarInfoService _service; // compile error
+
+    [SetUp]
+    public void Setup()
+    {
+        _service = new PersistCarInfoService(); // compile error
+    }
+    // ...
+}
+
+public class PersistCarInfoService : IPersistCarInfoService
+{
+}
+
+internal interface IPersistCarInfoService
+{
+}
+```
+````
+
+---
+<!--
+For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
+Test Driven Development can look like. I will be taking all the three key concepts from above and combining
+them together to create a record inside CosmosDB.
 -->
 
 ---
