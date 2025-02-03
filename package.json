@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "slidev build",
+    "serve": "yarn run http-server dist",
     "dev": "slidev --open",
     "export": "slidev export"
   },
@@ -13,5 +14,8 @@
     "@slidev/theme-seriph": "latest",
     "vue": "^3.5.13"
   },
-  "packageManager": "yarn@3.6.3"
+  "packageManager": "yarn@3.6.3",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }

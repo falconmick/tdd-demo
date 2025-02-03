@@ -563,7 +563,7 @@ them together to create a record inside CosmosDB.
 
 ````md magic-move
 ```cs
-public class PersistCarInfoServiceTests
+public class UpdateCarInfoCommandHandler_Tests
 {
     [SetUp]
     public void Setup()
@@ -577,48 +577,30 @@ public class PersistCarInfoServiceTests
     }
 }
 ```
-```cs {all|3,8|all}
-public class PersistCarInfoServiceTests
+```cs
+public class UpdateCarInfoCommandHandler_Tests
 {
-    private IPersistCarInfoService _service; // compile error
+    private IUpdateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _service = new PersistCarInfoService(); // compile error
+        _handler = new UpdateCarInfoCommandHandler();
     }
 
     [Test]
-    public void Insert_Should_Exist_Within_PersistCarInfoService()
+    public void Test1()
     {
-        await _service.InsertAsync();
-        
         Assert.Pass();
     }
 }
 ```
-```cs {all}
-public class PersistCarInfoServiceTests
-{
-    private IPersistCarInfoService _service; // compile error
-
-    [SetUp]
-    public void Setup()
-    {
-        _service = new PersistCarInfoService(); // compile error
-    }
-    // ...
-}
-
-public class PersistCarInfoService : IPersistCarInfoService
-{
-}
-
-internal interface IPersistCarInfoService
-{
-}
-```
 ````
+
+<!--
+v1 starting point
+v2 - red - UpdateCarInfoCommandHandler not defined
+-->
 
 ---
 <!--
