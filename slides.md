@@ -3,6 +3,7 @@ layout: cover
 ---
 
 # Unlocking Hidden Efficiency
+
 ## Seamless Solutions with TDD You Didn't Know You Needed
 
 <!-- 
@@ -86,6 +87,7 @@ TIMING FOR SECTION TWO: 1m25s
 ---
 
 ## Before we ask what, we ask why?
+
 ## Opening Statements (5 minutes)
 
 <!--
@@ -227,7 +229,7 @@ as such as triangulation and fake it's
 
 ---
 
-# Test-Splosions 
+# Test-Splosions
 
 <!--
 One reason why you might not want to use this style of testing is the dreaded 1 line change that breaks multiple test suites.
@@ -417,7 +419,9 @@ of what it looks like to properly implement them. Startin with Red Green Refacto
 ---
 
 # RED
+
 # GREEN
+
 # REFACTOR
 
 <!--
@@ -577,6 +581,7 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 }
 ```
+
 ```cs
 public class UpdateCarInfoCommandHandler_Tests
 {
@@ -603,6 +608,7 @@ v2 - red - UpdateCarInfoCommandHandler not defined
 -->
 
 ---
+
 <!--
 For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
 Test Driven Development can look like. I will be taking all the three key concepts from above and combining
@@ -627,7 +633,8 @@ them together to create a record inside CosmosDB.
         - Encourages better design and separation of concerns.
         - Ideal for systems with complex dependencies.
         - Facilitates collaboration between developers.
-        - **Critical point:** Smaller tickets require trust in co-workers' code quality. The London approach inherently produces "just better" code, enabling faster reviews and fewer bottlenecks.
+        - **Critical point:** Smaller tickets require trust in co-workers' code quality. The London approach inherently
+          produces "just better" code, enabling faster reviews and fewer bottlenecks.
     - **Weaknesses:**
         - Over-mocking and brittle tests.
         - Requires a deeper understanding of design patterns.
@@ -637,7 +644,9 @@ them together to create a record inside CosmosDB.
     - Choice depends on the problem domain and team dynamics.
 
 - **Additional insights:**
-    - Refactoring tests to replace mocks with real implementations (as suggested in [this article](https://blog.devgenius.io/detroit-and-london-schools-of-test-driven-development-3d2f8dca71e5)) can improve test robustness.
+    - Refactoring tests to replace mocks with real implementations (as suggested
+      in [this article](https://blog.devgenius.io/detroit-and-london-schools-of-test-driven-development-3d2f8dca71e5))
+      can improve test robustness.
     - **Meme idea:** "Banks hate him for this one trick!" (e.g., using adapters or breadth-first development).
 
 - **Transition:**
@@ -657,13 +666,17 @@ them together to create a record inside CosmosDB.
 
 - **Best practices:**
     - **Test runner:** Use a continuous test runner with near-instant test execution.
-    - **Triangulation:** As discussed in *Test Driven Development by Example*, use multiple test cases to drive generalization.
-    - **Isolation:** Aim for tests to run in isolation. If sharing an instance is necessary, guard it rigorously as a fixture.
-    - **Intent:** Make your intent known—name variables like `expected` and `actual`. For derived values (e.g., percentages), calculate them within the test instead of hardcoding.
+    - **Triangulation:** As discussed in *Test Driven Development by Example*, use multiple test cases to drive
+      generalization.
+    - **Isolation:** Aim for tests to run in isolation. If sharing an instance is necessary, guard it rigorously as a
+      fixture.
+    - **Intent:** Make your intent known—name variables like `expected` and `actual`. For derived values (e.g.,
+      percentages), calculate them within the test instead of hardcoding.
     - **Stutter tests:** Start with tests that do nothing (e.g., divide by zero) to validate the simplest case.
     - **Testing unknown APIs/SDKs:** Writing tests against an unknown API is the fastest way to understand its behavior.
     - **Edge cases:** Don’t manually verify—write a test instead.
-    - **Regression tests:** When a failure occurs, write a test to prove it before fixing. In a well-tested codebase, a regression is a sign to reassess the surrounding code.
+    - **Regression tests:** When a failure occurs, write a test to prove it before fixing. In a well-tested codebase, a
+      regression is a sign to reassess the surrounding code.
 
 - **Benefits:**
     - Faster feedback loops.
@@ -690,7 +703,8 @@ them together to create a record inside CosmosDB.
 
 - **Team consistency:**
     - While TDD is powerful, team consistency in coding practices takes priority.
-    - Share what you’ve learned and consider trying TDD on a splinter project. A unified team is better than a fractured one.
+    - Share what you’ve learned and consider trying TDD on a splinter project. A unified team is better than a fractured
+      one.
 
 - **Motivational note:**
     - "TDD isn’t just about writing tests—it’s about writing better software and becoming a better developer."
