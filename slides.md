@@ -558,7 +558,50 @@ TDD should be implemented in my C# example I will dig into this further.
 <!--
 For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
 Test Driven Development can look like. I will be taking all the three key concepts from above and combining
-them together to create a record inside CosmosDB.
+them together to validate a record passed in and depending on if the model is valid, returning back out a result
+that signifies this, otherwise we log an error if it is not valid.
+-->
+
+---
+
+# Demo
+
+<!--
+FALL BACK TO WALKTHROUGH IF IN DOUBT, blame time left (probably true)
+
+- v1 - starting point
+- v2 - red - UpdateCarInfoCommandHandler not defined
+- v3 - green - implemented missing methods, test now passes
+- v4 - red - add Handler method, it doesnt exist
+- v5 - green - implement handle method
+- v6 - refactor - give the test a name that makes sense
+- v7 - red - update HandleAsync return CarInfoUpdateResult + validate result not null
+- v8 - green - updated return type
+- v9 - red - update default result success to false
+- v10 - green - update success in CarInfoUpdateResult true in implementation
+- v11 - refactor - extract good info fake into method
+- v12 - refactor remove redundant test
+- v13 - red - add validate test failing build as Validator interface does not exist
+- v14 - red - implement validator interface
+- v15 - green - call validate
+- v16 - red - Create negative test scenario that returns false (we always return true atm)
+- v17 - red - return validate as result, breaking a test (as validate not return true unless mock setup)
+- v18 - green - setup happy path
+- v19 - red - Faker cannot play nice with ILogger.LogError extensions
+- v20 - green - extracted basic ILogger adapter and implement
+- v21 - refactor to use alternate mock, comment out log to prove the green test still fails if missing implementation
+-->
+
+---
+
+# Demo?
+
+<!--
+Ok checking my notes... apparently I have just showed off the basic red-green-refactor flow of TDD OR
+Completely flopped out and am now proceeding to fallback to my baked ahead of time demo run through.
+
+Either way, I will either summarise the steps here quickly or take a bit more time explaining concepts
+that were missed!
 -->
 
 ---
@@ -582,7 +625,7 @@ public class UpdateCarInfoCommandHandler_Tests
 }
 ```
 
-```cs
+```cs {*|3,8|*}
 public class UpdateCarInfoCommandHandler_Tests
 {
     private IUpdateCarInfoCommandHandler _handler;
@@ -603,8 +646,23 @@ public class UpdateCarInfoCommandHandler_Tests
 ````
 
 <!--
-v1 starting point
-v2 - red - UpdateCarInfoCommandHandler not defined
+#### v1 starting point
+First we start with our blank unit test, this is our starting point so we need a red
+
+{click}
+
+####  v2 - red
+Now we add in the handler which we will be testing `UpdateCarInfoCommandHandler`
+
+{click}
+
+The red phase of the cycle is in that this class does not exist. A compilation error is as valid of a red steps
+as a failing test is.
+
+{click}
+
+Our next step is green, which we will achieve through implementing the Update Car Info Command Handler
+with as little effort as possible
 -->
 
 ---
