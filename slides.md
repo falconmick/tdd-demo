@@ -667,109 +667,192 @@ with as little effort as possible
 
 ---
 
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+}
+
+public interface IUpdateCarInfoCommandHandler
+{
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return null;
+    }
+}
+
+public interface IUpdateCarInfoCommandHandler
+{
+    Task HandleAsync(CarInfo carInfo);
+}
+```
+````
+
 <!--
-For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
-Test Driven Development can look like. I will be taking all the three key concepts from above and combining
-them together to create a record inside CosmosDB.
+####  v3 - green
+And that's it
+
+I have not implemented anything further like the the method that I will be calling or anything,
+it is however a valid step to take, to make the leap and add on additional code whilest you are 
+already in the red and in particular this situation would be more than acceptable.
+
+But the point is to show that the smallest change would be such a step and in allot of situations 
+in which you feel like you could write a bit more you likely should step back and stick to slow is steady
+and keep your rhythm.
+
+{click}
+
+### v5 add handler green
+To keep this presentation snappy I will implement the handle method now, but if we were being pedantic we would have
+first attempted to call Handle, got a failing test, then fixed it getting us back to green. To get to the point in 
+which I had the handle method implemented whilest I worked on this example I also took the time to create the 
+next smallest test which was to call Handle with our CarInfo which also failed due to not being implemented but you
+will just have to trust me on that one!
 -->
 
 ---
 
-## Section 2: Strengths and Weaknesses of Each Approach (10 minutes)
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
 
-- **Detroit School (Classic TDD):**
-    - **Strengths:**
-        - Simplicity and readability.
-        - Great for algorithmic or state-heavy logic.
-        - Encourages minimalistic design.
-    - **Weaknesses:**
-        - Tightly coupled code if not careful.
-        - Less emphasis on design and collaboration.
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
 
-- **London School (Mockist TDD):**
-    - **Strengths:**
-        - Encourages better design and separation of concerns.
-        - Ideal for systems with complex dependencies.
-        - Facilitates collaboration between developers.
-        - **Critical point:** Smaller tickets require trust in co-workers' code quality. The London approach inherently
-          produces "just better" code, enabling faster reviews and fewer bottlenecks.
-    - **Weaknesses:**
-        - Over-mocking and brittle tests.
-        - Requires a deeper understanding of design patterns.
+    [Test]
+    public async Task Test1()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
 
-- **Compare and contrast:**
-    - Real-world analogy: Building a car vs. assembling a team to build a car.
-    - Choice depends on the problem domain and team dynamics.
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
 
-- **Additional insights:**
-    - Refactoring tests to replace mocks with real implementations (as suggested
-      in [this article](https://blog.devgenius.io/detroit-and-london-schools-of-test-driven-development-3d2f8dca71e5))
-      can improve test robustness.
-    - **Meme idea:** "Banks hate him for this one trick!" (e.g., using adapters or breadth-first development).
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
 
-- **Transition:**
-    - "Now, let’s dive into how one of these approaches can revolutionize your workflow in C#."
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
+````
 
----
+<!--
+### v6 Refactor
 
-## Section 3: Deep Dive into Leveraging TDD in C# (10 minutes)
+We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
+test we have been filling out we can see that some code cleaning up could be completed to improve upon the test suite
+we are working on. In this situation that change is to rename the test to explain what we are trying to achieve
 
-- **Choose one approach (e.g., London School):**
-    - Why it’s effective in C# for certain scenarios.
+{click}
 
-- **Concrete example:**
-    - Example: Building a feature in an ASP.NET Core application.
-    - Break down a large ticket into smaller, testable units.
-    - Demonstrate writing tests first, mocking dependencies, and refactoring.
+That's right, we don't have to exclusively use the refactor step on our code implementation, quite often it makes sense
+to take the time to tidy up and maintain our tests. This can come from somthing as simple as renaming a method or variable
+to extracting shared functionality between tests so that it can be shared.
 
-- **Best practices:**
-    - **Test runner:** Use a continuous test runner with near-instant test execution.
-    - **Triangulation:** As discussed in *Test Driven Development by Example*, use multiple test cases to drive
-      generalization.
-    - **Isolation:** Aim for tests to run in isolation. If sharing an instance is necessary, guard it rigorously as a
-      fixture.
-    - **Intent:** Make your intent known—name variables like `expected` and `actual`. For derived values (e.g.,
-      percentages), calculate them within the test instead of hardcoding.
-    - **Stutter tests:** Start with tests that do nothing (e.g., divide by zero) to validate the simplest case.
-    - **Testing unknown APIs/SDKs:** Writing tests against an unknown API is the fastest way to understand its behavior.
-    - **Edge cases:** Don’t manually verify—write a test instead.
-    - **Regression tests:** When a failure occurs, write a test to prove it before fixing. In a well-tested codebase, a
-      regression is a sign to reassess the surrounding code.
+You can even go as far as extracting useful functionality of your test suites into utilities of which we write their 
+very own tests for! We won't be going this far for the example but the world is our oyster.
 
-- **Benefits:**
-    - Faster feedback loops.
-    - Improved code quality and maintainability.
-    - Ability to parallelize work on smaller tickets.
-
-- **Common pitfalls:**
-    - Over-mocking or overly complex tests.
-    - Tips for avoiding these pitfalls.
-
-- **Call to action:**
-    - "Try this approach in your next project!"
+Up next why don't we start writing code that is actually going to get us writing our implementation!
+-->
 
 ---
 
-## Round-Up and Closing Statements (5 minutes)
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
 
-- **Recap the main points:**
-    - Two schools of TDD and their strengths/weaknesses.
-    - Leveraging one approach in C# for better efficiency.
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
 
-- **Reinforce the value of TDD:**
-    - Saves time, improves code quality, and transforms workflows.
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
 
-- **Team consistency:**
-    - While TDD is powerful, team consistency in coding practices takes priority.
-    - Share what you’ve learned and consider trying TDD on a splinter project. A unified team is better than a fractured
-      one.
+```cs {*|21|*}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
 
-- **Motivational note:**
-    - "TDD isn’t just about writing tests—it’s about writing better software and becoming a better developer."
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
 
-- **Call to action:**
-    - Share experiences on social media using #TDDMelbourne.
-    - Invite questions and further discussion.
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+    
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        
+        Assert.True(result.Successful);
+    }
+}
+```
+````
+
+<!--
+### v9 red handle bad return type
+
+Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break
+either our production code OR test suite. This is the good scenario test, we will moving forward as we add more
+and more functionality and test harnresses around our suite be the default starting point that all other more
+specific test will start from.
+
+The goal here is we will place any mocking code that is required to exist such to make this test pass into
+whatever mechanism our test runner uses to setup individual tests, the goal being if we make a new blank test
+with no setup code in it, it should result in the good scenario prior to us customising it to test what ever
+it is we are attempting to test.
+
+// todo: show just return true implementation
+-->
+
+---
+
+<!--
+todo: retrospective on the demo, likely need to raise that this is just an overview of what the workflow
+looks like and overtime it gives us X, Y, Z
+-->
 
 ---
 
