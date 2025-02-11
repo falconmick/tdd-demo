@@ -1580,3 +1580,29 @@ standard and some would argue rather rigorous testing practices?
 ---
 
 ## Thank You!
+
+<!--
+rough time estimates:
+
+Got it! Here’s an estimated duration breakdown for each section based on a speaking rate of about 125–150 words per minute, factoring in natural pauses, emphasis, and engagement moments:
+
+    Introduction (Section One) – 1m 10s (already estimated)
+    Question Time (Section Two) – 1m 25s (already estimated)
+    Opening Statements (Section Three) – 4m 15s (already estimated)
+    Schools Overview (Section Four) – 1m 15s (already estimated)
+    Detroit School - Why Use It? – ~2m 30s
+    Detroit School - Why Not? (Test-Splosions Section) – ~2m 45s
+    Short Term Speed Loss – ~2m 30s
+    Why Should I Use the London School? – ~4m 15s
+    Why Wouldn’t I Use the London School? – ~3m 30s
+    Which One Should I Be Following? – ~3m 45s
+    Going Deeper (Intro to Red-Green-Refactor) – ~1m 30s
+    Red-Green-Refactor (Detailed Explanation) – ~6m
+Introduction: 2 minutes
+Part 1 (Explaining TDD): 2 minutes
+Demo Steps (6 parts, 40 seconds each): 4 minutes
+Recap and Q&A: 2 minutes
+
+New Total Estimated Duration: ~45m 50s
+
+-->
