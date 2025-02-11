@@ -560,6 +560,15 @@ For this example I will use C# as this is my bread and butter, so I can give hop
 Test Driven Development can look like. I will be taking all the three key concepts from above and combining
 them together to validate a record passed in and depending on if the model is valid, returning back out a result
 that signifies this, otherwise we log an error if it is not valid.
+
+To make this demo possible I am using the following tools:
+
+- NUnit, my test runner and assertion library
+- and FakeItEasy, a mocking library that allows for inline definitions of mocks and also exposes several
+useful tools for mocking out functionality without having to hand code a mock substitute for a given interface.
+
+// todo: rename all `UpdateCarInfoCommandHandler` => `ValidateCarInfoCommandHandler`
+// todo: maybe I give a quick run-down of FakeIteEasy???
 -->
 
 ---
@@ -770,7 +779,7 @@ we are working on. In this situation that change is to rename the test to explai
 {click}
 
 That's right, we don't have to exclusively use the refactor step on our code implementation, quite often it makes sense
-to take the time to tidy up and maintain our tests. This can come from somthing as simple as renaming a method or variable
+to take the time to tidy up and maintain our tests. This can come from something as simple as renaming a method or variable
 to extracting shared functionality between tests so that it can be shared.
 
 You can even go as far as extracting useful functionality of your test suites into utilities of which we write their 
@@ -844,7 +853,705 @@ whatever mechanism our test runner uses to setup individual tests, the goal bein
 with no setup code in it, it should result in the good scenario prior to us customising it to test what ever
 it is we are attempting to test.
 
-// todo: show just return true implementation
+The most important thing to take away from this test is that given an acceptable input, we expect the result to not
+be null and to have the Successful flag set to true!
+-->
+
+---
+
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return null;
+    }
+}
+
+// public record CarInfoUpdateResult(bool Successful);
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return new CarInfoUpdateResult(true);
+    }
+}
+
+// public record CarInfoUpdateResult(bool Successful);
+```
+````
+
+<!--
+### v10 green - just return true
+
+Now that we have our failing test due to null not equalling success true what would be the correct solution to update
+our implementation to such that the test passed?
+
+{Click}
+
+That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
+to mean we return a new result object with true pasted directly inside of it. This might feel silly or redundant but
+what it gives us is another proven working test. As we add more and more of these our ability to quickly catch mistakes
+gets greater and greater.
+-->
+
+---
+
+````md magic-move
+```cs{*|8,15}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        
+        Assert.True(result.Successful);
+    }
+}
+```
+````
+
+<!--
+### V11 refactor - extract GoodCarInfo
+
+We have successfully gone from red to green, so that means we now have another opportunity to refactor.
+Again we will be looking into the test suite itself to see what could be improved. 
+
+I can see both some duplication and some legibility improvements that could be made here
+
+{click}
+
+When writing the test the A Fake Carinfo stub has taken up place as an alternative for a fully fledged CarInfo
+model being returned. For now this is still 100% acceptable, what isn't acceptable is that we have duplication
+in the repeated implementation of it as well as no solid story behind what does A Fake CarInfo even represent.
+-->
+
+---
+
+````md magic-move
+```cs{8,15}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        
+        Assert.True(result.Successful);
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+
+    [Test]
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
+    {
+        await _handler.HandleAsync(GoodCarInfo());
+        Assert.Pass();
+    }
+
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.True(result.Successful);
+    }
+
+    private static CarInfo GoodCarInfo()
+    {
+        return A.Fake<CarInfo>();
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.True(result.Successful);
+    }
+
+    private static CarInfo GoodCarInfo()
+    {
+        return A.Fake<CarInfo>();
+    }
+}
+```
+````
+
+<!--
+{click again}
+
+This is fixed by extracting that repetition into a new method GoodCarInfo and at the same time we add in additional
+context to our test suites by highlighting that a model will be returned that will allow for the good or happy case
+scenario to be possible. If for example we had a nullable field that we would exit early from our method with,
+the good case would define a model that satisfies this.
+
+A common tactic here is to create a good model, make a minor change to it which will make it no longer a good model
+(the nullable field example from above) and that way when the test fails, we have more confidence it failed due to
+the specific edge case we set up inside our test and less change it was bad test data that broke the test.
+
+{click}
+
+I have made one last refactor, I have removed the original test as now I am satisfied enough with our good case that I
+don't see any value in retaining the original test.
+-->
+
+---
+
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
+    
+    [Test]
+    public async Task HandleAsync_Should_Validate_CarInfo()
+    {
+        var carInfo = GoodCarInfo();
+        
+        await _handler.HandleAsync(carInfo);
+    }
+    
+    // ... other tests + setup code
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private IUpdateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new UpdateCarInfoCommandHandler();
+    }
+    
+    [Test]
+    public async Task HandleAsync_Should_Validate_CarInfo()
+    {
+        var carInfo = GoodCarInfo();
+        
+        await _handler.HandleAsync(carInfo);
+
+        A.CallTo(() => _validator.Validate(carInfo)).MustHaveHappenedOnceExactly();
+    }
+    
+    // ... other tests + setup code
+}
+```
+
+```cs{*|3,9}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    private ICarInfoValidator _validator;
+    private IUpdateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _validator = A.Fake<ICarInfoValidator>();
+        
+        _handler = new UpdateCarInfoCommandHandler();
+    }
+    
+    [Test]
+    public async Task HandleAsync_Should_Validate_CarInfo()
+    {
+        var carInfo = GoodCarInfo();
+        
+        await _handler.HandleAsync(carInfo);
+
+        A.CallTo(() => _validator.Validate(carInfo)).MustHaveHappenedOnceExactly();
+    }
+    
+    // ... other tests + setup code
+}
+```
+````
+
+<!--
+### v13 validate test failing build
+
+Our next test will be a scaffolding test that will allow us to continue our implementation in our mockist london approach
+to start writing the test I implement our new test scenario by defining the good case scnario and
+
+{click}
+
+adding in our assertion that some mock we are yet to define will have had it's Validate method called and our carInfo 
+passed in.
+
+{click}
+
+from there I add in the Validator field and set it up as a fake.
+
+{click}
+
+And once again we have a red step as these lines won't compile as this interface doesn't exist.
+-->
+
+---
+
+````md magic-move
+```cs
+public interface ICarInfoValidator
+{
+    bool Validate(CarInfo carInfo);
+}
+```
+````
+
+<!--
+This can be easily resolved by defining the interface
+-->
+
+---
+
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    public UpdateCarInfoCommandHandler()
+    {
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return new CarInfoUpdateResult(true);
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    {
+        _validator = validator;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return new CarInfoUpdateResult(true);
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    {
+        _validator = validator;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        _validator.Validate(carInfo);
+        return new CarInfoUpdateResult(true);
+    }
+}
+```
+````
+
+<!--
+From here we now can implement the solution to our failing test. First we need to inject in our dependency
+
+{click}
+
+of which I have also updated our test to pass in our mock to this constructor. Next we need to come up with an
+ingenious solution... Not really
+
+{click}
+
+as prior, we just do what ever is the minimum amount of effort to make the test pass, which just so happens to be
+that we call our method and do nothing with the result!
+-->
+
+---
+
+````md magic-move
+```cs{*|8|*}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+    
+    [Test]
+    public async Task HandleAsync_Should_Return_Non_Success_When_Validation_Failed()
+    {
+        A.CallTo(() => _validator.Validate(A<CarInfo>.Ignored)).Returns(false);
+        
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.False(result.Successful);
+    }
+    
+    // ...
+}
+```
+````
+
+<!--
+### v16 - red validate return false case
+
+now let's have a look at the way we can set up our mock of validate such that it will return false
+
+{click}
+
+The syntax isn't too important here, what you should  take away from this definition is that when:
+A call to Validate with any carInfo parameter passed in, we need to return false
+-->
+
+---
+
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    {
+        _validator = validator;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        _validator.Validate(carInfo);
+        return new CarInfoUpdateResult(true);
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    {
+        _validator = validator;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return new CarInfoUpdateResult(_validator.Validate(carInfo));
+    }
+}
+```
+````
+
+<!--
+With this change made and our new red test ready to go, we hop into the implementation and go with the most logical solution
+
+{click}
+
+now when the validation result is invalid, we will get our expected false value on Success and when it is successful it will
+be true...
+
+Only one problem.
+-->
+
+---
+
+````md magic-move
+```cs{*|10}
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+    
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.True(result.Successful);
+    }
+    
+    // ...
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler_Tests
+{
+    // ...
+    
+    [Test]
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
+    {
+        A.CallTo(() => _validator.Validate(A<CarInfo>._)).Returns(true);
+        
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.True(result.Successful);
+    }
+
+    
+    // ...
+}
+```
+````
+
+<!--
+### v18 setup happy path
+
+turns out this test is now failing due to
+
+{click}
+
+our Successful value actually being false!! This has happened because we had forgotten to upate the happy path code
+to correctly set up the validate mock to return true. One could argue the actual issue is that my implementation
+could have only returned a false result inside of an if statement and then this wouldn't have happened, but I find 
+that the happy case breaking upon fixing the new test is just a part of a growing test suite and the best solution
+is to just amend the happy path as we go.
+
+{click}
+
+in later refactoring there is a good chance that this setup code would be extracted out and the ability to get a
+false/true would be configured through a shared method plus we would also almost certainly need to move this 
+good case scenario setup code into a shared method that all tests can call into, or perhpase as a part of the per-test
+setup code as such as a constructor inside of NUnit.
+
+For now I will just be happy with how it is.
+-->
+
+---
+
+````md magic-move
+```cs{*|15-19|20-28}
+    // UpdateCarInfoCommandHandler_Tests
+    
+    [SetUp]
+    public void Setup()
+    {
+        _validator = A.Fake<ICarInfoValidator>();
+        _logger = A.Fake<ILogger>();
+        
+        _handler = new UpdateCarInfoCommandHandler(_validator, _logger);
+    }
+    
+    [Test]
+    public async Task HandleAsync_Should_Log_Error_If_Validation_Failed()
+    {
+        var carName = "Ford";
+        var carInfo = GoodCarInfo() with
+        {
+            CarName = carName
+        };
+        A.CallTo(() => _validator.Validate(carInfo)).Returns(false);
+        
+        await _handler.HandleAsync(carInfo);
+        
+        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName)).MustHaveHappenedOnceExactly();
+    }
+```
+````
+
+<!--
+### v19 faker doesnt like extensions
+
+All that remains in our little demo is to add in logging for invalid cars! I am injecting the standard ILogger
+interface and also have chosen to implement the ILogger into the constructor because it makes sense to do so
+even though technically to get the test to go red and fail we could have just skipped the full setup. It just
+makes sense to do common sense things once in a while.
+
+{click}
+
+in our new test we are setting up our scenario with a specific value for our good car scenario such that our assertion
+later specifically calls out the car name we have provided.
+
+{click}
+
+When we run this test instead of our usual error message that we would have expected, of which no occurances of the call
+were discovered from that mock, we instead see:
+-->
+
+---
+
+```cs
+FakeItEasy.Configuration.FakeConfigurationException : 
+
+  The current proxy generator can not intercept the method 
+  Microsoft.Extensions.Logging.LoggerExtensions.LogError(
+    Microsoft.Extensions.Logging.ILogger logger, System.String message, 
+    System.Object[] args) for the following reason:
+    
+    - Extension methods can not be intercepted since they're static.
+```
+
+<!--
+OH no! It appears that the interface that we relied upon isn't being used in a test-friendly way.
+
+Under the hood, the ILogger interface only defines a single method, of which an extension class
+defines a series of convenience extensions that make up the more approachable public API's of which
+everyone is using, i.e Log Error and LogInfo.
+
+When this happens there are only two workarounds, you either implement a hand rolled mock, that exposes what 
+ever conveniences you require OR you write your very own adapter.
+-->
+
+---
+
+````md magic-move
+```cs{1-4|*}
+public interface ILog
+{
+    void LogError(string? message, params object?[] args);
+}
+
+public class LogAdapter : ILog
+{
+    private readonly ILogger _logger;
+
+    public LogAdapter(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+
+    public void LogError(string? message, params object?[] args)
+    {
+        _logger.LogError(message, args);
+    }
+}
+```
+````
+
+<!--
+### V20 extract adapter and implement
+
+The first step in writing an adapter is to determine your API. Adapters as a pattern can be applied either to tidy
+up a series of interactions into a more codebase friendly API OR they can be thin layers that only exist to
+extract a testable interface. Of which this adapter is an example of such.
+
+What I have done here is gone into the implementation of the Logger extensions and stolen this definition, of which
+I am now going to expose under teh ILog interface. Typically when writing these style adapters it is because the SDK
+we are attempting to use has given us a concrete type back as such as a class, in those cases the name wouldn't change at
+all, we would simply append the I character to denote that it is an interface, and then the implementation as here would 
+append the Adapter word.
+
+{click}
+
+The Log Adapter class may look very simple, this is for a reason... We won't have any tests covering this adapter, which
+means we need to lower the risk of implementing a bug here. Given all we wanted to do was to update the interface we were
+coding against to be testable, such a boring implementation is more that sufficient.
+
+I have updated our test suite to now use the ILog interface instead of Microsoft's ILogger
+by keeping to the original signatures this swap is seamless
+-->
+
+---
+
+````md magic-move
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+    private readonly ILog _logger;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
+    {
+        _validator = validator;
+        _logger = logger;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return new CarInfoUpdateResult(_validator.Validate(carInfo));
+    }
+}
+```
+
+```cs
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+    private readonly ICarInfoValidator _validator;
+    private readonly ILog _logger;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
+    {
+        _validator = validator;
+        _logger = logger;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        var isValid = _validator.Validate(carInfo);
+
+        if (!isValid)
+        {
+            _logger.LogError("Car: {CarName} invalid", carInfo.CarName);
+        }
+        
+        return new CarInfoUpdateResult(isValid);
+    }
+}
+```
+````
+
+<!--
+now that our test suite is setup and our testable interface is ready to go, we can make our new test pass.
+
+{click}
+
+and with that our implementation is complete!
+
+One of the downsides to adapting out ILogger was that now for every possible usage of the ILogger's extensions
+we will need to re-define them in the interface and then to the adapter. I personally feel like this is OK,
+however specifically for ILogger I would typically use a hand rolled mock.
+
+This is because it's possible to add some really cool testing tech as such as tracking scoped fields and exposing 
+convenience based methods inside of your mock implementation that then make asserting log statements an absolute breeze.
+
+This serves double duty if your in a codebase that hasn't commited to full London style as downstream classes that also
+utilise scopes and logging can result in some really useful assertions with minimal effort. So maybe next time you could
+try writing your own.
 -->
 
 ---
