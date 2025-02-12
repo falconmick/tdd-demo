@@ -204,23 +204,30 @@ TIMING FOR SECTION FOUR: 1m 15s
 
 <!--
 Why would I pick the detroit school? Detroit just makes sense; if up until now you had been writing a few tests
-here and there around the important stuff; or to make the metrics look good you almost certainly have been writing
-test in a Detroit style. You were likely missing the red green part, but over all you made a point to take obvious
-chunks of functionality out of your codebase and made sure that they ended up working as you expected, maybe say for
+here and there around all the important stuff; or at least to make the metrics look good you almost certainly have been writing
+in this Detroit style. You were likely missing the red green part, but over all you made a point to take obvious
+chunks of functionality out of your codebase and made sure that they ended up working as you expected, 
+
+Say for
 example you had some logic that would take an existing item, merge some new state into it and then persisted it back
 to the database. There is a very good chance that this functionality would be wrapped in a set of nice test that
-mocked the database out with an in-memory fake which you then asserted against in the final steps of your test methods.
+mocked out the database out with an in-memory fake which you then asserted against in the final steps of your test methods.
 
-If this is your codebase now, then great you can transition into the detroit school with ease, just make sure to follow
-red green refactor and you're basically there! As soon as you start making this commitment to testing all the features
-your adding, as you add them, you will find that refactoring can be done with much greater speed and confidence as if
+If this is your codebase now, then great; you can transition into the detroit school with ease, just make sure to follow
+red green refactor and you're basically there! As soon as you start making this commitment to testing all the features, 
+as you add them, you will find that refactoring can be done with much greater speed and confidence as if
 a feature is important, you will have test around it. Then if you break that feature later on when applying a fix, those 
 test you wrote 6 months ago will be there to catch you before releasing broken functionality to your users.
 
-Another great use case for Detroit is code that takes in a series of inputs, transforms the data, applies complicated logic,
-then returns a result all without any side-effects from calling out to an external API. When you run into very self-contained
-coding exercises like this it can be a great opportunity to take full advantage of some more advanced testing techniques
-as such as triangulation and fake it's
+Another time that the Detroit approach can really shine is when writing small self-contained utilities which have no side effects and 
+simply take incoming arguments and transform them into an output based off a series of known rules. Because of this
+code kata's as such as supermarket pricing examples or others can be a good way to practice Test driven development in
+the Detroit style. From there you will find it easier to spot good sections of your codebase to treat as a unit for your
+testing. This will help guide your coding in such a way to push any required side effects to the edges of your codebases such
+that they are much easier to mock. This is showing us that testing not only can add reliability but also encourage us to
+write our code in such ways to isolate complexity.
+
+TIMING FOR SECTION FIVE: 2 min
 -->
 
 ---
@@ -235,39 +242,38 @@ as such as triangulation and fake it's
 One reason why you might not want to use this style of testing is the dreaded 1 line change that breaks multiple test suites.
 When our unit under test combines multiple shared snippets of code there is a large chance that eventually you will be
 writing a new feature or fixing a bug and out of nowhere all your tests start failing. When this happens, especially if
-you accidentally forgot to keep your red green refactor itterations small; or worse yet; you were not doing so the pure
+you accidentally forgot to keep your red green refactor iterations small; or worse yet; you were not doing so; the instant
 stress of having an entire set of test suites start failing can make it hard to find the code change that was at fault.
 
 There are workarounds for this issue, most importantly you can focus on making sure your entire set of suites run continuously
-so that any regressions are found at the same time as when changes are being made in the file that is responsible for the
-bug is still open and you can just control zed on that thang until you find the responsible line of code. But this also 
+so that any regressions are found at the same time as when changes are being made 
+and you can just control zed on that thang until you find the responsible line of code. But this also 
 just comes with the territory of testing collections of code in multiple locations and just is the price you pay for 
 simpler to write tests. Alternatively this type of hardship can be nearly eliminated by London school as you NEVER should
-be re-testing shared functionality between suites and the only thing that can break MoneyService's unit tests is a change
-that was made inside MoneyService.
+be re-testing shared functionality between classes and the only thing that can break a test for a given suite is code
+that exists in that very class as the unit of each test is at a class level
+
+TIMING FOR SECTION SIX: 1m 20s
 -->
 ---
 
 # Short term speed loss
 
 <!--
-Some would argue that another reason to avoid the Detroit school and some would argue test driven development all together
-is the short term speed loss. This reasoning is only really true in very small scale changes to existing codebases that
+Some would argue that another reason to avoid the Detroit school or test driven development all together
+is the short term speed loss. 
+This reasoning is only really true in very small scale changes to existing codebases that
 don't want to co-operate with tests. There is a very large chance that in the long run taking the time to pay for the
-test now will save a lot of hear-ache in the future, but on occasion it's just not worth it. It's important to note here
-that if you are trying to stick to test driven development that the Detroit school is by far the quicker approach to take
-over London. === todo: maybe change that last bit ===
+test now; will save a lot of hear-ache in the future, but on occasion it's just not worth it. 
 
-=== TODO: probably remove/rewrite this bit ===
-in the scenario in which you are trying to improve an existing codebase; If we compare this to London, the large up-front cost of fixing up your
-codebase and the un-realistic and very un-impactful job of re-writing the existing test to do so in isolation to the 
-classes they were made for realistically would just never happen and you would be stuck with large chunks of legacy
-code that is tested in one way (through a more Detroit style) and the newer parts which were extracted and most likely 
-don't play all to nice with the other code in our codebase.
+It's important to note here that if you are trying to migrate to test driven development 
+that the Detroit school is by far the quicker approach to take
+over London.
 
-It's for this reason that quite often if your jumping into an existing codebase Detroit can just be the only logical
-approach.
+It's for this reason that quite often if your jumping into an existing codebase Detroit might be the only logical approach.
 
+
+TIMING FOR SECTION SEVEN: 45s
 
 -->
 
@@ -276,6 +282,8 @@ approach.
 # Why should I use the London School?
 
 <!--
+Bias warning, I love London
+
 London school is bar far, so much harder to sell without first experiencing it, I can only say that it's worth taking
 the time to make a point to just try it out and see where the code takes you.
 
