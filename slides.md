@@ -282,25 +282,25 @@ TIMING FOR SECTION SEVEN: 45s
 # Why should I use the London School?
 
 <!--
-Bias warning, I love London
+Bias warning, I love the London approach
 
 London school is bar far, so much harder to sell without first experiencing it, I can only say that it's worth taking
 the time to make a point to just try it out and see where the code takes you.
 
-That is actually one of it's largest draws, especially when compared to Detroit, when you write London there is no
-thinking out ahead of time of logical bundles of classes to combine into a scenario to form your tests around.
+That is actually one of it's largest draws, especially when compared to Detroit, when you write London there less
+thinking out ahead of time what classes will be required to form your tests around.
 
-Instead you grab a feature, you start at the very outside of your code, for example the API endpoint, and you
-just assert what needs to happen for this class to be completed. You don't need to implement every single
-requirement to get to a complete test, instead you simply write a test that asserts the inputs to your API are 
-are passed to your validator,
-this then produces a failing test, so we 
-define the interface for your validation, 
-mock this interface, 
-add the call inside your API to call this non-existant validator 
-and bam, you have a working test that proves the correct values were provided to the correct
-dependencies. This process repeats over and over, without any of the dependencies having a single line of code 
-implemented inside of them.
+Instead you naturally start at the origin of your feature, such as the API endpoint, and you use your tests to define
+the structure of your class. If the first step of accepting an incoming request is to validate the input to make sure
+it is valid, then you write a test that asserts this. It doesn't matter that the validator interface doesn't exist, 
+you can go and define it. Once you have your interface that will be able to accept the input and return a suitable
+output, you skip the implementation step of the validator and instead define a mock for your new interface and
+utilise the assertion tools provided by the mock to ensure that the validator is called and then later in another
+test once you implement the call you can then stub out the functionality, allowing for easy testing setup
+to validate each unique and potentially hard to reproduce branch in your class.
+
+This process repeats over and over, without any of the other downstream classes needing to be implemented, we instead
+focus purely on the branches and edge cases tracked by this class.
 
 This to most sane developers will sound outlandish, spending multiple coding iterations writing tests that prove
 obvious thing X was passed to other obvious thing Y, what exactly am I gaining??
@@ -313,20 +313,19 @@ Because we always mock every single call, and we never depend upon code external
 codebase open to substitution at any time. The best example of this is when you later on in the project run into
 a bad race condition bug that is due to fractions of a second differences in calls to a DateTime Now function. If 
 we had of been testing without mocks all of our time sensitive code that is causing us headaches will be un-mockable and
-near impossible to re-create as a test. When everything is injected anything can be mocked.
+near impossible to re-create as a test. When using London everything is injected anything can be mocked. This is why you will
+even end up mocking DateTime functionality. 
 
 I would say the final and possibly most impactful tool that the London School gives you is that it makes splitting up
 your features into smaller tickets a much more manageable process. I have found that most teams that I work with who
 don't use the London approach will typically find themselves having a single developer delivering an entire feature
 from start to end even if the ticket is split up into multiple steps. If a team does split the ticket up into say
 one developer working on mapping the user input into a domain model and a second developer
-that will persist our data CarInfo data into our SQL database, we sometimes will run into the unfortunate situation
+that will persist our data into our SQL database, we sometimes will run into the unfortunate situation
 in which both developers implement their own version of the same file. For example the mapping ticket implements
-the CarInfo model as a record, which is basically a class that makes working with imutability really easy and
-convenient through C# language features as such as the with statements for updating fields. But then we have
-the SQL persistence ticket developer also implement CarInfo, but because they're using Entity Framework, a library
-that uses class mutation to track field updates to generate SQL queries their class is a plain old boring class
-that expects it can be mutated.
+the CarInfo model as a record, and the SQL persistence ticket developer also implement CarInfo, 
+but because they're using Entity Framework, a library that uses class mutation to track field updates to generate SQL 
+queries their class is a plain old boring class that expects it can be mutated.
 
 One of them now needs to update their codebase, neither of them are happy. 
 This is why quite often when a team writes up their tickets they can very often turn the feature ticket
@@ -335,21 +334,24 @@ into the entire ticket and not split up it into the individual steps required to
 
 This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
 So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
-the basic interfaces as such as the validator, mapper, database layer and finally the response mapper. However because
-they write test where entire chunks of a feature are the unit they will not be able to write any tests for this code as
-we are yet to implement any of them. Through doing this we have gained a shared understanding on how we will integrate
-however we also made our code untestable and thus it won't be tested. 
+the basic interfaces as such as the validator, mappers and database layer. However because
+they write test in the detroit style they will not be able to write any tests for this code as
+we are yet to implement any of these interfaces. Now we are going to check in a lot of code with 0 code coverage
+as we cannot write any tests for this code yet as it is not implemented. This can often lead to code that doesn't
+play nice with testing later on as the hardest code to write tests for is that code which already exists.
 
-Instead of not testing this important upper layer what if we just for now mocked away all of the mappers, validators and
+Instead of not testing this important upper layer what if we just for now mocked away all the mappers, validators and
 persistence calls? Well now if later down the line we find a bug in this layer of the codebase we know for a fact
-that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through the
-green test pass. As you probably can tell, that was London School approach and just shows that the London school makes
-splitting up your tickets into smaller tickets to be much more reliable and approachable.
+that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through that 
+test passing. The London approach forces us to at all times write code that has a failing test and it also makes each
+line we write more testable.
 
 If your team is finding that their tickets are taking more
 than a day to complete this is a good sign that you most likely need to split up your tickets into smaller more
-bite sized tickets that take at most half a day to complete, it is at that point that you also might find that
+bite sized tickets; that take at most half a day to complete, it is at that point that you also might find that
 swapping to the London approach will make all of that much manageable.
+
+TIMING FOR SECTION EIGHT: 5min 50sec
 -->
 ---
 
@@ -357,7 +359,7 @@ swapping to the London approach will make all of that much manageable.
 
 <!--
 Maintenance is by in far the largest reason why Detroit might be a better pick for you and your team over London.
-When you write 40 tests for a single class and a bunch of em are basic plumbing tests that don't really test much 
+When you write 40 tests for a single class and a bunch of em are basic scaffolding tests that don't really test much 
 you will find that a simple change that refactors a clump of code from one class into another can be excruciating to
 move.
 
@@ -369,12 +371,16 @@ When your simply trying to just clean up this can be burdensome and might lead t
 There is a silver lining here in that it can help if your suffering from premature re-fac-tile dysfunctions but realistically
 making it this hard to get work done can be a problem.
 
-With that said I have found that with a small amount of bending of the rules one can cut paste refactor the unit test
-such that the original tests magically move across without going through proper red-green-refactor. One other solution
+With that said I have found that with a small amount of bending of the rules one can cut paste refactor the unit test themselves
+such that the original tests magically move across without going through proper red-green-refactor process. One other solution
 would be to once a unit test is complete to take the time to go back over the suite and remove the scaffolding test such
-that all that remains are tests that are validating the extremities of the test like that we return success once the
-API returns OR the tests that shows we return a validation error. This is the by the book approach to managing this 
-complexity, I just have always had a hard time getting rid of my babies and just tend to keep them all.
+that all that remains are tests that are validating the extremities of the unit like that we return success once the
+API returns OR the unit tests that shows we return a validation error. This is the by the book approach to managing this 
+complexity, I just have always had a hard time getting rid of my tests and just want to keep all my babies.
+
+TIMING FOR SECTION NINE: 1m 35s
+
+
 -->
 ---
 
@@ -400,7 +406,7 @@ that you cannot come in and improve things?
 
 No it does not, what it means is you have a team who is open to the idea of testing, they just need a little help.
 What that also means is more involved practices like the London school are more than likely; a no-go, as chances are there are
-landmines straggling all throughout the codebase that will refuse to be isolated with mocking, so you likely want to 
+landmines straggled all throughout the codebase that will likely refuse to be isolated with mocking, so you will want to 
 minimise your mocking and focus less on writing unit tests and more on integration-ish tests.
 
 It is important to talk with your colleagues, get their feedback on how code is being written and also to provide some
@@ -413,15 +419,17 @@ wish you could be writing London which has been my reality for most of my recent
 up and your confident with the London approach, why not start out with heavy mocking and see how it works for your team
 you can always pivot to detroit if it's not working out. By that point hopefully even if you do have to remove the London
 style your codebase will already have a bunch of clarity from the outside-in work done so far.
+
+TIMING FOR SECTION TEN: 2m 25s
 -->
 ---
 
 # Going deeper
 
 <!--
-Now that we know about the different approaches to test driven development I think it would be no better time than
+Now that we know about the different approaches to test driven development I think now could be no better time than
 ever to go back to the key techniques that we must apply to our coding and give some better explanations and examples
-of what it looks like to properly implement them. Startin with Red Green Refactor.
+of what it looks like to properly implement them. Starting with Red Green Refactor and an example using javascript
 -->
 
 ---
@@ -446,25 +454,59 @@ all.
 
 # RED
 
+````md magic-move
+```js {*|2}
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+```
+````
+
 <!--
 
 First you write a test that will fail, it should be small and easy to write. 
+
+{click}
+
 It doesn't even have to compile, red can refer both to the test status bar or the syntax error caused by
 the non-existent piece of code your test is referring to.
-=== show the test with squigly: it('Should sum 2 plus 2 to equal 4', () => sum(2, 2).toEqual(4))
 -->
 
 ---
 
 # GREEN
 
+````md magic-move
+```js {2|*}
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+```
+
+```js
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+
+const sum = (augend, addend) => 4
+```
+````
+
 <!--
+{click}
 
 Now we need to make that test work with the minimal amount of changes as possible
 all sins permitted, was your test that two plus two equals four? Great stub out the method with
 the two arguments of the augend and the addend and return four. 
 
-=== transition in solution that shows var sum = (augend, addend) => 4 ===
+{click}
+
 It does not matter that our implementation is obviously wrong, that is 100% ok!
 If you can look at an implementation and see that it is flawed that is a sign that you do not have
 enough tests yet, and you need to continue the red green refactor cycle until you come to a more concrete output.
@@ -475,14 +517,43 @@ This approach is known as stutter testing and can often be used in conjugation w
 
 # REFACTOR
 
+````md magic-move
+```js
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+
+const sum = (augend, addend) => 4
+```
+
+```js
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+
+const sum = (augend, addend) => augend + addend;
+```
+````
+
 <!--
-Refactor is a key part of the "design" part of test driven design. If you have been following TDD correctly
+Refactor is a key part of the "design" of test driven design. If you have been following TDD correctly
 your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
-come into existence for free? Normally not, the refactor stage is to make code that you feel comfortable checking in 
-typically these changes are small, like extracting a method or variable to provide extra context through the name we 
-decide to give that extracted code but can also be moderately complicated as such as for each loop into a linq statement.
-The only condition is that once your refactor step is complete that all your test remain green as you may not implement
-new code that is not fist covered by the creation of a failing test.
+come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking in.
+
+{click}
+
+In this specific instance our refactoring is required to remove duplication between our test which defines 4 as the
+expected result and our implementation which just parrots it back to us. This is a really minimalistic example which
+is why this might feel a bit silly, but the point of this example is that even if a solution feels wrong, if it
+satisfies the test it is correct. It is the point of the refactor step to remove duplication and tidy up
+
+In more realistic scenarios quite often the act of adding on additional tests will flush out the silly solutions
+we come up with to satisfy the first few tests we write.
+
 As a side note, your tests code is just as important as your production code. If there is duplication inside of your 
 tests that could be solved with refactoring, it is at the time in which your codebase is green that you can apply
 these fixes and should be keep up with as much rigor as your working code.
