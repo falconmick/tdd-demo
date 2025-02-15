@@ -427,9 +427,9 @@ TIMING FOR SECTION TEN: 2m 25s
 # Going deeper
 
 <!--
-Now that we know about the different approaches to test driven development I think now could be no better time than
-ever to go back to the key techniques that we must apply to our coding and give some better explanations and examples
-of what it looks like to properly implement them. Starting with Red Green Refactor and an example using javascript
+Now that we know about the different approaches to test driven development, now could be no better time than
+ever to go back to the techniques that we can apply to our coding and give some better explanations and examples
+of what it looks like to properly implement them. Starting with a Red Green Refactor example using javascript
 -->
 
 ---
@@ -446,7 +446,7 @@ RED
 GREEN
 REFACTOR
 
-It doesn't matter what kinda of approach you take to test driven development, this one will remain consistent among them
+It doesn't matter what kinda of approach you take to test driven development, this one thing will remain consistent among them
 all. 
 -->
 
@@ -466,12 +466,12 @@ it('Should sum 2 plus 2 to equal 4', () => {
 
 <!--
 
-First you write a test that will fail, it should be small and easy to write. 
+First we write a test that will fail, it should be small and easy to write. 
 
 {click}
 
 It doesn't even have to compile, red can refer both to the test status bar or the syntax error caused by
-the non-existent piece of code your test is referring to.
+the non-existent sum function your test is referring to.
 -->
 
 ---
@@ -540,9 +540,10 @@ const sum = (augend, addend) => augend + addend;
 ````
 
 <!--
-Refactor is a key part of the "design" of test driven design. If you have been following TDD correctly
+Refactor is a key part of the "design" aspect of test driven design. If you have been following TDD correctly
 your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
-come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking in.
+come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking
+that code in.
 
 {click}
 
@@ -554,9 +555,12 @@ satisfies the test it is correct. It is the point of the refactor step to remove
 In more realistic scenarios quite often the act of adding on additional tests will flush out the silly solutions
 we come up with to satisfy the first few tests we write.
 
-As a side note, your tests code is just as important as your production code. If there is duplication inside of your 
-tests that could be solved with refactoring, it is at the time in which your codebase is green that you can apply
-these fixes and should be keep up with as much rigor as your working code.
+Your **test code** is just as important as your **production code**. If there's **duplication** in your tests that could 
+be solved with **refactoring**, the best time to fix it is when your **codebase is green**. Apply these fixes with the 
+same **rigor** as you would in your **production code**.
+
+
+TIMING FOR SECTION ELEVEN: 2m 40s
 -->
 
 ---
@@ -564,48 +568,34 @@ these fixes and should be keep up with as much rigor as your working code.
 # Mocking
 
 <!--
-Another tool that was instilled upon me was mocking, in particular extensive mocking.
+Another tool that is invaluable is mocking, in particular extensive mocking.
 
-Mocking sounds like a simple subject but depending on how you approach it you can get vastly different approaches to 
-test driven design. 
+Mocking sounds like a simple subject; but depending on how you approach it you can get vastly different results.
 
 One such approach is creating a new concrete implementation of an interface that is injected into your codebase that
-was designed purely for testing say for example a mock implementation of your databases repository interface. By implementing
-the provided interface you can either fully or partially re-create the methods which make external calls which cannot be 
-reliably created from within the context of testing as in-memory version, allowing for easy test data setup as we own the
-implementation and simplistic data access implementations on the getter/update endpoints the repository exposes.
+was designed purely for testing say for example a mock implementation of your databases. This implementation won't always
+be fully extensive but will allow us to simulate calling out to the real database Without any of the drawbacks
+of using a real database during testing. Through creating the mock by hand we also have the ability to embed test utilities as 
+such as data initialization or what ever other test utility we can put our minds to. 
 
-This is often seen with inside out development through Detroit School or classicist blackbox style testing. In such solutions we 
-strive to test code as close to realistic settings as we can, we still might be testing more internal layers to our codebase
-but we aim to keep the executing code that we are testing as fully fledged as possible.
+This is a common approach when using the Detroit School, by making a concrete implementation we can allow a series of
+interactions to add up together. we might for example have a test that first finds a value
+in the database and then modifies it. If we hadn't of mocked this the next run of the test might have not worked now 
+that the data is now modified OR if we had used a substitution framework instead of our handcrafted mock we
+would have to write a fair bit of unique setup code.
 
-A second approach is to rely upon a mocking framework as such as Moq, fake it easy or nsubstitute in the world of languages like
-C#. These tools allow for expression to be written which get called in place of the interface or class, allowing us to
-define inline to our test what that call will return OR even allow us to assert that the call was made at all.
+Speaking of substitution frameworks; in C# we have Moq, fake it easy or nsubstitute just to name a few.
+These tools allow for expression to be written which get called in place of the interface we supply them,
+allowing us to define inline to our test what that call will return OR even allow us to assert that the call was made at all.
 
-A word of caution here, most of these frameworks will provide tooling that allows you to implement mocks of concrete, 
-implementations as such as classes in C# 
-however do note that these are limited quite often to virtual or abstract methods and even if they are not
-they can carry the risk of causing unrelated broken tests which are painful to fix.
+The only thing to keep in mind here is even though these frameworks do have some support for classes, they are limited
+and a lot of the time a mock around a class will fail. It is for this reason that when using lots of mocking you tend
+to also need to be stricter with the separation of logic to data and also the usage of adapters on third party code.
 
-If your language of choice has a way to define the contract of your classes through ideas as such as interfaces in C# it is
-always best practice to do so, or at worst configure your mocks such that any un-mocked interaction with the substitute
-that your mock is defining will return a default or null value as to completely remove any concrete implementation details 
-from the execution of your tests. C# is perfect for this, but I have had a harder time in some more loose languages
-like javascript. Discipline is your friend here.
 
-These style mocks can also be used in Detroit School or classicist blackbox style tests, but they truly shine in the approach
-my mentor was instilling upon me, the London School or mockist outside in approach. When we are following this approach
-The one and only reason why a test should be failing is that the unit of work we are testing, 
-the method or function or whatever you want to call it
-is the only reason why that test should have failed. The implementation of the CartService does not concern our test,
-all that matters is the contract it exposes to us, AddToCart which gave us arguments of itemId and quantity and it's
-result of boolean. Our test will mock CartService fully and our assertions will ensure that when CartService's 
-AddToCart returns false, that the AlertService is called with InformUser, and that the string argument message
-has unable to add item to cart provided to it. 
+TIMING FOR SECTION TWELVE: 2 min
 
-We will go further into the Detroit and London school and their pros and cons later, but to continue with the
-tools I was given for my assignment we have one last rather unique concept.
+
 -->
 
 ---
@@ -616,17 +606,19 @@ tools I was given for my assignment we have one last rather unique concept.
 The adapter pattern is not too strict of an idea, in that third party code instead of being directly relied upon, is 
 instead abstracted away by an adapter layer, which can and often will help remove implementation details from our
 dependant codebase, say for example our adapter might provide a getter for the third party that both sets up a
-factory provided by the third party and then executes it all under the much simpler and relevant to our codebase 
-getter pattern.
+factory provided and then executes it all under the much simpler and relevant to our codebase pattern.
 
 It is only important that this layer remain as simplistic as possible as it can often not be viable to test it 
-without integration testing, so if your adapter grows too far you will end up having dangerously uncovered code.
+without integration testing, so if your adapter grows too much you will end up having dangerously uncovered section of code.
 
-In the case of the code that was being developed for the company I was working for at the time, the use of adapters
-was alot more extreme than you might have expect, we even adapted out DateTime, which gave our tests the ability to act as
-Pure functions which allowed us to have much less brittle testing and also made testing edge cases a cakewalk as we had
+When following the London approach of test driven development the use of adapters
+will be a lot more extreme than you might expect, I even adapted out DateTime, which gives our tests the ability to act as
+Pure functions which leads to less brittle testing and also makes testing edge cases a cakewalk as we have
 full control over how much the time changes between each call to Now. When I go over a detailed example of how I think
-TDD should be implemented in my C# example I will dig into this further.
+TDD should be implemented in my C# example I will dig into adapters further.
+
+
+TIMING FOR SECTION THIRTEEN: 1m 10s
 
 -->
 
@@ -646,8 +638,9 @@ To make this demo possible I am using the following tools:
 - and FakeItEasy, a mocking library that allows for inline definitions of mocks and also exposes several
 useful tools for mocking out functionality without having to hand code a mock substitute for a given interface.
 
-// todo: rename all `UpdateCarInfoCommandHandler` => `ValidateCarInfoCommandHandler`
-// todo: maybe I give a quick run-down of FakeIteEasy???
+Originally this was going to be live, but then I opened up my mac laptop and remembered all my bindings are windows
+based and I am 100% completely lost... So in the interest of not flapping around like a grounded fish for the next 10
+min, I will instead jump to my backup slides for the live demo.
 -->
 
 ---
@@ -658,7 +651,7 @@ useful tools for mocking out functionality without having to hand code a mock su
 FALL BACK TO WALKTHROUGH IF IN DOUBT, blame time left (probably true)
 
 - v1 - starting point
-- v2 - red - UpdateCarInfoCommandHandler not defined
+- v2 - red - ValidateCarInfoCommandHandler not defined
 - v3 - green - implemented missing methods, test now passes
 - v4 - red - add Handler method, it doesnt exist
 - v5 - green - implement handle method
@@ -698,7 +691,7 @@ that were missed!
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     [SetUp]
     public void Setup()
@@ -714,14 +707,14 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs {*|3,8|*}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
     }
 
     [Test]
@@ -740,7 +733,7 @@ First we start with our blank unit test, this is our starting point so we need a
 {click}
 
 ####  v2 - red
-Now we add in the handler which we will be testing `UpdateCarInfoCommandHandler`
+Now we add in the handler which we will be testing `ValidateCarInfoCommandHandler`
 
 {click}
 
@@ -757,17 +750,17 @@ with as little effort as possible
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
 }
 
-public interface IUpdateCarInfoCommandHandler
+public interface IValidateCarInfoCommandHandler
 {
 }
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
     {
@@ -775,7 +768,7 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
     }
 }
 
-public interface IUpdateCarInfoCommandHandler
+public interface IValidateCarInfoCommandHandler
 {
     Task HandleAsync(CarInfo carInfo);
 }
@@ -786,36 +779,87 @@ public interface IUpdateCarInfoCommandHandler
 ####  v3 - green
 And that's it
 
-I have not implemented anything further like the the method that I will be calling or anything,
-it is however a valid step to take, to make the leap and add on additional code whilest you are 
-already in the red and in particular this situation would be more than acceptable.
-
-But the point is to show that the smallest change would be such a step and in allot of situations 
-in which you feel like you could write a bit more you likely should step back and stick to slow is steady
-and keep your rhythm.
+Note how all I need do to get into the green is simply define the interface and the implementation so that is all
+I have done
 
 {click}
 
 ### v5 add handler green
-To keep this presentation snappy I will implement the handle method now, but if we were being pedantic we would have
-first attempted to call Handle, got a failing test, then fixed it getting us back to green. To get to the point in 
-which I had the handle method implemented whilest I worked on this example I also took the time to create the 
-next smallest test which was to call Handle with our CarInfo which also failed due to not being implemented but you
-will just have to trust me on that one!
+To keep this presentation snappy I will implement the handle method now as well, but if we were being pedantic we would have
+first attempted to call Handle, got a failing test, then done this implementation getting us back to green.
 -->
 
 ---
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        await _handler.HandleAsync(???);
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
     }
 
     [Test]
@@ -828,14 +872,57 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>() with 
+        {
+            CarName = "Ford"
+        });
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
     }
 
     [Test]
@@ -849,6 +936,36 @@ public class UpdateCarInfoCommandHandler_Tests
 ````
 
 <!--
+When I skipped a step just now I also added the following line, which I could have also done in a red green style
+but I thought I would save you the slides whiplash!
+
+{click}
+
+Which gets us to our next problem... What did we put in as the argument for our call to Handle Async? At this point
+we don't know anything about CarInfo, maybe it's a new type we defined and we can just leave it blank OR maybe its
+a pre-existing class which has required fields?
+
+{click}
+
+When this happens it can sometimes be hard to determine how would be best to define our Car Info. A second option
+becomes available when we are using a mocking framework, so for example in this demo I could just use a fake
+it easy mock for our data object!
+
+{click}
+
+This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
+to get from failing code to passing code. This includes in our test suites.
+
+A cool thing about this approach is it works nicely with records, as such we can have our fake and if it turns out
+a property on it is important to us
+
+{click}
+
+we can just use with to make a new copy with only the one field we need set on it! Eventually when we are deeper
+into our implementation and we have a better idea of what the generic model shape we need is for a passing test,
+we will extract the creation of this fake and maybe even replace it with a real once once we have more context
+and decide to cleanup in a refactor step!
+
 ### v6 Refactor
 
 We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
@@ -871,14 +988,14 @@ Up next why don't we start writing code that is actually going to get us writing
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
     }
 
     [Test]
@@ -891,14 +1008,14 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs {*|21|*}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
     }
 
     [Test]
@@ -922,10 +1039,14 @@ public class UpdateCarInfoCommandHandler_Tests
 <!--
 ### v9 red handle bad return type
 
+{click}
+
 Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break
-either our production code OR test suite. This is the good scenario test, we will moving forward as we add more
+either our production code OR test suite. This is the good scenario test, we will move forward as we add more
 and more functionality and test harnresses around our suite be the default starting point that all other more
 specific test will start from.
+
+{click}
 
 The goal here is we will place any mocking code that is required to exist such to make this test pass into
 whatever mechanism our test runner uses to setup individual tests, the goal being if we make a new blank test
@@ -940,7 +1061,7 @@ be null and to have the Successful flag set to true!
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
     {
@@ -952,7 +1073,7 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
     {
@@ -974,7 +1095,7 @@ our implementation to such that the test passed?
 
 That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
 to mean we return a new result object with true pasted directly inside of it. This might feel silly or redundant but
-what it gives us is another proven working test. As we add more and more of these our ability to quickly catch mistakes
+what it gives us is another proven working test. As we add more and more of these ability to quickly catch mistakes
 gets greater and greater.
 -->
 
@@ -982,7 +1103,7 @@ gets greater and greater.
 
 ````md magic-move
 ```cs{*|8,15}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
 
@@ -1014,8 +1135,7 @@ I can see both some duplication and some legibility improvements that could be m
 
 {click}
 
-When writing the test the A Fake Carinfo stub has taken up place as an alternative for a fully fledged CarInfo
-model being returned. For now this is still 100% acceptable, what isn't acceptable is that we have duplication
+For now the car info stub is still 100% acceptable, what isn't acceptable is that we have duplication
 in the repeated implementation of it as well as no solid story behind what does A Fake CarInfo even represent.
 -->
 
@@ -1023,7 +1143,7 @@ in the repeated implementation of it as well as no solid story behind what does 
 
 ````md magic-move
 ```cs{8,15}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
 
@@ -1045,7 +1165,7 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
 
@@ -1072,7 +1192,7 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
 
@@ -1114,14 +1234,29 @@ don't see any value in retaining the original test.
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+    
+    // ... other tests + setup code
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
     }
     
     [Test]
@@ -1137,14 +1272,14 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
     }
     
     [Test]
@@ -1162,17 +1297,17 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs{*|3,9}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     private ICarInfoValidator _validator;
-    private IUpdateCarInfoCommandHandler _handler;
+    private IValidateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
         _validator = A.Fake<ICarInfoValidator>();
         
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new ValidateCarInfoCommandHandler();
     }
     
     [Test]
@@ -1193,8 +1328,11 @@ public class UpdateCarInfoCommandHandler_Tests
 <!--
 ### v13 validate test failing build
 
-Our next test will be a scaffolding test that will allow us to continue our implementation in our mockist london approach
-to start writing the test I implement our new test scenario by defining the good case scnario and
+Our next test will be a scaffolding test 
+
+{click}
+
+to start writing the test I implement our new test scenario by copy pasting the good scenario into our new test
 
 {click}
 
@@ -1229,9 +1367,9 @@ This can be easily resolved by defining the interface
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
-    public UpdateCarInfoCommandHandler()
+    public ValidateCarInfoCommandHandler()
     {
     }
 
@@ -1243,11 +1381,11 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator)
     {
         _validator = validator;
     }
@@ -1260,11 +1398,11 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator)
     {
         _validator = validator;
     }
@@ -1296,7 +1434,7 @@ that we call our method and do nothing with the result!
 
 ````md magic-move
 ```cs{*|8|*}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
     
@@ -1330,11 +1468,11 @@ A call to Validate with any carInfo parameter passed in, we need to return false
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator)
     {
         _validator = validator;
     }
@@ -1348,11 +1486,11 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator)
     {
         _validator = validator;
     }
@@ -1380,7 +1518,7 @@ Only one problem.
 
 ````md magic-move
 ```cs{*|10}
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
     
@@ -1397,7 +1535,7 @@ public class UpdateCarInfoCommandHandler_Tests
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler_Tests
+public class ValidateCarInfoCommandHandler_Tests
 {
     // ...
     
@@ -1424,11 +1562,9 @@ turns out this test is now failing due to
 
 {click}
 
-our Successful value actually being false!! This has happened because we had forgotten to upate the happy path code
-to correctly set up the validate mock to return true. One could argue the actual issue is that my implementation
-could have only returned a false result inside of an if statement and then this wouldn't have happened, but I find 
-that the happy case breaking upon fixing the new test is just a part of a growing test suite and the best solution
-is to just amend the happy path as we go.
+our Successful value actually being false!! This has happened because we had forgotten to update the happy path code
+to correctly set up to validate mock to return true. I have found that the happy case breaking upon fixing the new test 
+is just a part of a growing test suite and the best solution is to just amend the happy path as we go.
 
 {click}
 
@@ -1444,7 +1580,7 @@ For now I will just be happy with how it is.
 
 ````md magic-move
 ```cs{*|15-19|20-28}
-    // UpdateCarInfoCommandHandler_Tests
+    // ValidateCarInfoCommandHandler_Tests
     
     [SetUp]
     public void Setup()
@@ -1452,7 +1588,7 @@ For now I will just be happy with how it is.
         _validator = A.Fake<ICarInfoValidator>();
         _logger = A.Fake<ILogger>();
         
-        _handler = new UpdateCarInfoCommandHandler(_validator, _logger);
+        _handler = new ValidateCarInfoCommandHandler(_validator, _logger);
     }
     
     [Test]
@@ -1475,10 +1611,7 @@ For now I will just be happy with how it is.
 <!--
 ### v19 faker doesnt like extensions
 
-All that remains in our little demo is to add in logging for invalid cars! I am injecting the standard ILogger
-interface and also have chosen to implement the ILogger into the constructor because it makes sense to do so
-even though technically to get the test to go red and fail we could have just skipped the full setup. It just
-makes sense to do common sense things once in a while.
+All that remains in our little demo is to add in logging for invalid cars!
 
 {click}
 
@@ -1507,9 +1640,8 @@ FakeItEasy.Configuration.FakeConfigurationException :
 <!--
 OH no! It appears that the interface that we relied upon isn't being used in a test-friendly way.
 
-Under the hood, the ILogger interface only defines a single method, of which an extension class
-defines a series of convenience extensions that make up the more approachable public API's of which
-everyone is using, i.e Log Error and LogInfo.
+Under the hood, the ILogger interface only defines a single method, and what we actually called was a convenience
+extension method!
 
 When this happens there are only two workarounds, you either implement a hand rolled mock, that exposes what 
 ever conveniences you require OR you write your very own adapter.
@@ -1550,10 +1682,7 @@ up a series of interactions into a more codebase friendly API OR they can be thi
 extract a testable interface. Of which this adapter is an example of such.
 
 What I have done here is gone into the implementation of the Logger extensions and stolen this definition, of which
-I am now going to expose under teh ILog interface. Typically when writing these style adapters it is because the SDK
-we are attempting to use has given us a concrete type back as such as a class, in those cases the name wouldn't change at
-all, we would simply append the I character to denote that it is an interface, and then the implementation as here would 
-append the Adapter word.
+I am now going to expose under teh ILog interface.
 
 {click}
 
@@ -1569,12 +1698,12 @@ by keeping to the original signatures this swap is seamless
 
 ````md magic-move
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
     private readonly ILog _logger;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
     {
         _validator = validator;
         _logger = logger;
@@ -1588,12 +1717,12 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 ```
 
 ```cs
-public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
     private readonly ILog _logger;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
+    public ValidateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
     {
         _validator = validator;
         _logger = logger;
@@ -1621,23 +1750,84 @@ now that our test suite is setup and our testable interface is ready to go, we c
 
 and with that our implementation is complete!
 
-One of the downsides to adapting out ILogger was that now for every possible usage of the ILogger's extensions
-we will need to re-define them in the interface and then to the adapter. I personally feel like this is OK,
-however specifically for ILogger I would typically use a hand rolled mock.
+One of the downsides to adapting out ILogger was that microsoft chose to expose only a single method because
+there are ALLOT of overrides for information, error and more so that means we get to implement them!
+I personally feel like this is OK, however specifically for ILogger I would typically use a hand rolled mock instead.
 
-This is because it's possible to add some really cool testing tech as such as tracking scoped fields and exposing 
+This is because it's possible to add some really cool testing tech as such as tracking of scoped fields and exposing 
 convenience based methods inside of your mock implementation that then make asserting log statements an absolute breeze.
+-->
 
-This serves double duty if your in a codebase that hasn't commited to full London style as downstream classes that also
-utilise scopes and logging can result in some really useful assertions with minimal effort. So maybe next time you could
-try writing your own.
+---
+
+````md magic-move
+```cs
+public class FakeLogger : ILogger
+{
+    public readonly List<(LogLevel LogLevel, string Message, IReadOnlyList<KeyValuePair<string, object?>> State)> 
+        CallList = new();
+    private readonly List<IReadOnlyList<KeyValuePair<string, object?>>> _scopeStateList = new();
+    
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, // ..)
+    {
+        IReadOnlyList<KeyValuePair<string, object?>> stateWithScopeState = 
+            [.._scopeStateList.SelectMany(l => l), ..(IReadOnlyList<KeyValuePair<string, object?>>)state!];
+        
+        CallList.Add((logLevel, formatter(state, exception), stateWithScopeState));
+    }
+
+    public bool IsEnabled(LogLevel logLevel) => true;
+
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+    {
+        var scopeState = (IReadOnlyList<KeyValuePair<string, object?>>)state;
+        
+        _scopeStateList.Add(scopeState);
+
+        return new DisposableAction(() => _scopeStateList.Remove(scopeState));
+    }
+}
+```
+````
+
+<!--
+Thanks to how flexible the State generic can be there is some fairly gnarly casting that needs doing and in the example
+I have shown here, and there are still flaws but this is roughly what you can arrive at as a mock for the I Logger.
+
+What this little mock allows us to do is fully capture the log level, the log message as displayed to the console
+as well as all the fields that hide inside the state at the time in which the log was collected.
+
+The best part about all this is if you want to include this in your very own C# projects you can take this as a take home 
+project, why not build out your very own logging mock with the detroit style of test driven development. You start
+out with no implementation, first you write a test for the IsEnabled property, next comes a test that asserts that your 
+able to retrieve the latest logs level, next the message, so on and so forth.
 -->
 
 ---
 
 <!--
-todo: retrospective on the demo, likely need to raise that this is just an overview of what the workflow
-looks like and overtime it gives us X, Y, Z
+With the demo now complete is no better time than ever to go over what we just saw. Firstly whenever we start out working
+on our code we ALWAYS start with a failing test. Even if it feels slightly odd, if there is a way to write a test
+first then we will write that test first. If we are writing production code and there isn't a failing test then
+we are failing.
+
+From there we focused on fixing any compilation or failed test such that we could get back into a green state, so that 
+we would always be moving forward. The golden rule there being that we take the path of least resistance to get back 
+green, even if that step feels a little silly, if it completes another red green cycle with the least 
+possible change then it is the correct solution.
+
+Next where it would make sense we would take the time to refactor, this can be as simple as renaming a test
+with a default templated out test name into one that explained what the test was achieving OR if the refactor
+was more complicated and ended up extracting logic from within our production code or even the very test that was
+written for that code.
+
+From there we took to using mocking to both validate the internal interactions of our unit and to also substitute
+out the results of calling into our mocks. By doing so we were able to exercise the app to it's fullest and
+ensure that every edge case inside our unit was working as expected.
+
+Finally when third party code got in the way of our testing we took to the adapter pattern to extract a testable interface
+out of the code that we are using to interact within our classes. By doing so, every interaction within our codebase
+is mockable and controllable and any logic that could lead to a bug can be isolated and tested.
 -->
 
 ---
@@ -1661,27 +1851,6 @@ standard and some would argue rather rigorous testing practices?
 ## Thank You!
 
 <!--
-rough time estimates:
 
-Got it! Here’s an estimated duration breakdown for each section based on a speaking rate of about 125–150 words per minute, factoring in natural pauses, emphasis, and engagement moments:
-
-    Introduction (Section One) – 1m 10s (already estimated)
-    Question Time (Section Two) – 1m 25s (already estimated)
-    Opening Statements (Section Three) – 4m 15s (already estimated)
-    Schools Overview (Section Four) – 1m 15s (already estimated)
-    Detroit School - Why Use It? – ~2m 30s
-    Detroit School - Why Not? (Test-Splosions Section) – ~2m 45s
-    Short Term Speed Loss – ~2m 30s
-    Why Should I Use the London School? – ~4m 15s
-    Why Wouldn’t I Use the London School? – ~3m 30s
-    Which One Should I Be Following? – ~3m 45s
-    Going Deeper (Intro to Red-Green-Refactor) – ~1m 30s
-    Red-Green-Refactor (Detailed Explanation) – ~6m
-Introduction: 2 minutes
-Part 1 (Explaining TDD): 2 minutes
-Demo Steps (6 parts, 40 seconds each): 4 minutes
-Recap and Q&A: 2 minutes
-
-New Total Estimated Duration: ~45m 50s
 
 -->
