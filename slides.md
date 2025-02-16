@@ -1,4 +1,5 @@
 ---
+theme: the-unnamed
 layout: cover
 ---
 
@@ -16,6 +17,19 @@ and how you can fully leverage its powers become a better developer.
 But first of all, who am I?
 -->
 
+---
+layout: about-me
+
+helloMsg: Hello!
+name: Michael Crook
+imageSrc: /michael.png
+position: left
+job: Full-stack dotnet Contractor
+line1: www.mcrook.com
+line2:
+social1: bsky.app/profile/mcrook.com
+social2: linkedin.com/in/falconmick
+social3: github.com/falconmick
 ---
 
 ## About Me
@@ -627,8 +641,8 @@ TIMING FOR SECTION THIRTEEN: 1m 10s
 # Example Time
 
 <!--
-For this example I will use C# as this is my bread and butter, so I can give hopefully the most concrete example of what
-Test Driven Development can look like. I will be taking all the three key concepts from above and combining
+For this example I will use C# as this is my bread and butter, With this I will be able to give a concrete example of
+how Test Driven Development can be implemented. I will be taking all the three key concepts from above and combining
 them together to validate a record passed in and depending on if the model is valid, returning back out a result
 that signifies this, otherwise we log an error if it is not valid.
 
@@ -636,11 +650,14 @@ To make this demo possible I am using the following tools:
 
 - NUnit, my test runner and assertion library
 - and FakeItEasy, a mocking library that allows for inline definitions of mocks and also exposes several
-useful tools for mocking out functionality without having to hand code a mock substitute for a given interface.
+useful tools to validate how our mocks have been interacted with
 
 Originally this was going to be live, but then I opened up my mac laptop and remembered all my bindings are windows
 based and I am 100% completely lost... So in the interest of not flapping around like a grounded fish for the next 10
-min, I will instead jump to my backup slides for the live demo.
+min, I will instead jump to my backup slides for this demo.
+
+
+TIMING FOR SECTION 14: 50s
 -->
 
 ---
@@ -671,18 +688,6 @@ FALL BACK TO WALKTHROUGH IF IN DOUBT, blame time left (probably true)
 - v19 - red - Faker cannot play nice with ILogger.LogError extensions
 - v20 - green - extracted basic ILogger adapter and implement
 - v21 - refactor to use alternate mock, comment out log to prove the green test still fails if missing implementation
--->
-
----
-
-# Demo?
-
-<!--
-Ok checking my notes... apparently I have just showed off the basic red-green-refactor flow of TDD OR
-Completely flopped out and am now proceeding to fallback to my baked ahead of time demo run through.
-
-Either way, I will either summarise the steps here quickly or take a bit more time explaining concepts
-that were missed!
 -->
 
 ---
@@ -727,12 +732,10 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-#### v1 starting point
 First we start with our blank unit test, this is our starting point so we need a red
 
 {click}
 
-####  v2 - red
 Now we add in the handler which we will be testing `ValidateCarInfoCommandHandler`
 
 {click}
@@ -744,6 +747,210 @@ as a failing test is.
 
 Our next step is green, which we will achieve through implementing the Update Car Info Command Handler
 with as little effort as possible
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
+{
+}
+
+public interface IValidateCarInfoCommandHandler
+{
+}
+```
+````
+
+<!--
+And that's it
+
+Note how all I need do to get into the green is simply define the interface and the implementation so that is all
+I have done
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(???);
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
+        Assert.Pass();
+    }
+}
+```
+````
+
+<!--
+Next up we update our Test to call the method that we will be implementing called Handle Async
+
+{click}
+
+The only issue here is what do we place as the argument? In this situation we will be receiving a record type
+called CarInfo to pass in but how should we define this new CarInfo instance we are going to use
+
+{click}
+
+we don't know anything about CarInfo, however In this demo it's actually a pretty simple record, but there are times in which
+a data type object can get relatively complicated to construct with required and optional properties. To get around
+a situation like this we can actually a mock in place of the data type.
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>() with 
+        {
+            CarName = "Ford"
+        });
+        Assert.Pass();
+    }
+}
+```
+
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
+````
+
+<!--
+{click}
+
+This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
+to get from failing code to passing code. This includes in our test suites.
+
+A cool thing about this approach is we are still using a record type when we define a mock this way. This means that we 
+are able to use the records `with` syntax to modify individual properties
+
+{click}
+
+In the past, I've found that constructing complicated record type... especially those with many nested structures 
+generated from a schema... can be a lot of work. I used to take a snapshot of what the data needed to look like, then 
+read that snapshot in as part of my test setup, followed by JSON decoding it into my test's starting record.
+
+But now all I have to do is define a simple little mock
 -->
 
 ---
@@ -776,17 +983,11 @@ public interface IValidateCarInfoCommandHandler
 ````
 
 <!--
-####  v3 - green
-And that's it
-
-Note how all I need do to get into the green is simply define the interface and the implementation so that is all
-I have done
+Now that we have a failing to compile test, all we need to do is
 
 {click}
 
-### v5 add handler green
-To keep this presentation snappy I will implement the handle method now as well, but if we were being pedantic we would have
-first attempted to call Handle, got a failing test, then done this implementation getting us back to green.
+Add in our definition and with it our test will pass.
 -->
 
 ---
@@ -806,109 +1007,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task Test1()
     {
-        Assert.Pass();
-    }
-}
-```
-
-```cs
-public class ValidateCarInfoCommandHandler_Tests
-{
-    private IValidateCarInfoCommandHandler _handler;
-
-    [SetUp]
-    public void Setup()
-    {
-        _handler = new ValidateCarInfoCommandHandler();
-    }
-
-    [Test]
-    public async Task Test1()
-    {
-        await _handler.HandleAsync(???);
-        Assert.Pass();
-    }
-}
-```
-
-```cs
-public class ValidateCarInfoCommandHandler_Tests
-{
-    private IValidateCarInfoCommandHandler _handler;
-
-    [SetUp]
-    public void Setup()
-    {
-        _handler = new ValidateCarInfoCommandHandler();
-    }
-
-    [Test]
-    public async Task Test1()
-    {
-        await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
-        Assert.Pass();
-    }
-}
-```
-
-```cs
-public class ValidateCarInfoCommandHandler_Tests
-{
-    private IValidateCarInfoCommandHandler _handler;
-
-    [SetUp]
-    public void Setup()
-    {
-        _handler = new ValidateCarInfoCommandHandler();
-    }
-
-    [Test]
-    public async Task Test1()
-    {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
-        Assert.Pass();
-    }
-}
-```
-
-```cs
-public class ValidateCarInfoCommandHandler_Tests
-{
-    private IValidateCarInfoCommandHandler _handler;
-
-    [SetUp]
-    public void Setup()
-    {
-        _handler = new ValidateCarInfoCommandHandler();
-    }
-
-    [Test]
-    public async Task Test1()
-    {
-        await _handler.HandleAsync(A.Fake<CarInfo>() with 
-        {
-            CarName = "Ford"
-        });
-        Assert.Pass();
-    }
-}
-```
-
-```cs
-public class ValidateCarInfoCommandHandler_Tests
-{
-    private IValidateCarInfoCommandHandler _handler;
-
-    [SetUp]
-    public void Setup()
-    {
-        _handler = new ValidateCarInfoCommandHandler();
-    }
-
-    [Test]
-    public async Task Test1()
-    {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 }
@@ -928,7 +1027,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 }
@@ -936,38 +1035,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-When I skipped a step just now I also added the following line, which I could have also done in a red green style
-but I thought I would save you the slides whiplash!
-
-{click}
-
-Which gets us to our next problem... What did we put in as the argument for our call to Handle Async? At this point
-we don't know anything about CarInfo, maybe it's a new type we defined and we can just leave it blank OR maybe its
-a pre-existing class which has required fields?
-
-{click}
-
-When this happens it can sometimes be hard to determine how would be best to define our Car Info. A second option
-becomes available when we are using a mocking framework, so for example in this demo I could just use a fake
-it easy mock for our data object!
-
-{click}
-
-This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
-to get from failing code to passing code. This includes in our test suites.
-
-A cool thing about this approach is it works nicely with records, as such we can have our fake and if it turns out
-a property on it is important to us
-
-{click}
-
-we can just use with to make a new copy with only the one field we need set on it! Eventually when we are deeper
-into our implementation and we have a better idea of what the generic model shape we need is for a passing test,
-we will extract the creation of this fake and maybe even replace it with a real once once we have more context
-and decide to cleanup in a refactor step!
-
-### v6 Refactor
-
 We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
 test we have been filling out we can see that some code cleaning up could be completed to improve upon the test suite
 we are working on. In this situation that change is to rename the test to explain what we are trying to achieve
@@ -981,7 +1048,7 @@ to extracting shared functionality between tests so that it can be shared.
 You can even go as far as extracting useful functionality of your test suites into utilities of which we write their 
 very own tests for! We won't be going this far for the example but the world is our oyster.
 
-Up next why don't we start writing code that is actually going to get us writing our implementation!
+Up next why don't we start writing code towards our implementation!
 -->
 
 ---
@@ -1001,13 +1068,13 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 }
 ```
 
-```cs {*|21|*}
+```cs
 public class ValidateCarInfoCommandHandler_Tests
 {
     private IValidateCarInfoCommandHandler _handler;
@@ -1021,7 +1088,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
     
@@ -1037,24 +1104,21 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-### v9 red handle bad return type
-
-{click}
-
 Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break
-either our production code OR test suite. This is the good scenario test, we will move forward as we add more
-and more functionality and test harnresses around our suite be the default starting point that all other more
-specific test will start from.
+either our production code OR test suite. This is the good scenario test, as we add more tests to our codebase this
+one test will quite often act as the starting point for a new test and will contain all required mocking setup code to 
+achieve a passing good scenario
 
 {click}
 
-The goal here is we will place any mocking code that is required to exist such to make this test pass into
-whatever mechanism our test runner uses to setup individual tests, the goal being if we make a new blank test
-with no setup code in it, it should result in the good scenario prior to us customising it to test what ever
-it is we are attempting to test.
-
-The most important thing to take away from this test is that given an acceptable input, we expect the result to not
+This test asserts that given an acceptable input, we expect the result to not
 be null and to have the Successful flag set to true!
+
+As we move forward we will find that this test does need to be updated such that it will apply the basic mocks required to achieve
+a passing good scenario test. This shared setup code can either exist as a setup method we call at the top of each of our tests
+or we could use the setup method. 
+
+For now our happy path does not have any setup code so I will leave it empty.
 -->
 
 ---
@@ -1086,17 +1150,19 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-### v10 green - just return true
-
-Now that we have our failing test due to null not equalling success true what would be the correct solution to update
+Now that we have our failing test due to our implementation returning null what would be the correct solution to update
 our implementation to such that the test passed?
 
 {Click}
 
 That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
-to mean we return a new result object with true pasted directly inside of it. This might feel silly or redundant but
-what it gives us is another proven working test. As we add more and more of these ability to quickly catch mistakes
-gets greater and greater.
+to mean we return a new result object with true pasted directly inside of it. We are taking the simplest approach
+because as much as we think we know the solution, as we add more and more tests to cover each requirement
+the actual end implementation will show itself.
+
+If we were to take a bigger leap and implement more of the code ahead of our tests, that would leave us with 
+un-covered functionality which can lead to bugs and often we will have incorrect assumptions and will have to
+re-write that code anyway.
 -->
 
 ---
@@ -1110,7 +1176,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 
@@ -1126,8 +1192,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-### V11 refactor - extract GoodCarInfo
-
 We have successfully gone from red to green, so that means we now have another opportunity to refactor.
 Again we will be looking into the test suite itself to see what could be improved. 
 
@@ -1135,7 +1199,7 @@ I can see both some duplication and some legibility improvements that could be m
 
 {click}
 
-For now the car info stub is still 100% acceptable, what isn't acceptable is that we have duplication
+For now the car info mock is still 100% acceptable, what isn't acceptable is that we have duplication
 in the repeated implementation of it as well as no solid story behind what does A Fake CarInfo even represent.
 -->
 
@@ -1150,7 +1214,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(A.Fake<CarInfo>());
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 
@@ -1172,19 +1236,19 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
-        await _handler.HandleAsync(GoodCarInfo());
+        CarInfoUpdateResult result = await _handler.HandleAsync(GetGoodCarInfo());
         Assert.Pass();
     }
 
     [Test]
     public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var result = await _handler.HandleAsync(GetGoodCarInfo());
         
         Assert.True(result.Successful);
     }
 
-    private static CarInfo GoodCarInfo()
+    private static CarInfo GetGoodCarInfo()
     {
         return A.Fake<CarInfo>();
     }
@@ -1199,12 +1263,12 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var result = await _handler.HandleAsync(GetGoodCarInfo());
         
         Assert.True(result.Successful);
     }
 
-    private static CarInfo GoodCarInfo()
+    private static CarInfo GetGoodCarInfo()
     {
         return A.Fake<CarInfo>();
     }
@@ -1215,14 +1279,17 @@ public class ValidateCarInfoCommandHandler_Tests
 <!--
 {click again}
 
-This is fixed by extracting that repetition into a new method GoodCarInfo and at the same time we add in additional
-context to our test suites by highlighting that a model will be returned that will allow for the good or happy case
-scenario to be possible. If for example we had a nullable field that we would exit early from our method with,
-the good case would define a model that satisfies this.
+This is fixed by extracting that repetition into a new method GetGoodCarInfo.
+By extracting a method we have achieved two things.
+A) If later on more work is required to define a Car Info model, we will not need to fix multiple tests, but instead this one
+implementation
 
-A common tactic here is to create a good model, make a minor change to it which will make it no longer a good model
-(the nullable field example from above) and that way when the test fails, we have more confidence it failed due to
-the specific edge case we set up inside our test and less change it was bad test data that broke the test.
+And B) when we extracted the method we included a hint to the reader of what we are constructing. Of which in 
+this case is a good car info model. That way later in our tests if we see somebody modifying this good car info
+we know that what they are actually doing is making non good car info.
+
+By using this pattern it can be much more likely that our test assertions are asserting a result that is due to our 
+change and less likely that the test case is accidentally asserting bad data that we missed.
 
 {click}
 
@@ -1262,7 +1329,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Validate_CarInfo()
     {
-        var carInfo = GoodCarInfo();
+        var carInfo = GetGoodCarInfo();
         
         await _handler.HandleAsync(carInfo);
     }
@@ -1285,7 +1352,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Validate_CarInfo()
     {
-        var carInfo = GoodCarInfo();
+        var carInfo = GetGoodCarInfo();
         
         await _handler.HandleAsync(carInfo);
 
@@ -1313,7 +1380,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Validate_CarInfo()
     {
-        var carInfo = GoodCarInfo();
+        var carInfo = GetGoodCarInfo();
         
         await _handler.HandleAsync(carInfo);
 
@@ -1326,8 +1393,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-### v13 validate test failing build
-
 Our next test will be a scaffolding test 
 
 {click}
@@ -1428,6 +1493,8 @@ ingenious solution... Not really
 
 as prior, we just do what ever is the minimum amount of effort to make the test pass, which just so happens to be
 that we call our method and do nothing with the result!
+
+I will be skipping the refactor step, so we cycle back to red
 -->
 
 ---
@@ -1443,7 +1510,7 @@ public class ValidateCarInfoCommandHandler_Tests
     {
         A.CallTo(() => _validator.Validate(A<CarInfo>.Ignored)).Returns(false);
         
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var result = await _handler.HandleAsync(GetGoodCarInfo());
         
         Assert.False(result.Successful);
     }
@@ -1454,8 +1521,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-### v16 - red validate return false case
-
 now let's have a look at the way we can set up our mock of validate such that it will return false
 
 {click}
@@ -1508,7 +1573,7 @@ With this change made and our new red test ready to go, we hop into the implemen
 
 {click}
 
-now when the validation result is invalid, we will get our expected false value on Success and when it is successful it will
+now when the validation result is invalid, we will get our expected false value and when it is successful it will
 be true...
 
 Only one problem.
@@ -1525,7 +1590,7 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var result = await _handler.HandleAsync(GetGoodCarInfo());
         
         Assert.True(result.Successful);
     }
@@ -1544,7 +1609,7 @@ public class ValidateCarInfoCommandHandler_Tests
     {
         A.CallTo(() => _validator.Validate(A<CarInfo>._)).Returns(true);
         
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var result = await _handler.HandleAsync(GetGoodCarInfo());
         
         Assert.True(result.Successful);
     }
@@ -1556,8 +1621,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-### v18 setup happy path
-
 turns out this test is now failing due to
 
 {click}
@@ -1568,10 +1631,9 @@ is just a part of a growing test suite and the best solution is to just amend th
 
 {click}
 
-in later refactoring there is a good chance that this setup code would be extracted out and the ability to get a
-false/true would be configured through a shared method plus we would also almost certainly need to move this 
-good case scenario setup code into a shared method that all tests can call into, or perhpase as a part of the per-test
-setup code as such as a constructor inside of NUnit.
+I won't be doing any further refactoring here, but it's quite common that mock setup code like what we just added here
+might be worth making reusable, in which we could extract out the setup into a method and then
+allow the caller to pass in true or false as to make this more convenient.
 
 For now I will just be happy with how it is.
 -->
@@ -1595,7 +1657,7 @@ For now I will just be happy with how it is.
     public async Task HandleAsync_Should_Log_Error_If_Validation_Failed()
     {
         var carName = "Ford";
-        var carInfo = GoodCarInfo() with
+        var carInfo = GetGoodCarInfo() with
         {
             CarName = carName
         };
@@ -1609,19 +1671,17 @@ For now I will just be happy with how it is.
 ````
 
 <!--
-### v19 faker doesnt like extensions
-
 All that remains in our little demo is to add in logging for invalid cars!
 
 {click}
 
-in our new test we are setting up our scenario with a specific value for our good car scenario such that our assertion
-later specifically calls out the car name we have provided.
+in our new test we are setting up our scenario with a specific value for our good car value such that our assertion
+later specifically test that we received the expected car name
 
 {click}
 
-When we run this test instead of our usual error message that we would have expected, of which no occurances of the call
-were discovered from that mock, we instead see:
+The following code would therefore currently fail because we are not calling any logging. However that is not what 
+actually happens when we run the test instead we see:
 -->
 
 ---
@@ -1640,11 +1700,13 @@ FakeItEasy.Configuration.FakeConfigurationException :
 <!--
 OH no! It appears that the interface that we relied upon isn't being used in a test-friendly way.
 
-Under the hood, the ILogger interface only defines a single method, and what we actually called was a convenience
+Under the hood, the ILogger interface only defines a single method, and what we actually called was an
 extension method!
 
 When this happens there are only two workarounds, you either implement a hand rolled mock, that exposes what 
-ever conveniences you require OR you write your very own adapter.
+ever conveniences you need to write your assertions OR you write your very own adapter.
+
+We will go with the latter approach
 -->
 
 ---
@@ -1675,23 +1737,21 @@ public class LogAdapter : ILog
 ````
 
 <!--
-### V20 extract adapter and implement
-
 The first step in writing an adapter is to determine your API. Adapters as a pattern can be applied either to tidy
 up a series of interactions into a more codebase friendly API OR they can be thin layers that only exist to
 extract a testable interface. Of which this adapter is an example of such.
 
 What I have done here is gone into the implementation of the Logger extensions and stolen this definition, of which
-I am now going to expose under teh ILog interface.
+I am now going to expose under the ILog interface.
 
 {click}
 
 The Log Adapter class may look very simple, this is for a reason... We won't have any tests covering this adapter, which
 means we need to lower the risk of implementing a bug here. Given all we wanted to do was to update the interface we were
-coding against to be testable, such a boring implementation is more that sufficient.
+coding against to be testable, then this is all that we need to do
 
 I have updated our test suite to now use the ILog interface instead of Microsoft's ILogger
-by keeping to the original signatures this swap is seamless
+Our ILog interface has the same signature as the extension so this works without issue
 -->
 
 ---
@@ -1751,11 +1811,11 @@ now that our test suite is setup and our testable interface is ready to go, we c
 and with that our implementation is complete!
 
 One of the downsides to adapting out ILogger was that microsoft chose to expose only a single method because
-there are ALLOT of overrides for information, error and more so that means we get to implement them!
+there are ALLOT of overrides for information, error and this results in many possible permutations that we will be stuck coding!
 I personally feel like this is OK, however specifically for ILogger I would typically use a hand rolled mock instead.
 
 This is because it's possible to add some really cool testing tech as such as tracking of scoped fields and exposing 
-convenience based methods inside of your mock implementation that then make asserting log statements an absolute breeze.
+convenience based methods inside of your mock implementation and much more
 -->
 
 ---
@@ -1794,40 +1854,42 @@ public class FakeLogger : ILogger
 Thanks to how flexible the State generic can be there is some fairly gnarly casting that needs doing and in the example
 I have shown here, and there are still flaws but this is roughly what you can arrive at as a mock for the I Logger.
 
-What this little mock allows us to do is fully capture the log level, the log message as displayed to the console
-as well as all the fields that hide inside the state at the time in which the log was collected.
+With this mock we have access to write assertions on the log level, the exact message and every other field that makes
+up the log call including the template parameters and scoped log state
 
-The best part about all this is if you want to include this in your very own C# projects you can take this as a take home 
-project, why not build out your very own logging mock with the detroit style of test driven development. You start
-out with no implementation, first you write a test for the IsEnabled property, next comes a test that asserts that your 
+The best part about all this is if you want to include **this** in your very own C# projects you can take this as a take home 
+project, why not build out your very own logging mock using test driven development. You start
+out with nothing implemented, first you write a test for the IsEnabled property, next comes a test that asserts that your 
 able to retrieve the latest logs level, next the message, so on and so forth.
+
+timing for section 15 (demo): 12m 20s
 -->
 
 ---
 
 <!--
-With the demo now complete is no better time than ever to go over what we just saw. Firstly whenever we start out working
-on our code we ALWAYS start with a failing test. Even if it feels slightly odd, if there is a way to write a test
-first then we will write that test first. If we are writing production code and there isn't a failing test then
-we are failing.
+With the demo out of the way, its no better time than ever to go over what we just saw. Firstly whenever we start out working
+on our code we ALWAYS start with a failing test.
+If we are writing production code and there isn't a failing test then we are failing.
 
-From there we focused on fixing any compilation or failed test such that we could get back into a green state, so that 
-we would always be moving forward. The golden rule there being that we take the path of least resistance to get back 
-green, even if that step feels a little silly, if it completes another red green cycle with the least 
-possible change then it is the correct solution.
+From there we focused on fixing any compilation or failed test such that we could get back into a green state.
+The golden rule there being that we take the path of least resistance to get back 
+green, even if that step feels a little silly, if it completes another red green cycle it is the correct solution.
+We will simply form another cycle to deal with the sillyness.
 
 Next where it would make sense we would take the time to refactor, this can be as simple as renaming a test
-with a default templated out test name into one that explained what the test was achieving OR if the refactor
-was more complicated and ended up extracting logic from within our production code or even the very test that was
-written for that code.
+into one that explained what the test was achieving OR it could end up being changes to code through refactoring
+the code under test or even the tests themselves
 
-From there we took to using mocking to both validate the internal interactions of our unit and to also substitute
+We took to using mocking to both validate the internal interactions of our unit and to also substitute
 out the results of calling into our mocks. By doing so we were able to exercise the app to it's fullest and
 ensure that every edge case inside our unit was working as expected.
 
-Finally when third party code got in the way of our testing we took to the adapter pattern to extract a testable interface
-out of the code that we are using to interact within our classes. By doing so, every interaction within our codebase
+Finally when third party code got in the way of our testing we took to the adapter pattern to extract a testable interface. 
+By doing so, every interaction within our codebase
 is mockable and controllable and any logic that could lead to a bug can be isolated and tested.
+
+timing for section 16: 1m 15s
 -->
 
 ---
@@ -1844,6 +1906,8 @@ Hands down if we push back on our teams standard testing standards for the sake 
 OR
 ===pause=== remember people, ego is on the line ===pause=== Hands up or slightly raised if we deliver the code with our 
 standard and some would argue rather rigorous testing practices?
+
+timing for section 17: 25s
 -->
 
 ---
