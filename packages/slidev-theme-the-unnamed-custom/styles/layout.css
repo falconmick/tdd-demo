@@ -7,6 +7,11 @@
   --slidev-theme-color: #f3eff5;
   --slidev-theme-background: #161c2c;
 
+  &.light {
+    --slidev-theme-color: #161c2c;
+    --slidev-theme-background: #d3d9e9;
+  }
+
   /* Text sizes */
   --slidev-theme-font-size: 1.1em;
   --slidev-theme-default-font-size: var(--slidev-theme-font-size);
@@ -369,6 +374,15 @@
 }
 
 /* About me slide */
+
+.light .about-me  {
+  background: var(--slidev-theme-aboutme-color);
+  color: var(--slidev-theme-aboutme-background) !important;
+
+  h1 {
+    color: var(--slidev-theme-aboutme-background);
+  }
+}
 .about-me {
   background: var(--slidev-theme-aboutme-background);
   color: var(--slidev-theme-aboutme-color) !important;

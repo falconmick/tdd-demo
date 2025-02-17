@@ -1,5 +1,5 @@
 {
-  "name": "slidev-theme-the-unnamed",
+  "name": "slidev-theme-the-unnamed-custom",
   "version": "0.0.22",
   "keywords": [
     "slidev-theme",
@@ -27,7 +27,7 @@
   },
   "//": "Learn more: https://sli.dev/themes/write-a-theme.html",
   "slidev": {
-    "colorSchema": "dark",
+    "colorSchema": "both",
     "highlighter": "shiki",
     "defaults": {
       "fonts": {
@@ -39,5 +39,6 @@
   },
   "author": "Elio Struyf <elio@struyfconsulting.be>",
   "funding": "https://github.com/sponsors/estruyf",
-  "bugs": "https://github.com/estruyf/slidev-theme-the-unnamed/issues"
+  "bugs": "https://github.com/estruyf/slidev-theme-the-unnamed/issues",
+  "packageManager": "yarn@3.6.3"
 }

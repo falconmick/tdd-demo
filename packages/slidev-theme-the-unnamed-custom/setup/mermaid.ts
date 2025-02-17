@@ -1,9 +1,9 @@
-import type { MermaidOptions } from '@slidev/types'
+import type { MermaidConfig } from 'mermaid'
 import { defineMermaidSetup } from '@slidev/types'
 
 export default defineMermaidSetup(() => {
   // eslint-disable-next-line prefer-const
-  let injection_return: MermaidOptions = {
+  let injection_return: MermaidConfig = {
     theme: 'forest',
     themeVariables: {
       // General theme variables

@@ -1,5 +1,5 @@
 ---
-theme: ./slidev-theme-the-unnamed-custom
+theme: the-unnamed-custom
 layout: cover
 background: /sponsor.png
 dimBackground: false
