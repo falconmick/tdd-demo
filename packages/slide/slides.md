@@ -1950,5 +1950,5 @@ layout: center
 background: "#fff"
 ---
 
-<img src="./dddmelb2025.png" alt="alt" style="max-width: 400px; width: 100%;">
+<img src="/dddmelb2025.png" alt="alt" style="max-width: 400px; width: 100%;">
 
