@@ -846,7 +846,11 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task Test1()
     {
-        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
+        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo 
+        { 
+            Blah = "dno", 
+            OtherThing = "no idea" 
+        });
         Assert.Pass();
     }
 }
@@ -885,7 +889,11 @@ public class ValidateCarInfoCommandHandler_Tests
     [Test]
     public async Task Test1()
     {
-        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo { Blah = "dno", OtherThing = "no idea" });
+        CarInfoUpdateResult result = await _handler.HandleAsync(new CarInfo 
+        { 
+            Blah = "dno", 
+            OtherThing = "no idea" 
+        });
         Assert.Pass();
     }
 }
@@ -1685,7 +1693,8 @@ For now I will just be happy with how it is.
         
         await _handler.HandleAsync(carInfo);
         
-        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName)).MustHaveHappenedOnceExactly();
+        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName))
+            .MustHaveHappenedOnceExactly();
     }
 ```
 ````
@@ -1838,6 +1847,8 @@ This is because it's possible to add some really cool testing tech as such as tr
 convenience based methods inside of your mock implementation and much more
 -->
 
+---
+class: small-code
 ---
 
 ````md magic-move

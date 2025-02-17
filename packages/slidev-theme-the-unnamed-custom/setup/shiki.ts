@@ -6,7 +6,7 @@ export default defineShikiSetup(() => {
   return {
     themes: {
       dark: darkTheme as any,
-      light: 'min-light',
+      light: 'github-light-high-contrast',
     },
   };
 });

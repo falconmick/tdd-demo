@@ -21,6 +21,7 @@
   --slidev-theme-two-columns-font-size: var(--slidev-theme-font-size);
   --slidev-theme-aboutme-font-size: var(--slidev-theme-font-size);
   --slidev-theme-code-font-size: 12px;
+  --slidev-code-font-size: 16px;
 
   /* Code colors */
   --slidev-theme-code-background: #0f131e;
@@ -166,6 +167,10 @@
       1em
     ) !important;
   }
+}
+
+.small-code {
+  --slidev-code-font-size: 12px;
 }
 
 .slidev-layout.cover,
