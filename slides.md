@@ -1,5 +1,15 @@
 ---
-theme: the-unnamed
+theme: ./slidev-theme-the-unnamed-custom
+layout: cover
+background: /sponsor.png
+dimBackground: false
+---
+
+<!--
+First and foremost! Thank you to all the sponsors, without them such an open an inclusive event just isn’t possible
+-->
+
+---
 layout: cover
 ---
 
@@ -13,8 +23,18 @@ without a clear understanding of when; and how; to use its varying tools effecti
 In this session I will go into the origins test-driven development;
 my personal approach;
 and how you can fully leverage its powers become a better developer. 
+-->
 
-But first of all, who am I?
+---
+layout: cover
+background: /bingo.png
+dimBackground: false
+---
+
+<!--
+Also don’t forget, sponsor bingo… Maybe after my talk though!
+
+Firstly, who am I?
 -->
 
 ---
@@ -1918,3 +1938,17 @@ timing for section 17: 25s
 
 
 -->
+
+---
+layout: cover
+background: /sponsor.png
+dimBackground: false
+---
+
+---
+layout: center
+background: "#fff"
+---
+
+<img src="./dddmelb2025.png" alt="alt" style="max-width: 400px; width: 100%;">
+
