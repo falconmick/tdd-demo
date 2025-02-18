@@ -45,7 +45,7 @@
   --slidev-theme-default-background: var(--slidev-theme-background);
 
   /*  Center */
-  --slidev-theme-center-headingBg: var(--slidev-theme-accents-blue);
+  --slidev-theme-center-headingBg: var(--slidev-theme-accents-yellow);
   --slidev-theme-center-headingColor: var(--slidev-theme-accents-vulcan);
   --slidev-theme-center-background: var(--slidev-theme-background);
 
@@ -81,7 +81,7 @@
 
   :not(pre) > code {
     background: var(--slidev-theme-code-background);
-    color: var(--slidev-theme-code-color, var(--slidev-theme-color));
+    color: var(--slidev-theme-code-color), var(--slidev-theme-color);
   }
 
   h1 + p {
@@ -98,8 +98,12 @@
     font-size: var(--slidev-theme-font-size, 1.1em);
   }
 
+  li h2 {
+    padding-bottom: 2rem;
+  }
+
   h1 {
-    @apply text-4xl;
+    @apply text-5xl;
   }
 
   h2 {
@@ -161,11 +165,7 @@
   }
 
   .slidev-code code {
-    font-size: var(
-      --slidev-theme-code-font-size,
-      var(--slidev-code-font-size),
-      1em
-    ) !important;
+    font-size: var(--slidev-theme-code-font-size), var(--slidev-code-font-size), 1em !important;
   }
 }
 

@@ -52,77 +52,42 @@ social2: linkedin.com/in/falconmick
 social3: github.com/falconmick
 ---
 
-## About Me
-
-Michael Crook
-Full-stack dotnet Contractor
-
-- bsky.app/profile/mcrook.com
-- linkedin.com/in/falconmick
-- github.com/falconmick
-
 <!--
 Hi
 I’m Michael!
 I am a full stack developer from Perth who spends his most of his days working with dotnet as a glorious virtual data plumber.
 I would like to see myself as an overly passionate tech who can’t stop getting excited about tech, 
 You can find me under the handle falconmick just about everywhere where I talk mostly about coding and console modding.
+-->
 
+---
+layout: about-me
+
+helloMsg: Hello!
+name: Michael Crook
+imageSrc: /michael.png
+position: left
+job: Full-stack dotnet Contractor
+line1: www.mcrook.com
+line2:
+social1: bsky.app/profile/mcrook.com
+social2: linkedin.com/in/falconmick
+social3: github.com/falconmick
+---
+
+<!--
 Throughout my career; with all the teams I have had the opportunity to work with; I have found the following to always be
 true: If you want to deliver high quality software testing your code is; without a doubt; the key deciding factor on
 how likely you are to succeed. It is not the quality or quantity of developer that matters, but instead the discipline that the
 team takes to ensure they validate their code with tests that can be run with as minimal friction in both speed and 
 resilience to change.
-
-
-TIMING FOR SECTION ONE: 1m10s
 -->
 
 ---
-
-## Question Time
-
-<!--
-Before I start lets do a theoretical:
-Upper management is in a flurry, our product Y's top competitor Product X has just had an announcement.
-Coming in 6 months time is an all new AI chat-bot integration, a game changing feature that is going to send our company broke;
-That is, unless, we cannot match or beat their announced delivery date.
-
-In this project speed matters above all else, we have been promised that as soon as we get this live that
-We will be given the time necessary to take this beta implementation back to the workshop and made right.
-
-Because we all know that tech demo's don't ever become forever code the second we hand it over.
-
-So the question for the audience: 
-you can leave your hands down if we push back on our normal testing requirements; and for the sake of the project 
-just get it done
-OR
-Hands up if we deliver the project with our standard; and some would argue; rather expansive testing practices?
-
-=== delay for hands ===
-
-By the end of this presentation I hope to have as many hands in the air when I ask this question again for all the
-reasons that I have coming up, but it all boils down to this one; important; law of delivering software:
-
-# Slow is Smooth. Smooth is Fast
-
-Fun fact: Audience participation varies greatly from country to country and Australia typically is on the more stone
-faced side! You all fell for my trap card, now when we reach the end if all goes well I will look like I have converted 
-the entire room!
-
-My ego can't wait
-
-
-
-TIMING FOR SECTION TWO: 1m25s
-
--->
-
+layout: center
 ---
 
-## Before we ask what, we ask why?
-
-## Opening Statements (5 minutes)
+# A Tale as old as time
 
 <!--
 Now before I start going over the basics of what test-driven development is I thought it might be best to go over why?
@@ -132,13 +97,35 @@ Like most of you I started out with a surface level appreciation but at the same
 After spending the last day or two on my PR and seeing that my 60% coverage was not acceptable to our automated
 code coverage overlord; SonarQube; was the very last thing I wanted to see at 5pm on a Friday.
 
+-->
+
+---
+layout: center
+---
+
+# A Tale as old as time
+<h2 v-click style="position: absolute;top: 60%;">PR Failed</h2>
+
+<!--
 Nevertheless, I would work late and add some basic tests that would cover all the new code, check in my PR and head
 home late for the weekend. It didn't help my morale when I came early that next monday and the first thing I see is a review
 for obvious bug I had missed. 
+
+{click}
+
 I shouldn't have bothered staying late as my PR is now going to take a hot
 minute to fix and by then all the other developers will be busy working on their changes so my code won't get another 
 review until well after lunch.
 
+-->
+
+---
+layout: center
+---
+
+# A New Hope?
+
+<!--
 At times like this it can feel like test are there purely to make the Pull Request gates happy and not to make my codebase any better.
 Not much good that tests was; when It didn't even end up catching anything important.
 
@@ -147,6 +134,20 @@ work with a seasoned veteran of the London School of Test Driven development. Ha
 spent the majority of his career working on software for the stock exchange in england he was in and around all of the 
 thought leaders of the London School of Test driven development; as those ideas were first maturing.
 
+-->
+
+---
+
+# The Three Testings Tools of Power!
+
+<v-clicks>
+
+- ## Red Green Refactor
+- ## Mocking
+- ## Adapters
+</v-clicks>
+
+<!--
 There were three main tools he handed over to me that completely changed how I would approach writing code moving forward.
 Those three tools were:
 
@@ -158,6 +159,21 @@ Mocking, which turned into the most valuable tool in how I designed my code movi
 and finally Adapters, the practice of taking third party code that doesn't line up with your teams coding patterns and
 making a small translation layer.
 
+-->
+
+---
+
+# My First TDD Project
+
+<v-clicks>
+
+- ## Console App to migrate data from legacy to new
+- ## Discovered outside in software design
+- ## Uncovered the most powerful tool of all...
+
+</v-clicks>
+
+<!--
 With these three tools I was also handed the task of writing a fairly mundane console app that would use third party
 API's to explore a series of file systems, parse the data in it's legacy format, re-arrange the structure including 
 sorting into a new storage approach and then persisting. Basically a data migration project with a few bells and whistles.
@@ -168,31 +184,77 @@ mock third party API? Easy use an adapter to expose a more manageable interface.
 
 Finally the most powerful tool and how every line of code was written:
 
-RED
+-->
+
+---
+layout: center
+class: spaced-h1
+---
+
+<style>
+.spaced-h1 h1 {
+    margin-bottom: 0.2rem !important;
+}
+</style>
+
+<v-clicks>
+
+# RED
+# GREEN
+# REFACTOR
+
+</v-clicks>
+
+<!--
+{click}
+&nbsp;**RED**&nbsp;
 I would write a small test that I knew would fail
 
-Green
+{click}
+&nbsp;**Green**&nbsp;
 I implement the fix with as little effort as possible but importantly made the failing test pass, then finally
 
-Refactor
+{click}
+&nbsp;**Refactor**&nbsp;
 Now that my new feature has proven that the test will fail without it, but will succeed with it
 I can take a short second to re-arrange and tidy up any mess left over by the previous two steps.
 
-I took a small sample of our data and flawlessly executed this validation migration. I then took
-my backup of prod (still not quite believing the results), ran the tool and had a perfect migration. No setting
-any breakpoints to debug a silly weird edge case, no last minute re-structuring after finding that the code just wasn't
-quite readable.
+-->
 
+---
+
+# My First TDD Project
+
+<v-clicks>
+
+- ## Flawless Victory
+- ## No Debugging
+- ## Beautiful Code
+
+</v-clicks>
+
+<!--
+I took a small sample of our data and flawlessly executed this validation migration. 
+
+{click} I then took my backup of prod (still not quite believing the results), ran the tool and had a perfect migration. 
+
+{click} No setting any breakpoints to debug a silly weird edge case, 
+
+{click} no last minute re-structuring after finding that the code just wasn't quite readable.
+
+-->
+
+---
+layout: center
+---
+
+# All Results; Zero Effort
+
+<!--
 It just worked. Perfectly. No effort. Only results.
 
 It was at that moment that I found out what all coding could look like;
 Welcome to the London School of Test-Driven Development.
-
-
-
-TIMING FOR SECTION THREE: 4m 15s
-
-
 -->
 
 ---
@@ -206,7 +268,9 @@ the approaches were first formalised.
 
 ---
 
-# Detroit
+# Schools?
+
+- ## Detroit
 
 <!--
 the Detroit location came out of the C3 project, the Chrysler Comprehensive Compensation Project to be more precise, 
@@ -217,7 +281,10 @@ as the origin of Detroit School.
 
 ---
 
-# London
+# Schools?
+
+- ## Detroit
+- ## London
 
 <!--
 Following the explosion of interest in Extreme Programming many community groups were formed around learning and implementing
@@ -1921,24 +1988,6 @@ By doing so, every interaction within our codebase
 is mockable and controllable and any logic that could lead to a bug can be isolated and tested.
 
 timing for section 16: 1m 15s
--->
-
----
-
-# Again I ask you
-
-<!--
-Let's go back to that theoretical:
-
-In that project speed was touted as mattering above all else, we have been promised that as soon as we get this live we will be given
-the time needed to go back around and clean up the implementation.
-
-Hands down if we push back on our teams standard testing standards for the sake of the project
-OR
-===pause=== remember people, ego is on the line ===pause=== Hands up or slightly raised if we deliver the code with our 
-standard and some would argue rather rigorous testing practices?
-
-timing for section 17: 25s
 -->
 
 ---
