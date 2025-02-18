@@ -528,10 +528,6 @@ layout: two-cols
 dragPos:
   harry: 115,398,161,161
   kiara: 661,395,161,161
-  foo: 160,426,64,40
-  circleTwo: 379,289,64,40
-  bar: 159,427,64,40
-  crossTwo: 162,352,64,40
   "'foo'": 394,290,40,40
   "'circleTwo'": 825,284,40,40
   "'bar'": 697,431,89,74
@@ -615,8 +611,16 @@ queries their class is a plain old boring class that expects it can be mutated.
 into the entire ticket and not split up it into the individual steps required to complete the feature. If instead of
 6 small tickets we had a single big ticket, one developer can grab it and see it from start to end without conflicts.
 
---
+-->
 
+---
+layout: center
+---
+
+# London's Calling 
+
+<!--
+TODO:::::::::::::::::::::
 This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
 So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
 the basic interfaces as such as the validator, mappers and database layer. However because
@@ -632,6 +636,9 @@ persistence calls? Well now if later down the line we find a bug in this layer o
 that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through that 
 test passing. The London approach forces us to at all times write code that has a failing test and it also makes each
 line we write more testable.
+
+todo: make sure its clear that by london we gain the ability to add the initial bits of code
+for all to integrate against WHICH was made with tests
 
 --
 
