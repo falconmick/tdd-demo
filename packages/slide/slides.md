@@ -377,9 +377,7 @@ write our code in such ways to isolate complexity.
 
 # Why wouldn't I use the Detroit School?
 
----
-
-# Test-Splosions
+- ## Test-Splosions
 
 <!--
 One reason why you might not want to use this style of testing is the dreaded 1 line change that breaks multiple test suites.
@@ -388,6 +386,15 @@ writing a new feature or fixing a bug and out of nowhere all your tests start fa
 you accidentally forgot to keep your red green refactor iterations small; or worse yet; you were not doing so; the instant
 stress of having an entire set of test suites start failing can make it hard to find the code change that was at fault.
 
+-->
+
+---
+
+# Why wouldn't I use the Detroit School?
+
+- ## Test-Splosions
+
+<!--
 There are workarounds for this issue, most importantly you can focus on making sure your entire set of suites run continuously
 so that any regressions are found at the same time as when changes are being made 
 and you can just control zed on that thang until you find the responsible line of code. But this also 
@@ -395,12 +402,14 @@ just comes with the territory of testing collections of code in multiple locatio
 simpler to write tests. Alternatively this type of hardship can be nearly eliminated by London school as you NEVER should
 be re-testing shared functionality between classes and the only thing that can break a test for a given suite is code
 that exists in that very class as the unit of each test is at a class level
-
-TIMING FOR SECTION SIX: 1m 20s
 -->
 ---
 
-# Short term speed loss
+
+# Why wouldn't I use the Detroit School?
+
+- ## Test-Splosions
+- ## Short term speed loss
 
 <!--
 Some would argue that another reason to avoid the Detroit school or test driven development all together
@@ -414,15 +423,18 @@ that the Detroit school is by far the quicker approach to take
 over London.
 
 It's for this reason that quite often if your jumping into an existing codebase Detroit might be the only logical approach.
-
-
-TIMING FOR SECTION SEVEN: 45s
-
 -->
 
 ---
 
 # Why should I use the London School?
+
+<v-clicks>
+
+- ## BIAS ALERT!!!
+- ## Once you know... you know
+
+</v-clicks>
 
 <!--
 Bias warning, I love the London approach
@@ -433,6 +445,17 @@ the time to make a point to just try it out and see where the code takes you.
 That is actually one of it's largest draws, especially when compared to Detroit, when you write London there less
 thinking out ahead of time what classes will be required to form your tests around.
 
+-->
+
+---
+
+# Why should I use the London School?
+
+- ## BIAS ALERT!!!
+- ## Once you know... you know
+- ## Tests come fast and without dependencies
+
+<!--
 Instead you naturally start at the origin of your feature, such as the API endpoint, and you use your tests to define
 the structure of your class. If the first step of accepting an incoming request is to validate the input to make sure
 it is valid, then you write a test that asserts this. It doesn't matter that the validator interface doesn't exist, 
@@ -442,16 +465,41 @@ utilise the assertion tools provided by the mock to ensure that the validator is
 test once you implement the call you can then stub out the functionality, allowing for easy testing setup
 to validate each unique and potentially hard to reproduce branch in your class.
 
+--> 
+
+---
+
+# Why should I use the London School?
+
+- ## BIAS ALERT!!!
+- ## Once you know... you know
+- ## Tests come fast and without dependencies
+- ## Outside In code flow
+
+<!--
 This process repeats over and over, without any of the other downstream classes needing to be implemented, we instead
 focus purely on the branches and edge cases tracked by this class.
 
 This to most sane developers will sound outlandish, spending multiple coding iterations writing tests that prove
 obvious thing X was passed to other obvious thing Y, what exactly am I gaining??
 
-Well what you are gaining is software that is designed with a outside in style. I have found that if I work my way from 
+Well what you are gaining is software that is designed with an outside in style. I have found that if I work my way from 
 the outside of my code all the way in that I am able to discover shared responsibilities much sooner and can invest in 
 designing much more understandable API's as I develop rather than coming back and re-working them later.
 
+-->
+
+---
+
+# Why should I use the London School?
+
+- ## BIAS ALERT!!!
+- ## Once you know... you know
+- ## Tests come fast and without dependencies
+- ## Outside In code flow
+- ## Everything is testable
+
+<!--
 Because we always mock every single call, and we never depend upon code external to our unit, we also leave our entire
 codebase open to substitution at any time. The best example of this is when you later on in the project run into
 a bad race condition bug that is due to fractions of a second differences in calls to a DateTime Now function. If 
@@ -459,21 +507,115 @@ we had of been testing without mocks all of our time sensitive code that is caus
 near impossible to re-create as a test. When using London everything is injected anything can be mocked. This is why you will
 even end up mocking DateTime functionality. 
 
+-->
+
+---
+layout: center
+---
+
+# London's Calling
+
+<!--
 I would say the final and possibly most impactful tool that the London School gives you is that it makes splitting up
 your features into smaller tickets a much more manageable process. I have found that most teams that I work with who
 don't use the London approach will typically find themselves having a single developer delivering an entire feature
-from start to end even if the ticket is split up into multiple steps. If a team does split the ticket up into say
-one developer working on mapping the user input into a domain model and a second developer
+from start to end even if the ticket is split up into multiple steps. 
+
+-->
+
+---
+layout: two-cols
+dragPos:
+  harry: 115,398,161,161
+  kiara: 661,395,161,161
+  foo: 160,426,64,40
+  circleTwo: 379,289,64,40
+  bar: 159,427,64,40
+  crossTwo: 162,352,64,40
+  "'foo'": 394,290,40,40
+  "'circleTwo'": 825,284,40,40
+  "'bar'": 697,431,89,74
+  "'crossTwo'": 145,441,96,79
+---
+
+# Harry
+
+````md magic-move
+```cs
+public interface ICarInfoMapper
+{
+    ??? Map(CarInfoInput input);
+}
+```
+```cs
+public interface ICarInfoMapper
+{
+    CarInfo Map(CarInfoInput input);
+}
+
+public record CarInfo
+{
+    public string? CarName { get; init; }
+}
+```
+````
+
+
+
+<img v-drag="'harry'" src="/harry.png" />
+
+::right::
+
+# Kiara
+
+````md magic-move
+```cs
+public interface ICarInfoRepository
+{
+    Task Update(??? input);
+}
+```
+```cs
+public interface ICarInfoRepository
+{
+    Task Update(CarInfo input);
+}
+
+public class CarInfo
+{
+    public string? CarName { get; set; }
+}
+```
+````
+
+<img v-drag="'kiara'" src="/kiara.png" />
+
+
+<v-drag pos="'foo'" v-mark="{ at: 3, color: '#934', type: 'circle' }"></v-drag>
+<v-drag pos="'circleTwo'" v-mark="{ at: 3, color: '#934', type: 'circle' }"></v-drag>
+<v-drag pos="'bar'" v-mark="{ at: 4, color: '#934', strokeWidth: 30, type: 'crossed-off' }"></v-drag>
+<v-drag pos="'crossTwo'" v-mark="{ at: 4, color: '#934', strokeWidth: 30, type: 'crossed-off' }"></v-drag>
+
+<!--
+If a team does split the ticket up into say
+**Harry** working on mapping the user input into a domain model and **Kiara**
 that will persist our data into our SQL database, we sometimes will run into the unfortunate situation
 in which both developers implement their own version of the same file. For example the mapping ticket implements
-the CarInfo model as a record, and the SQL persistence ticket developer also implement CarInfo, 
-but because they're using Entity Framework, a library that uses class mutation to track field updates to generate SQL 
+the CarInfo model as a record, 
+
+{click} and the SQL persistence ticket developer also implement CarInfo, 
+but because they're using Entity Framework, 
+
+{click} a library that uses class mutation to track field updates to generate SQL 
 queries their class is a plain old boring class that expects it can be mutated.
 
-One of them now needs to update their codebase, neither of them are happy. 
-This is why quite often when a team writes up their tickets they can very often turn the feature ticket
+{click} One of them now needs to update their codebase, neither of them are happy. 
+
+{click}This is why quite often when a team writes up their tickets they can very often turn the feature ticket
 into the entire ticket and not split up it into the individual steps required to complete the feature. If instead of
 6 small tickets we had a single big ticket, one developer can grab it and see it from start to end without conflicts.
+
+--
 
 This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
 So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
@@ -483,11 +625,15 @@ we are yet to implement any of these interfaces. Now we are going to check in a 
 as we cannot write any tests for this code yet as it is not implemented. This can often lead to code that doesn't
 play nice with testing later on as the hardest code to write tests for is that code which already exists.
 
+--
+
 Instead of not testing this important upper layer what if we just for now mocked away all the mappers, validators and
 persistence calls? Well now if later down the line we find a bug in this layer of the codebase we know for a fact
 that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through that 
 test passing. The London approach forces us to at all times write code that has a failing test and it also makes each
 line we write more testable.
+
+--
 
 If your team is finding that their tickets are taking more
 than a day to complete this is a good sign that you most likely need to split up your tickets into smaller more
@@ -496,6 +642,7 @@ swapping to the London approach will make all of that much manageable.
 
 TIMING FOR SECTION EIGHT: 5min 50sec
 -->
+
 ---
 
 # Why wouldn't I use the London School?
@@ -2053,4 +2200,3 @@ background: "#fff"
 ---
 
 <img src="/dddmelb2025.png" alt="alt" style="max-width: 400px; width: 100%;">
-
