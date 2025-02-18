@@ -293,15 +293,13 @@ and Nat Pryce form more techniques and approaches which eventually resulted in t
 "Growing Object-Oriented Software, Guided by Tests". This book expanded upon Detroit School; but was more focused around
 testing a singular unit with mocks, whereas Detroit was all about testing the combined interactions of our classes as a singular
 unit.
-
-
-
-TIMING FOR SECTION FOUR: 1m 15s
 -->
 
 ---
 
 # Why should I use the Detroit School?
+
+- ## Comes naturally
 
 <!--
 Why would I pick the detroit school? Detroit just makes sense; if up until now you had been writing a few tests
@@ -309,26 +307,70 @@ here and there around all the important stuff; or at least to make the metrics l
 in this Detroit style. You were likely missing the red green part, but over all you made a point to take obvious
 chunks of functionality out of your codebase and made sure that they ended up working as you expected, 
 
-Say for
-example you had some logic that would take an existing item, merge some new state into it and then persisted it back
+-->
+
+---
+
+# Why should I use the Detroit School?
+
+- ## Comes naturally
+- ## Test as a whole, mock the pain away
+
+<!--
+Say for example you had some logic that would take an existing item, merge some new state into it and then persisted it back
 to the database. There is a very good chance that this functionality would be wrapped in a set of nice test that
 mocked out the database out with an in-memory fake which you then asserted against in the final steps of your test methods.
 
+-->
+
+---
+
+# Why should I use the Detroit School?
+
+- ## Comes naturally
+- ## Test as a whole, mock the pain away
+- ## You can refactor with confidence
+
+<!--
 If this is your codebase now, then great; you can transition into the detroit school with ease, just make sure to follow
 red green refactor and you're basically there! As soon as you start making this commitment to testing all the features, 
 as you add them, you will find that refactoring can be done with much greater speed and confidence as if
 a feature is important, you will have test around it. Then if you break that feature later on when applying a fix, those 
 test you wrote 6 months ago will be there to catch you before releasing broken functionality to your users.
+-->
 
+---
+
+# Why should I use the Detroit School?
+
+- ## Comes naturally
+- ## Test as a whole, mock the pain away
+- ## You can refactor with confidence
+- ## Works wonders in some situations
+
+<!--
 Another time that the Detroit approach can really shine is when writing small self-contained utilities which have no side effects and 
 simply take incoming arguments and transform them into an output based off a series of known rules. Because of this
 code kata's as such as supermarket pricing examples or others can be a good way to practice Test driven development in
-the Detroit style. From there you will find it easier to spot good sections of your codebase to treat as a unit for your
+the Detroit style. 
+
+-->
+
+---
+
+# Why should I use the Detroit School?
+
+- ## Comes naturally
+- ## Test as a whole, mock the pain away
+- ## You can refactor with confidence
+- ## Works wonders in some situations
+- ## Pushes you to isolate complexity
+
+<!--
+From there you will find it easier to spot good sections of your codebase to treat as a unit for your
 testing. This will help guide your coding in such a way to push any required side effects to the edges of your codebases such
 that they are much easier to mock. This is showing us that testing not only can add reliability but also encourage us to
 write our code in such ways to isolate complexity.
-
-TIMING FOR SECTION FIVE: 2 min
 -->
 
 ---
