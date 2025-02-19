@@ -191,12 +191,6 @@ layout: center
 class: spaced-h1
 ---
 
-<style>
-.spaced-h1 h1 {
-    margin-bottom: 0.2rem !important;
-}
-</style>
-
 <v-clicks>
 
 # RED
@@ -620,7 +614,6 @@ layout: center
 # London's Calling 
 
 <!--
-TODO:::::::::::::::::::::
 This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
 So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
 the basic interfaces as such as the validator, mappers and database layer. However because
@@ -629,30 +622,45 @@ we are yet to implement any of these interfaces. Now we are going to check in a 
 as we cannot write any tests for this code yet as it is not implemented. This can often lead to code that doesn't
 play nice with testing later on as the hardest code to write tests for is that code which already exists.
 
---
+-->
 
+---
+layout: center
+---
+
+# London's Calling 
+
+<!--
 Instead of not testing this important upper layer what if we just for now mocked away all the mappers, validators and
 persistence calls? Well now if later down the line we find a bug in this layer of the codebase we know for a fact
 that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through that 
 test passing. The London approach forces us to at all times write code that has a failing test and it also makes each
 line we write more testable.
 
-todo: make sure its clear that by london we gain the ability to add the initial bits of code
-for all to integrate against WHICH was made with tests
+-->
 
---
+---
+layout: center
+dragPos:
+  stopwatch: 365,318,223,223
+---
 
+# London's Calling 
+
+<img v-drag="'stopwatch'" src="/stopwatch.png" />
+
+<!--
 If your team is finding that their tickets are taking more
 than a day to complete this is a good sign that you most likely need to split up your tickets into smaller more
 bite sized tickets; that take at most half a day to complete, it is at that point that you also might find that
 swapping to the London approach will make all of that much manageable.
-
-TIMING FOR SECTION EIGHT: 5min 50sec
 -->
 
 ---
 
-# Why wouldn't I use the London School?
+# Why not to use the London School?
+
+- ## Maintenance of Scaffolding
 
 <!--
 Maintenance is by in far the largest reason why Detroit might be a better pick for you and your team over London.
@@ -664,21 +672,40 @@ To do so correctly you would have to basically fully re-create the entire red gr
 code being moved plus setup new tests in the old class to validate the refactored chunk of code's interface is being 
 correctly called.
 
+-->
+
+---
+
+# Why not to use the London School?
+
+- ## Maintenance of Scaffolding
+- ## Refactoring takes effort
+
+<!--
 When your simply trying to just clean up this can be burdensome and might lead to less time spent refactoring.
 There is a silver lining here in that it can help if your suffering from premature re-fac-tile dysfunctions but realistically
 making it this hard to get work done can be a problem.
 
+-->
+
+---
+
+# Why not to use the London School?
+
+- ## Maintenance of Scaffolding
+- ## Refactoring takes effort
+
+<!--
 With that said I have found that with a small amount of bending of the rules one can cut paste refactor the unit test themselves
 such that the original tests magically move across without going through proper red-green-refactor process. One other solution
 would be to once a unit test is complete to take the time to go back over the suite and remove the scaffolding test such
 that all that remains are tests that are validating the extremities of the unit like that we return success once the
 API returns OR the unit tests that shows we return a validation error. This is the by the book approach to managing this 
 complexity, I just have always had a hard time getting rid of my tests and just want to keep all my babies.
-
-TIMING FOR SECTION NINE: 1m 35s
-
-
 -->
+
+---
+layout: center
 ---
 
 # Which one should I be following?
@@ -692,33 +719,78 @@ OR
 do I take a much more extreme route and allow my tests to define my API, choosing to chip away at the code one
 concern at a time through the isolation that mocking allows.
 
+-->
+
+---
+layout: center
+dragPos:
+  itDepends: 356,204,265,72
+---
+
+# Which one should I be following?
+<h1 v-drag="'itDepends'">It Depends</h1>
+
+<!--
 The answer to this is everybody's favourite; it depends; however this time we get to complete that sentence by saying
 it depends on you team.
 
 One of the biggest mistake any new developer, no matter the seniority, can make when joining a new team is to try and 
 uproot an established team coding approach and replace it with their own.
 
-Does that mean if you join a team and they have no real testing strategy, just a few tests here and there that
+Does that mean if you join a team, and they have no real testing strategy, just a few tests here and there that
 that you cannot come in and improve things?
+-->
 
+---
+clicksStart: 1
+---
+
+# Introducing TDD to your team
+
+<v-clicks >
+
+- ## Keep it simple, use Detroit School
+- ## Talk to your Team
+
+</v-clicks>
+
+<!--
 No it does not, what it means is you have a team who is open to the idea of testing, they just need a little help.
 What that also means is more involved practices like the London school are more than likely; a no-go, as chances are there are
 landmines straggled all throughout the codebase that will likely refuse to be isolated with mocking, so you will want to 
 minimise your mocking and focus less on writing unit tests and more on integration-ish tests.
 
-It is important to talk with your colleagues, get their feedback on how code is being written and also to provide some
+{click} It is important to talk with your colleagues, get their feedback on how code is being written and also to provide some
 ideas too on how things could be improved to see how that works for the team. Most developers know deep down they 
 should be writing tests but just struggle to justify their time doing so. If you come in help make testing the norm
 you will likely find they come with you willing and happy.
 
+-->
+
+---
+clicksStart: 4
+---
+
+# Introducing TDD to your team
+
+<v-clicks >
+
+- ## Keep it simple, use Detroit School
+- ## Talk to your Team
+- ## Start out London, failsafe to Detroit
+
+</v-clicks>
+
+<!--
 What this all mostly boils down to is there is a high chance you should just use Detroit even if deep down you really 
 wish you could be writing London which has been my reality for most of my recent engagements. If a new project is coming
 up and your confident with the London approach, why not start out with heavy mocking and see how it works for your team
 you can always pivot to detroit if it's not working out. By that point hopefully even if you do have to remove the London
 style your codebase will already have a bunch of clarity from the outside-in work done so far.
-
-TIMING FOR SECTION TEN: 2m 25s
 -->
+
+---
+layout: center
 ---
 
 # Going deeper
@@ -730,11 +802,12 @@ of what it looks like to properly implement them. Starting with a Red Green Refa
 -->
 
 ---
+layout: center
+class: spaced-h1
+---
 
 # RED
-
 # GREEN
-
 # REFACTOR
 
 <!--
@@ -796,11 +869,10 @@ const sum = (augend, addend) => 4
 ````
 
 <!--
-{click}
-
-Now we need to make that test work with the minimal amount of changes as possible
-all sins permitted, was your test that two plus two equals four? Great stub out the method with
-the two arguments of the augend and the addend and return four. 
+{click to undo highlight}
+Now we need to make the test work with the minimal amount of changes as possible
+;all sins permitted. Was your test that two plus two equals four? Great stub out the method with
+the two arguments then return four. 
 
 {click}
 
@@ -808,6 +880,41 @@ It does not matter that our implementation is obviously wrong, that is 100% ok!
 If you can look at an implementation and see that it is flawed that is a sign that you do not have
 enough tests yet, and you need to continue the red green refactor cycle until you come to a more concrete output.
 This approach is known as stutter testing and can often be used in conjugation with triangulation approaches.
+-->
+
+---
+layout: default
+dragPos:
+  "'circleTwo'": 364,273,30,30
+  "'circleOne'": 281,213,40,40
+---
+
+# REFACTOR
+
+````md magic-move
+```js
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+
+const sum = (augend, addend) => 4
+```
+````
+
+<v-drag pos="'circleOne'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
+<v-drag pos="'circleTwo'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
+
+<!--
+Refactor is a key part of the "design" aspect of test driven design. If you have been following TDD correctly
+your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
+come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking
+that code in.
+
+{click}
+In this specific instance our refactoring is required to remove duplication between our test which defines 4 as the
+expected result and our implementation which just parrots it back to us. 
 -->
 
 ---
@@ -837,32 +944,42 @@ const sum = (augend, addend) => augend + addend;
 ````
 
 <!--
-Refactor is a key part of the "design" aspect of test driven design. If you have been following TDD correctly
-your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
-come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking
-that code in.
-
 {click}
-
-In this specific instance our refactoring is required to remove duplication between our test which defines 4 as the
-expected result and our implementation which just parrots it back to us. This is a really minimalistic example which
+This is a really minimalistic example which
 is why this might feel a bit silly, but the point of this example is that even if a solution feels wrong, if it
 satisfies the test it is correct. It is the point of the refactor step to remove duplication and tidy up
+-->
 
+---
+
+# REFACTOR
+
+````md magic-move
+```js
+it('Should sum 2 plus 2 to equal 4', () => {
+    const result = sum(2, 2)
+    
+    expect(result).toBe(4)
+});
+
+const sum = (augend, addend) => augend + addend;
+```
+````
+
+<!--
 In more realistic scenarios quite often the act of adding on additional tests will flush out the silly solutions
 we come up with to satisfy the first few tests we write.
 
 Your **test code** is just as important as your **production code**. If there's **duplication** in your tests that could 
 be solved with **refactoring**, the best time to fix it is when your **codebase is green**. Apply these fixes with the 
 same **rigor** as you would in your **production code**.
-
-
-TIMING FOR SECTION ELEVEN: 2m 40s
 -->
 
 ---
 
 # Mocking
+
+- ## Concrete Implementation of Interfaces
 
 <!--
 Another tool that is invaluable is mocking, in particular extensive mocking.
@@ -875,29 +992,60 @@ be fully extensive but will allow us to simulate calling out to the real databas
 of using a real database during testing. Through creating the mock by hand we also have the ability to embed test utilities as 
 such as data initialization or what ever other test utility we can put our minds to. 
 
+-->
+
+---
+
+# Mocking
+
+- ## Concrete Implementation of Interfaces
+
+<!--
 This is a common approach when using the Detroit School, by making a concrete implementation we can allow a series of
 interactions to add up together. we might for example have a test that first finds a value
 in the database and then modifies it. If we hadn't of mocked this the next run of the test might have not worked now 
 that the data is now modified OR if we had used a substitution framework instead of our handcrafted mock we
 would have to write a fair bit of unique setup code.
 
-Speaking of substitution frameworks; in C# we have Moq, fake it easy or nsubstitute just to name a few.
+-->
+
+---
+
+# Mocking
+
+- ## Concrete Implementation of Interfaces
+- ## Substitution Frameworks
+
+<!--
+Speaking of substitution frameworks; in C# we have Moq, fake it easy or n substitute just to name a few.
 These tools allow for expression to be written which get called in place of the interface we supply them,
 allowing us to define inline to our test what that call will return OR even allow us to assert that the call was made at all.
 
+-->
+
+---
+dragPos:
+  "'dragons'": 266,347,425,128,-27
+---
+
+# Mocking
+
+- ## Concrete Implementation of Interfaces
+- ## Substitution Frameworks
+
+<v-drag pos="'dragons'"><h1>Here be Dragons</h1></v-drag>
+
+<!--
 The only thing to keep in mind here is even though these frameworks do have some support for classes, they are limited
 and a lot of the time a mock around a class will fail. It is for this reason that when using lots of mocking you tend
 to also need to be stricter with the separation of logic to data and also the usage of adapters on third party code.
-
-
-TIMING FOR SECTION TWELVE: 2 min
-
-
 -->
 
 ---
 
 # Adapters
+
+- ## Remove implementation details from third-party code
 
 <!--
 The adapter pattern is not too strict of an idea, in that third party code instead of being directly relied upon, is 
@@ -905,17 +1053,63 @@ instead abstracted away by an adapter layer, which can and often will help remov
 dependant codebase, say for example our adapter might provide a getter for the third party that both sets up a
 factory provided and then executes it all under the much simpler and relevant to our codebase pattern.
 
+-->
+
+---
+
+# Adapters
+
+- ## Remove implementation details from third-party code
+- ## Must be free from complexity
+
+<!--
 It is only important that this layer remain as simplistic as possible as it can often not be viable to test it 
 without integration testing, so if your adapter grows too much you will end up having dangerously uncovered section of code.
 
+-->
+
+---
+
+# Adapters
+
+- ## Remove implementation details from third-party code
+- ## Must be free from complexity
+- ## Essential in London School
+
+<!--
 When following the London approach of test driven development the use of adapters
-will be a lot more extreme than you might expect, I even adapted out DateTime, which gives our tests the ability to act as
+will be a lot more extreme than you might expect, 
+
+-->
+
+---
+
+# Adapters
+
+- ## Remove implementation details from third-party code
+- ## Must be free from complexity
+- ## Essential in London School
+- ## Enables fine-grain control of tests through mocking
+
+<!--
+I even adapted out DateTime, which gives our tests the ability to act as
 Pure functions which leads to less brittle testing and also makes testing edge cases a cakewalk as we have
 full control over how much the time changes between each call to Now. When I go over a detailed example of how I think
 TDD should be implemented in my C# example I will dig into adapters further.
+-->
 
+---
 
-TIMING FOR SECTION THIRTEEN: 1m 10s
+# Example Time
+
+- ## C# with the London School Approach
+
+<!--
+For this example I will use C# and the London School approach as this is my bread and butter, With this I will be able 
+to give a concrete example of how Test Driven Development can be implemented. 
+I will be taking all the three key concepts from above and combining
+them together to validate a record passed in and depending on if the model is valid, returning back out a result
+that signifies this, otherwise we log an error if it is not valid.
 
 -->
 
@@ -923,54 +1117,33 @@ TIMING FOR SECTION THIRTEEN: 1m 10s
 
 # Example Time
 
-<!--
-For this example I will use C# as this is my bread and butter, With this I will be able to give a concrete example of
-how Test Driven Development can be implemented. I will be taking all the three key concepts from above and combining
-them together to validate a record passed in and depending on if the model is valid, returning back out a result
-that signifies this, otherwise we log an error if it is not valid.
+- ## C# with the London School Approach
+- ## Nunit, FakeItEasy
 
+<!--
 To make this demo possible I am using the following tools:
 
 - NUnit, my test runner and assertion library
 - and FakeItEasy, a mocking library that allows for inline definitions of mocks and also exposes several
 useful tools to validate how our mocks have been interacted with
 
-Originally this was going to be live, but then I opened up my mac laptop and remembered all my bindings are windows
-based and I am 100% completely lost... So in the interest of not flapping around like a grounded fish for the next 10
-min, I will instead jump to my backup slides for this demo.
-
-
-TIMING FOR SECTION 14: 50s
 -->
 
 ---
 
-# Demo
+# Example Time
+
+- ## C# with the London School Approach
+- ## Nunit, FakeItEasy
+- ## Live demo? More like live mistake!
 
 <!--
-FALL BACK TO WALKTHROUGH IF IN DOUBT, blame time left (probably true)
+Originally this was going to be live, but then I opened up my mac laptop and remembered all my bindings are windows
+based and I am 100% completely lost... So in the interest of not flapping around like a grounded fish for the next 10
+min, I will instead jump to my backup slides for this demo.
 
-- v1 - starting point
-- v2 - red - ValidateCarInfoCommandHandler not defined
-- v3 - green - implemented missing methods, test now passes
-- v4 - red - add Handler method, it doesnt exist
-- v5 - green - implement handle method
-- v6 - refactor - give the test a name that makes sense
-- v7 - red - update HandleAsync return CarInfoUpdateResult + validate result not null
-- v8 - green - updated return type
-- v9 - red - update default result success to false
-- v10 - green - update success in CarInfoUpdateResult true in implementation
-- v11 - refactor - extract good info fake into method
-- v12 - refactor remove redundant test
-- v13 - red - add validate test failing build as Validator interface does not exist
-- v14 - red - implement validator interface
-- v15 - green - call validate
-- v16 - red - Create negative test scenario that returns false (we always return true atm)
-- v17 - red - return validate as result, breaking a test (as validate not return true unless mock setup)
-- v18 - green - setup happy path
-- v19 - red - Faker cannot play nice with ILogger.LogError extensions
-- v20 - green - extracted basic ILogger adapter and implement
-- v21 - refactor to use alternate mock, comment out log to prove the green test still fails if missing implementation
+- Note to self: If I swap to Windows machine in the future, blame my macOS keybindings
+- note to self 2: Don't read above note out aloud
 -->
 
 ---
@@ -994,7 +1167,7 @@ public class ValidateCarInfoCommandHandler_Tests
 }
 ```
 
-```cs {*|3,8|*}
+```cs {*|3,8}
 public class ValidateCarInfoCommandHandler_Tests
 {
     private IValidateCarInfoCommandHandler _handler;
@@ -1094,6 +1267,39 @@ public class ValidateCarInfoCommandHandler_Tests
     }
 }
 ```
+````
+
+<!--
+Next up we update our Test to call the method that we will be implementing called Handle Async
+
+{click}
+
+The only issue here is what do we place as the argument? In this situation we will be receiving a record type
+called CarInfo to pass in but how should we define this new CarInfo instance we are going to use
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(???);
+        Assert.Pass();
+    }
+}
+```
 
 ```cs
 public class ValidateCarInfoCommandHandler_Tests
@@ -1121,13 +1327,6 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Next up we update our Test to call the method that we will be implementing called Handle Async
-
-{click}
-
-The only issue here is what do we place as the argument? In this situation we will be receiving a record type
-called CarInfo to pass in but how should we define this new CarInfo instance we are going to use
-
 {click}
 
 we don't know anything about CarInfo, however In this demo it's actually a pretty simple record, but there are times in which
@@ -1162,6 +1361,40 @@ public class ValidateCarInfoCommandHandler_Tests
 }
 ```
 
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
+````
+
+<!--
+{click}
+
+This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
+to get from failing code to passing code. This includes in our test suites.
+
+A cool thing about this approach is we are still using a record type when we define a mock this way. This means that we 
+are able to use the records `with` syntax to modify individual properties
+-->
+
+---
+
+````md magic-move
 ```cs
 public class ValidateCarInfoCommandHandler_Tests
 {
@@ -1227,21 +1460,11 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-{click}
-
-This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
-to get from failing code to passing code. This includes in our test suites.
-
-A cool thing about this approach is we are still using a record type when we define a mock this way. This means that we 
-are able to use the records `with` syntax to modify individual properties
-
-{click}
-
-In the past, I've found that constructing complicated record type... especially those with many nested structures 
+{click} In the past, I've found that constructing complicated record type... especially those with many nested structures 
 generated from a schema... can be a lot of work. I used to take a snapshot of what the data needed to look like, then 
 read that snapshot in as part of my test setup, followed by JSON decoding it into my test's starting record.
 
-But now all I have to do is define a simple little mock
+But now all I have to do is define a simple little mock, then use the `with` keyword to customise
 -->
 
 ---
@@ -1303,6 +1526,36 @@ public class ValidateCarInfoCommandHandler_Tests
     }
 }
 ```
+````
+
+<!--
+We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
+test we have been filling out we can see that some code cleaning up could be completed to improve upon the test suite
+we are working on. In this situation that change is to rename the test to explain what we are trying to achieve
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler_Tests
+{
+    private IValidateCarInfoCommandHandler _handler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _handler = new ValidateCarInfoCommandHandler();
+    }
+
+    [Test]
+    public async Task Test1()
+    {
+        CarInfoUpdateResult result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        Assert.Pass();
+    }
+}
+```
 
 ```cs
 public class ValidateCarInfoCommandHandler_Tests
@@ -1326,20 +1579,13 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
-test we have been filling out we can see that some code cleaning up could be completed to improve upon the test suite
-we are working on. In this situation that change is to rename the test to explain what we are trying to achieve
-
-{click}
-
-That's right, we don't have to exclusively use the refactor step on our code implementation, quite often it makes sense
+{click} We don't have to exclusively use the refactor step on our code implementation, quite often it makes sense
 to take the time to tidy up and maintain our tests. This can come from something as simple as renaming a method or variable
 to extracting shared functionality between tests so that it can be shared.
 
 You can even go as far as extracting useful functionality of your test suites into utilities of which we write their 
-very own tests for! We won't be going this far for the example but the world is our oyster.
-
-Up next why don't we start writing code towards our implementation!
+very own tests for! We won't be going this far for the example but the world is our oyster. Up next why don't we start 
+writing code towards our implementation!
 -->
 
 ---
@@ -1426,6 +1672,28 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 
 // public record CarInfoUpdateResult(bool Successful);
 ```
+````
+
+<!--
+Now that we have our failing test due to our implementation returning null what would be the correct solution to update
+our implementation to such that the test passed?
+
+-->
+
+---
+
+````md magic-move
+```cs
+public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
+{
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        return null;
+    }
+}
+
+// public record CarInfoUpdateResult(bool Successful);
+```
 
 ```cs
 public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
@@ -1441,12 +1709,7 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-Now that we have our failing test due to our implementation returning null what would be the correct solution to update
-our implementation to such that the test passed?
-
-{Click}
-
-That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
+{click} That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
 to mean we return a new result object with true pasted directly inside of it. We are taking the simplest approach
 because as much as we think we know the solution, as we add more and more tests to cover each requirement
 the actual end implementation will show itself.
@@ -1456,6 +1719,10 @@ un-covered functionality which can lead to bugs and often we will have incorrect
 re-write that code anyway.
 -->
 
+---
+dragPos:
+  "'circleOne'": 521,292,168,40
+  "'circleTwo'": 672,167,168,40
 ---
 
 ````md magic-move
@@ -1482,6 +1749,9 @@ public class ValidateCarInfoCommandHandler_Tests
 ```
 ````
 
+<v-drag pos="'circleOne'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
+<v-drag pos="'circleTwo'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
+
 <!--
 We have successfully gone from red to green, so that means we now have another opportunity to refactor.
 Again we will be looking into the test suite itself to see what could be improved. 
@@ -1489,7 +1759,6 @@ Again we will be looking into the test suite itself to see what could be improve
 I can see both some duplication and some legibility improvements that could be made here
 
 {click}
-
 For now the car info mock is still 100% acceptable, what isn't acceptable is that we have duplication
 in the repeated implementation of it as well as no solid story behind what does A Fake CarInfo even represent.
 -->
@@ -1947,16 +2216,15 @@ For now I will just be happy with how it is.
     [Test]
     public async Task HandleAsync_Should_Log_Error_If_Validation_Failed()
     {
-        var carName = "Ford";
         var carInfo = GetGoodCarInfo() with
         {
-            CarName = carName
+            CarName = "Ford"
         };
         A.CallTo(() => _validator.Validate(carInfo)).Returns(false);
         
         await _handler.HandleAsync(carInfo);
         
-        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName))
+        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", "Ford"))
             .MustHaveHappenedOnceExactly();
     }
 ```
@@ -2004,7 +2272,7 @@ We will go with the latter approach
 ---
 
 ````md magic-move
-```cs{1-4|*}
+```cs{1-4}
 public interface ILog
 {
     void LogError(string? message, params object?[] args);
@@ -2035,9 +2303,37 @@ extract a testable interface. Of which this adapter is an example of such.
 
 What I have done here is gone into the implementation of the Logger extensions and stolen this definition, of which
 I am now going to expose under the ILog interface.
+-->
 
+---
+
+````md magic-move
+```cs{1-4|*}
+public interface ILog
+{
+    void LogError(string? message, params object?[] args);
+}
+
+public class LogAdapter : ILog
+{
+    private readonly ILogger _logger;
+
+    public LogAdapter(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+
+    public void LogError(string? message, params object?[] args)
+    {
+        _logger.LogError(message, args);
+    }
+}
+```
+````
+
+<!--
 {click}
-
 The Log Adapter class may look very simple, this is for a reason... We won't have any tests covering this adapter, which
 means we need to lower the risk of implementing a bug here. Given all we wanted to do was to update the interface we were
 coding against to be testable, then this is all that we need to do
@@ -2112,6 +2408,8 @@ convenience based methods inside of your mock implementation and much more
 
 ---
 class: small-code
+dragPos:
+  qr: 784,20,176,176
 ---
 
 ````md magic-move
@@ -2144,7 +2442,11 @@ public class FakeLogger : ILogger
 ```
 ````
 
+<img v-drag="'qr'" src="/tddqr.png" />
+
 <!--
+No I don't expect you to memorise this, QR code links to this incomplete-ish implementation
+
 Thanks to how flexible the State generic can be there is some fairly gnarly casting that needs doing and in the example
 I have shown here, and there are still flaws but this is roughly what you can arrive at as a mock for the I Logger.
 
@@ -2155,44 +2457,142 @@ The best part about all this is if you want to include **this** in your very own
 project, why not build out your very own logging mock using test driven development. You start
 out with nothing implemented, first you write a test for the IsEnabled property, next comes a test that asserts that your 
 able to retrieve the latest logs level, next the message, so on and so forth.
-
-timing for section 15 (demo): 12m 20s
 -->
 
 ---
+clicksStart: 1
+---
+
+# Demo Recap
+
+<v-clicks>
+
+- ## Always write a failing test before you write prod code
+- ## The quickest/dirtiest/silliest solution is the best solution
+
+</v-clicks>
 
 <!--
 With the demo out of the way, its no better time than ever to go over what we just saw. Firstly whenever we start out working
 on our code we ALWAYS start with a failing test.
 If we are writing production code and there isn't a failing test then we are failing.
 
+{click}
 From there we focused on fixing any compilation or failed test such that we could get back into a green state.
 The golden rule there being that we take the path of least resistance to get back 
 green, even if that step feels a little silly, if it completes another red green cycle it is the correct solution.
-We will simply form another cycle to deal with the sillyness.
+We will simply form another cycle to deal with the silliness.
 
+-->
+
+---
+clicksStart: 3
+---
+
+# Demo Recap
+
+<v-clicks>
+
+- ## Always write a failing test before you write prod code
+- ## The quickest/dirtiest/silliest solution is the best solution
+- ## Refactor out duplication add clarity
+
+</v-clicks>
+
+<!--
 Next where it would make sense we would take the time to refactor, this can be as simple as renaming a test
 into one that explained what the test was achieving OR it could end up being changes to code through refactoring
 the code under test or even the tests themselves
 
+-->
+
+---
+clicksStart: 4
+---
+
+# Demo Recap
+
+<v-clicks>
+
+- ## Always write a failing test before you write prod code
+- ## The quickest/dirtiest/silliest solution is the best solution
+- ## Refactor out duplication add clarity
+- ## Mocking can set-up and validate code
+
+</v-clicks>
+
+<!--
 We took to using mocking to both validate the internal interactions of our unit and to also substitute
 out the results of calling into our mocks. By doing so we were able to exercise the app to it's fullest and
 ensure that every edge case inside our unit was working as expected.
 
-Finally when third party code got in the way of our testing we took to the adapter pattern to extract a testable interface. 
-By doing so, every interaction within our codebase
-is mockable and controllable and any logic that could lead to a bug can be isolated and tested.
-
-timing for section 16: 1m 15s
 -->
 
 ---
+clicksStart: 5
+---
 
-## Thank You!
+# Demo Recap
+
+<v-clicks>
+
+- ## Always write a failing test before you write prod code
+- ## The quickest/dirtiest/silliest solution is the best solution
+- ## Refactor out duplication add clarity
+- ## Mocking can set-up and validate code
+- ## Adapt away any issue that stops you from testing
+
+</v-clicks>
 
 <!--
+Finally when third party code got in the way of our testing we took to the adapter pattern to extract a testable interface. 
+By doing so, every interaction within our codebase
+is mockable and controllable and any logic that could lead to a bug can be isolated and tested.
+-->
 
+---
+layout: center
+---
 
+# Final Thoughts
+
+<!--
+Coming into this session I am sure we have had a bunch of differently experienced developers. From the new to testing,
+those who begrudgingly add test around their code to keep SonarQube happy and maybe even a few people who have a whole
+lot of testing experience.
+
+For those who are new, I hope that this can serve as some inspiration to look deeper into the concepts of red, green
+refactor.
+
+-->
+
+---
+layout: center
+---
+
+# Final Thoughts
+
+<!--
+Those of us out there who know their way around a tdd cycle but never saw the point, I hope that this gets you excited
+to give a more structured approach a go, check out Kent Becks book on it if you can get the chance.
+
+Finally to those out there who are experienced test driven developers, I am sure many of you have dismissed mocking
+approach of London School. I really hope that you can use the concepts of adapters and fluent mocking frameworks
+to your advantage and given the London approach another go.
+-->
+
+---
+layout: center
+---
+
+## Thank You! 
+
+Questions (time permitting)
+
+<!--
+**REMINDER**
+
+Move to sponsor slide after questions
 -->
 
 ---
@@ -2200,6 +2600,10 @@ layout: cover
 background: /sponsor.png
 dimBackground: false
 ---
+
+<!--
+Thank-you again to all the sponsors
+-->
 
 ---
 layout: center

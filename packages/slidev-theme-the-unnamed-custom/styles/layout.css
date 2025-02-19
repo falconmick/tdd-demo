@@ -67,6 +67,11 @@
   --slidev-theme-aboutme-nameColor: var(--slidev-theme-accents-red);
 }
 
+
+.spaced-h1 h1 {
+  margin-bottom: 0.2rem !important;
+}
+
 /* The unnamed styles */
 .dark #slide-content,
 .dark .bg-main,
