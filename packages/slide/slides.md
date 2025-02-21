@@ -94,8 +94,10 @@ Now before I start going over the basics of what test-driven development is I th
 More specifically why did I get sucked into the world of testing in the first place!
 
 Like most of you I started out with a surface level appreciation but at the same time a slight disdain for tests. 
-After spending the last day or two on my PR and seeing that my 60% coverage was not acceptable to our automated
-code coverage overlord; SonarQube; was the very last thing I wanted to see at 5pm on a Friday.
+
+A Theoretical for us to consider:
+After spending the last day or two on your PR, the very last thing you wanted to see at 5pm on a friday was the 
+60% coverage was not acceptable to the automated code coverage overlord **SonarQube**.
 
 -->
 
@@ -107,15 +109,15 @@ layout: center
 <h2 v-click style="position: absolute;top: 60%;">PR Failed</h2>
 
 <!--
-Nevertheless, I would work late and add some basic tests that would cover all the new code, check in my PR and head
-home late for the weekend. It didn't help my morale when I came early that next monday and the first thing I see is a review
-for obvious bug I had missed. 
+Nevertheless, you work late and add some basic tests that would cover all the new code, check in the PR and head
+home for a late start to the weekend. It didn't help morale when you came early that next monday and the first thing you
+see is a review the for obvious bug that was missed. 
 
 {click}
 
-I shouldn't have bothered staying late as my PR is now going to take a hot
-minute to fix and by then all the other developers will be busy working on their changes so my code won't get another 
-review until well after lunch.
+It feels like you shouldn't have bothered staying late as now the PR is now going to take a hot
+minute to fix and by then all the other developers will be busy working on their changes so this pull request
+isn't seeing any more reviews until well into the afternoon.
 
 -->
 
@@ -126,13 +128,12 @@ layout: center
 # A New Hope?
 
 <!--
-At times like this it can feel like test are there purely to make the Pull Request gates happy and not to make my codebase any better.
-Not much good that tests was; when It didn't even end up catching anything important.
+At times like this it can feel like test are there purely for the metrics and not to make my codebase any better.
+Not much good that tests was; when It didnt catch that simple mistake
 
 I have had my fair share of experiences like this up until one day when I was on a new team and I had the great opportunity to
-work with a seasoned veteran of the London School of Test Driven development. Having
-spent the majority of his career working on software for the stock exchange in england he was in and around all of the 
-thought leaders of the London School of Test driven development; as those ideas were first maturing.
+work with Paul, a seasoned veteran of the London School of Test Driven development. Having
+been around in the London development scene during the rise of the London approach as those ideas were first maturing.
 
 -->
 
@@ -145,22 +146,31 @@ thought leaders of the London School of Test driven development; as those ideas 
 - ## Red Green Refactor
 - ## Mocking
 - ## Adapters
+
 </v-clicks>
 
 <!--
 There were three main tools he handed over to me that completely changed how I would approach writing code moving forward.
 Those three tools were:
 
+{click}
+
 Red, Green, Refactor, which is the practice of never writing a single line of production code that doesn't first have
 a failing test.
 
-Mocking, which turned into the most valuable tool in how I designed my code moving forward
+{click}
 
-and finally Adapters, the practice of taking third party code that doesn't line up with your teams coding patterns and
+Mocking, which enabled the most valuable design tool in my utility belt
+
+{click}
+
+and finally Adapters, the practice of taking third party code that doesn't line up with your teams patterns and
 making a small translation layer.
 
 -->
 
+---
+clicksStart: 1
 ---
 
 # My First TDD Project
@@ -175,15 +185,18 @@ making a small translation layer.
 
 <!--
 With these three tools I was also handed the task of writing a fairly mundane console app that would use third party
-API's to explore a series of file systems, parse the data in it's legacy format, re-arrange the structure including 
+API's to explore a series of file systems, parse the data within, re-arrange the structure including 
 sorting into a new storage approach and then persisting. Basically a data migration project with a few bells and whistles.
 
-It was this project that I was first able to see the true power of Test Driven Development. Using mocking I discovered
-how the source code wanted to be layed out naturally through outside-in design. When I came across an impossible to
+{click}
+
+It was this project that I was first able to see the true power of Test Driven Development. Using mocking my code could
+be tested before it was complete. When I came across an impossible to
 mock third party API? Easy use an adapter to expose a more manageable interface.
 
-Finally the most powerful tool and how every line of code was written:
+{click}
 
+Finally the most powerful tool and how every line of code was written:
 -->
 
 ---
@@ -210,7 +223,7 @@ I implement the fix with as little effort as possible but importantly made the f
 
 {click}
 &nbsp;**Refactor**&nbsp;
-Now that my new feature has proven that the test will fail without it, but will succeed with it
+Now that my new feature has got its implementation
 I can take a short second to re-arrange and tidy up any mess left over by the previous two steps.
 
 -->
@@ -281,12 +294,14 @@ as the origin of Detroit School.
 - ## London
 
 <!--
-Following the explosion of interest in Extreme Programming many community groups were formed around learning and implementing
-these ideas, one such group was the London based Extreme Tuesday Club. This group helped Steve Freeman
-and Nat Pryce form more techniques and approaches which eventually resulted in the other most well known testing bible,
-"Growing Object-Oriented Software, Guided by Tests". This book expanded upon Detroit School; but was more focused around
-testing a singular unit with mocks, whereas Detroit was all about testing the combined interactions of our classes as a singular
-unit.
+Following the **explosion** of interest in **Extreme Programming**, many **community groups** formed to learn and 
+implement these ideas. One such group was the **London-based Extreme Tuesday Club**. This group played a key role in 
+helping **Steve Freeman** and **Nat Pryce** refine techniques and approaches, ultimately leading to another of the most 
+well-known **testing bibles**—*"Growing Object-Oriented Software, Guided by Tests."*  
+
+This book expanded on the **Detroit School** but took a different focus. While **Detroit** emphasized testing the 
+**combined interactions** of classes as a **singular unit**, this approach centered on testing **individual units** 
+using **mocks**.
 -->
 
 ---
@@ -326,11 +341,14 @@ mocked out the database out with an in-memory fake which you then asserted again
 - ## You can refactor with confidence
 
 <!--
-If this is your codebase now, then great; you can transition into the detroit school with ease, just make sure to follow
-red green refactor and you're basically there! As soon as you start making this commitment to testing all the features, 
-as you add them, you will find that refactoring can be done with much greater speed and confidence as if
-a feature is important, you will have test around it. Then if you break that feature later on when applying a fix, those 
-test you wrote 6 months ago will be there to catch you before releasing broken functionality to your users.
+If this is your **codebase** now, great! You can transition into the **Detroit school** with ease—just make sure to follow 
+**Red-Green-Refactor**, and you're basically there!  
+
+Once you commit to **testing** every feature as you add it, you'll find that **refactoring** comes with more **confidence**. 
+Why? Because if a feature is **important**, you'll have a **test** around it.  
+
+And if you break that feature later while applying a fix, those **tests** you wrote **six months ago** will be there to 
+**catch you**—before you release broken functionality to your **users**.
 -->
 
 ---
@@ -389,13 +407,16 @@ stress of having an entire set of test suites start failing can make it hard to 
 - ## Test-Splosions
 
 <!--
-There are workarounds for this issue, most importantly you can focus on making sure your entire set of suites run continuously
-so that any regressions are found at the same time as when changes are being made 
-and you can just control zed on that thang until you find the responsible line of code. But this also 
-just comes with the territory of testing collections of code in multiple locations and just is the price you pay for 
-simpler to write tests. Alternatively this type of hardship can be nearly eliminated by London school as you NEVER should
-be re-testing shared functionality between classes and the only thing that can break a test for a given suite is code
-that exists in that very class as the unit of each test is at a class level
+There are **workarounds** for this issue. Most importantly, you can focus on making sure your **entire test suite** runs continuously,  
+so that any **regressions** are caught **as soon as** changes are made. If something breaks, you can just **control zed on that thang**  
+until you find the **responsible line of code**.  
+
+But this kind of challenge is just **part of testing**— with detroit. If your unit of test has many
+overlapping suites, you will find that you can topple a **house of cards** with a **smallest** of a mistake.
+
+Alternatively, this kind of **pain** can be nearly eliminated by the **London School** approach. With London School,  
+you should **never** be re-testing shared functionality between classes. The only thing that can break a test in a given suite  
+is code that exists **within that very class**, since each test treats the **class itself** as the unit under test.
 -->
 ---
 
@@ -406,17 +427,18 @@ that exists in that very class as the unit of each test is at a class level
 - ## Short term speed loss
 
 <!--
-Some would argue that another reason to avoid the Detroit school or test driven development all together
-is the short term speed loss. 
-This reasoning is only really true in very small scale changes to existing codebases that
-don't want to co-operate with tests. There is a very large chance that in the long run taking the time to pay for the
-test now; will save a lot of hear-ache in the future, but on occasion it's just not worth it. 
+Some would argue that another reason to avoid the **Detroit school**—or even **Test-Driven Development** altogether—is 
+the **short-term speed loss**.  
+But this concern really only applies to **small-scale changes** in existing **codebases** that don't **cooperate with tests**.  
 
-It's important to note here that if you are trying to migrate to test driven development 
-that the Detroit school is by far the quicker approach to take
-over London.
+In the **long run**, though, taking the time to **write tests now** can save a lot of **headache later**. That said, 
+there are **occasional cases** where it just **isn't worth it**.  
 
-It's for this reason that quite often if your jumping into an existing codebase Detroit might be the only logical approach.
+It's important to note that if you're trying to **migrate to TDD**, the **Detroit school** is by far the 
+**quicker approach** compared to **London**.  
+
+For this reason, when jumping into an **existing codebase**, **Detroit** might be the **only logical approach**.  
+
 -->
 
 ---
@@ -431,14 +453,13 @@ It's for this reason that quite often if your jumping into an existing codebase 
 </v-clicks>
 
 <!--
-Bias warning, I love the London approach
+**Bias warning**—I love the **London approach**.  
 
-London school is bar far, so much harder to sell without first experiencing it, I can only say that it's worth taking
-the time to make a point to just try it out and see where the code takes you.
+The **London school** is, by far, much harder to sell without first experiencing it. 
+But I can only say—it's worth taking the time to try it out and see **where the code takes you**.  
 
-That is actually one of it's largest draws, especially when compared to Detroit, when you write London there less
-thinking out ahead of time what classes will be required to form your tests around.
-
+And that’s actually one of its biggest draws, especially when compared to **Detroit**. When you write in **London style**, 
+there’s less need to think ahead about what classes will be required to form your tests around.
 -->
 
 ---
@@ -450,15 +471,15 @@ thinking out ahead of time what classes will be required to form your tests arou
 - ## Tests come fast and without dependencies
 
 <!--
-Instead you naturally start at the origin of your feature, such as the API endpoint, and you use your tests to define
-the structure of your class. If the first step of accepting an incoming request is to validate the input to make sure
-it is valid, then you write a test that asserts this. It doesn't matter that the validator interface doesn't exist, 
-you can go and define it. Once you have your interface that will be able to accept the input and return a suitable
-output, you skip the implementation step of the validator and instead define a mock for your new interface and
-utilise the assertion tools provided by the mock to ensure that the validator is called and then later in another
-test once you implement the call you can then stub out the functionality, allowing for easy testing setup
-to validate each unique and potentially hard to reproduce branch in your class.
+Instead, you naturally start at the **origin** of your feature—such as the **API endpoint**—and use your **tests** to 
+define the structure of your class. If the first step in handling an **incoming request** is to **validate the input**, then you write a test to assert this. 
 
+It doesn’t matter that the **validator interface** doesn’t exist yet—you can go ahead and define it. Once you have an 
+interface that accepts the input and returns a suitable output, you **skip the implementation** and instead create a 
+**mock** for your new interface. You then use the **assertion tools** provided by the mock to ensure that the validator is called.
+
+Later, in another test, once you implement the call, you can **stub out the functionality**, making it easy to set up 
+tests that validate each **unique** and potentially **hard-to-reproduce** branch in your class.
 --> 
 
 ---
@@ -494,13 +515,14 @@ designing much more understandable API's as I develop rather than coming back an
 - ## Everything is testable
 
 <!--
-Because we always mock every single call, and we never depend upon code external to our unit, we also leave our entire
-codebase open to substitution at any time. The best example of this is when you later on in the project run into
-a bad race condition bug that is due to fractions of a second differences in calls to a DateTime Now function. If 
-we had of been testing without mocks all of our time sensitive code that is causing us headaches will be un-mockable and
-near impossible to re-create as a test. When using London everything is injected anything can be mocked. This is why you will
-even end up mocking DateTime functionality. 
+Because we **mock every single call** and never depend on external code within our unit, our entire **codebase remains 
+open to substitution** at any time.  
 
+A great example of this is when, later in the project, you encounter a **race condition bug** caused by tiny differences 
+in calls to **DateTime.Now**. If we had been testing **without mocks**, all our time-sensitive code—now causing us 
+headaches—would be **un-mockable** and nearly impossible to reproduce in a test.  
+
+With the **London style**, everything is **injected**, meaning **anything can be mocked**.
 -->
 
 ---
@@ -587,24 +609,24 @@ public class CarInfo
 <v-drag pos="'crossTwo'" v-mark="{ at: 4, color: '#934', strokeWidth: 30, type: 'crossed-off' }"></v-drag>
 
 <!--
-If a team does split the ticket up into say
-**Harry** working on mapping the user input into a domain model and **Kiara**
-that will persist our data into our SQL database, we sometimes will run into the unfortunate situation
-in which both developers implement their own version of the same file. For example the mapping ticket implements
-the CarInfo model as a record, 
+If a team splits the ticket, assigning **Harry** to map the user input into a domain model and **Kiara** to handle SQL 
+persistence, they might run into an unfortunate issue—both developers end up implementing their own version of the **same file**.
 
-{click} and the SQL persistence ticket developer also implement CarInfo, 
-but because they're using Entity Framework, 
+{click} For example, **Harry**  defines `CarInfo` as a **record**.
 
-{click} a library that uses class mutation to track field updates to generate SQL 
-queries their class is a plain old boring class that expects it can be mutated.
+{click} Meanwhile, **Kiara** also implements `CarInfo`, but because they're using **Entity Framework**, 
 
-{click} One of them now needs to update their codebase, neither of them are happy. 
+a library that **relies on class mutation** to track field updates for generating SQL queries, their version is a 
+**mutable class** instead.
 
-{click}This is why quite often when a team writes up their tickets they can very often turn the feature ticket
-into the entire ticket and not split up it into the individual steps required to complete the feature. If instead of
-6 small tickets we had a single big ticket, one developer can grab it and see it from start to end without conflicts.
+{click} Now, one of them has to **rework their implementation**, and neither is happy about it.
 
+{click} This is why, quite often, when a team writes up their tickets, they end up turning **the feature ticket** into 
+**the entire ticket**, rather than breaking it down into the individual steps needed to complete the feature.  
+
+If, instead of **six small tickets**, we had **one big ticket**, a single developer could pick it up and work through it 
+**from start to finish** without running into these conflicts. But now our work
+is in **bigger chunks** which can lead to **half complete** sprints with **no tickets** left
 -->
 
 ---
@@ -696,12 +718,14 @@ making it this hard to get work done can be a problem.
 - ## Refactoring takes effort
 
 <!--
-With that said I have found that with a small amount of bending of the rules one can cut paste refactor the unit test themselves
-such that the original tests magically move across without going through proper red-green-refactor process. One other solution
-would be to once a unit test is complete to take the time to go back over the suite and remove the scaffolding test such
-that all that remains are tests that are validating the extremities of the unit like that we return success once the
-API returns OR the unit tests that shows we return a validation error. This is the by the book approach to managing this 
-complexity, I just have always had a hard time getting rid of my tests and just want to keep all my babies.
+With that said, I've noticed that with a **small bend** in the rules, you can **cut, paste, and refactor** the unit tests 
+themselves—essentially **shuffling the original tests** into place without ever going through the proper **red-green-refactor** process.  
+
+Another approach would be to, once a unit test is complete, **go back** through the suite and **remove the scaffolding tests**, 
+leaving only those that **validate the extremities** of the unit. This is the **by-the-book** way to manage this complexity.  
+
+But honestly? **I’ve always struggled** with deleting my tests—I just want to **keep all my babies.**  
+
 -->
 
 ---
@@ -724,11 +748,11 @@ concern at a time through the isolation that mocking allows.
 ---
 layout: center
 dragPos:
-  itDepends: 356,204,265,72
+  itDepends: 356,345,265,72,7
 ---
 
 # Which one should I be following?
-<h1 v-drag="'itDepends'">It Depends</h1>
+<h1 style="text-wrap: nowrap" v-drag="'itDepends'">It Depends</h1>
 
 <!--
 The answer to this is everybody's favourite; it depends; however this time we get to complete that sentence by saying
@@ -1001,12 +1025,14 @@ such as data initialization or what ever other test utility we can put our minds
 - ## Concrete Implementation of Interfaces
 
 <!--
-This is a common approach when using the Detroit School, by making a concrete implementation we can allow a series of
-interactions to add up together. we might for example have a test that first finds a value
-in the database and then modifies it. If we hadn't of mocked this the next run of the test might have not worked now 
-that the data is now modified OR if we had used a substitution framework instead of our handcrafted mock we
-would have to write a fair bit of unique setup code.
+This is a **common approach** in the **Detroit School** of TDD. By creating a **concrete implementation**, 
+we allow a series of interactions to build up naturally.  
 
+For example, we might have a **test** that first **retrieves a value** from the **database** and then **modifies it**. 
+Without mocking, the next test run might **fail** because the data has **already changed**.  
+
+Alternatively, if we had used a **substitution framework** instead of a **handcrafted mock**, we would have needed to write 
+**a lot of extra setup code** to handle these interactions.
 -->
 
 ---
@@ -1048,11 +1074,11 @@ to also need to be stricter with the separation of logic to data and also the us
 - ## Remove implementation details from third-party code
 
 <!--
-The adapter pattern is not too strict of an idea, in that third party code instead of being directly relied upon, is 
-instead abstracted away by an adapter layer, which can and often will help remove implementation details from our
-dependant codebase, say for example our adapter might provide a getter for the third party that both sets up a
-factory provided and then executes it all under the much simpler and relevant to our codebase pattern.
+The **Adapter Pattern** isn’t a strict rule, but rather a way to introduce an **adapter layer** that abstracts away 
+**third-party code** instead of relying on it directly. This can help remove **implementation details** from our dependent codebase.  
 
+For example, an **adapter** might provide a **getter** that first sets up a **factory** for the third-party component 
+and then executes it—all while keeping the interaction **simpler** and more **aligned** with how we write code in our codebase.
 -->
 
 ---
@@ -1825,24 +1851,24 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-{click again}
+{click again}  
 
-This is fixed by extracting that repetition into a new method GetGoodCarInfo.
-By extracting a method we have achieved two things.
-A) If later on more work is required to define a Car Info model, we will not need to fix multiple tests, but instead this one
-implementation
+This is fixed by extracting the repeated code into a new method: **GetGoodCarInfo**.  
 
-And B) when we extracted the method we included a hint to the reader of what we are constructing. Of which in 
-this case is a good car info model. That way later in our tests if we see somebody modifying this good car info
-we know that what they are actually doing is making non good car info.
+By doing this, we achieve two things:  
 
-By using this pattern it can be much more likely that our test assertions are asserting a result that is due to our 
-change and less likely that the test case is accidentally asserting bad data that we missed.
+1. If we later need to refine the **Car Info model**, we won’t have to modify multiple tests—just this **one implementation**.  
 
-{click}
+2. When extracting the method, we also add a **clear hint** to the reader about what we are constructing: a **good car info model**. 
+This makes it obvious that if someone later modifies **GoodCarInfo**, they are acting **with purpose**.  
 
-I have made one last refactor, I have removed the original test as now I am satisfied enough with our good case that I
-don't see any value in retaining the original test.
+By following this pattern, our test assertions are more likely to validate the **intended changes** rather than 
+accidentally assert against **bad data** that we overlooked.  
+
+{click}  
+
+For one final refactor, I’ve **removed the original test**. Now that I’m confident in our **good case**, 
+keeping the original test no longer adds value.
 -->
 
 ---
