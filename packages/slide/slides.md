@@ -1036,7 +1036,7 @@ dragPos:
 <v-drag pos="'dragons'"><h1>Here be Dragons</h1></v-drag>
 
 <!--
-The only thing to keep in mind here is even though these frameworks do have some support for classes, they are limited
+The only thing to keep in mind here is even though these frameworks do have some support for classes in languages like C#, they are limited
 and a lot of the time a mock around a class will fail. It is for this reason that when using lots of mocking you tend
 to also need to be stricter with the separation of logic to data and also the usage of adapters on third party code.
 -->
@@ -1078,8 +1078,7 @@ without integration testing, so if your adapter grows too much you will end up h
 
 <!--
 When following the London approach of test driven development the use of adapters
-will be a lot more extreme than you might expect, 
-
+will be a lot more extensive than you might expect,
 -->
 
 ---
@@ -1107,10 +1106,8 @@ TDD should be implemented in my C# example I will dig into adapters further.
 <!--
 For this example I will use C# and the London School approach as this is my bread and butter, With this I will be able 
 to give a concrete example of how Test Driven Development can be implemented. 
-I will be taking all the three key concepts from above and combining
-them together to validate a record passed in and depending on if the model is valid, returning back out a result
-that signifies this, otherwise we log an error if it is not valid.
-
+I will be taking all the three key concepts from today and combining
+them together to validate a record passed in and then return that result. If the validation failed I will also log that
 -->
 
 ---
@@ -1199,8 +1196,6 @@ Now we add in the handler which we will be testing `ValidateCarInfoCommandHandle
 The red phase of the cycle is in that this class does not exist. A compilation error is as valid of a red steps
 as a failing test is.
 
-{click}
-
 Our next step is green, which we will achieve through implementing the Update Car Info Command Handler
 with as little effort as possible
 -->
@@ -1222,8 +1217,7 @@ public interface IValidateCarInfoCommandHandler
 <!--
 And that's it
 
-Note how all I need do to get into the green is simply define the interface and the implementation so that is all
-I have done
+Note how all I need do to get into the green is simply define the interface and the implementation
 -->
 
 ---
@@ -1641,21 +1635,17 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break
+Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break {click}
 either our production code OR test suite. This is the good scenario test, as we add more tests to our codebase this
 one test will quite often act as the starting point for a new test and will contain all required mocking setup code to 
 achieve a passing good scenario
-
-{click}
 
 This test asserts that given an acceptable input, we expect the result to not
 be null and to have the Successful flag set to true!
 
 As we move forward we will find that this test does need to be updated such that it will apply the basic mocks required to achieve
 a passing good scenario test. This shared setup code can either exist as a setup method we call at the top of each of our tests
-or we could use the setup method. 
-
-For now our happy path does not have any setup code so I will leave it empty.
+or we could use the setup method provided by our test runner.
 -->
 
 ---
@@ -1675,9 +1665,7 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-Now that we have our failing test due to our implementation returning null what would be the correct solution to update
-our implementation to such that the test passed?
-
+Now that we have our failing test due to our implementation returning null what would be the correct implementation such that to get our test to pass?
 -->
 
 ---
@@ -1961,8 +1949,7 @@ to start writing the test I implement our new test scenario by copy pasting the 
 
 {click}
 
-adding in our assertion that some mock we are yet to define will have had it's Validate method called and our carInfo 
-passed in.
+now I add in on an assertion that a new mock we are yet to define will have had it's Validate method called 
 
 {click}
 
@@ -2046,7 +2033,7 @@ From here we now can implement the solution to our failing test. First we need t
 
 {click}
 
-of which I have also updated our test to pass in our mock to this constructor. Next we need to come up with an
+of which I have also updated our test to pass in our mock to this constructor aswell. Then we need to come up with an
 ingenious solution... Not really
 
 {click}
@@ -2081,11 +2068,11 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-now let's have a look at the way we can set up our mock of validate such that it will return false
+From here we need another test, in this one we will be mocking out what Validate returns, such that it returns false
 
 {click}
 
-The syntax isn't too important here, what you should  take away from this definition is that when:
+The syntax isn't too important here, what you should  take away from this is that when:
 A call to Validate with any carInfo parameter passed in, we need to return false
 -->
 
@@ -2181,17 +2168,17 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-turns out this test is now failing due to
+turns our happy path test is now failing due to
 
 {click}
 
-our Successful value actually being false!! This has happened because we had forgotten to update the happy path code
-to correctly set up to validate mock to return true. I have found that the happy case breaking upon fixing the new test 
+our Successful value actually is actually false!! This has happened because we had forgotten to update the happy path code
+to correctly set up to validate mock to return true. I have found that the happy case breaking upon completion of a red green cycle
 is just a part of a growing test suite and the best solution is to just amend the happy path as we go.
 
 {click}
 
-I won't be doing any further refactoring here, but it's quite common that mock setup code like what we just added here
+I won't be doing any further refactoring here, but our mock setup code that we just added
 might be worth making reusable, in which we could extract out the setup into a method and then
 allow the caller to pass in true or false as to make this more convenient.
 
@@ -2235,8 +2222,7 @@ All that remains in our little demo is to add in logging for invalid cars!
 
 {click}
 
-in our new test we are setting up our scenario with a specific value for our good car value such that our assertion
-later specifically test that we received the expected car name
+in our new test we are setting up our scenario with a specific value for our car info to make our latter assertions more deliberate feeling
 
 {click}
 
@@ -2260,7 +2246,7 @@ FakeItEasy.Configuration.FakeConfigurationException :
 <!--
 OH no! It appears that the interface that we relied upon isn't being used in a test-friendly way.
 
-Under the hood, the ILogger interface only defines a single method, and what we actually called was an
+Under the hood, the ILogger interface only defines a single method, what we actually called was an
 extension method!
 
 When this happens there are only two workarounds, you either implement a hand rolled mock, that exposes what 
@@ -2308,7 +2294,7 @@ I am now going to expose under the ILog interface.
 ---
 
 ````md magic-move
-```cs{1-4|*}
+```cs
 public interface ILog
 {
     void LogError(string? message, params object?[] args);
@@ -2333,10 +2319,8 @@ public class LogAdapter : ILog
 ````
 
 <!--
-{click}
-The Log Adapter class may look very simple, this is for a reason... We won't have any tests covering this adapter, which
-means we need to lower the risk of implementing a bug here. Given all we wanted to do was to update the interface we were
-coding against to be testable, then this is all that we need to do
+The Log Adapter class may look very simple, but this is for a reason... We won't have any tests covering this adapter, which
+means we need to lower the risk of implementing a bug here. 
 
 I have updated our test suite to now use the ILog interface instead of Microsoft's ILogger
 Our ILog interface has the same signature as the extension so this works without issue
@@ -2399,11 +2383,11 @@ now that our test suite is setup and our testable interface is ready to go, we c
 and with that our implementation is complete!
 
 One of the downsides to adapting out ILogger was that microsoft chose to expose only a single method because
-there are ALLOT of overrides for information, error and this results in many possible permutations that we will be stuck coding!
+there are ALLOT of overrides for information, error and more.
 I personally feel like this is OK, however specifically for ILogger I would typically use a hand rolled mock instead.
 
 This is because it's possible to add some really cool testing tech as such as tracking of scoped fields and exposing 
-convenience based methods inside of your mock implementation and much more
+convenience based methods inside of your mock implementation
 -->
 
 ---
@@ -2453,7 +2437,7 @@ I have shown here, and there are still flaws but this is roughly what you can ar
 With this mock we have access to write assertions on the log level, the exact message and every other field that makes
 up the log call including the template parameters and scoped log state
 
-The best part about all this is if you want to include **this** in your very own C# projects you can take this as a take home 
+The best part about all this is if you want to include **this mock** in your very own C# projects you can take this as a take home 
 project, why not build out your very own logging mock using test driven development. You start
 out with nothing implemented, first you write a test for the IsEnabled property, next comes a test that asserts that your 
 able to retrieve the latest logs level, next the message, so on and so forth.
@@ -2480,9 +2464,8 @@ If we are writing production code and there isn't a failing test then we are fai
 {click}
 From there we focused on fixing any compilation or failed test such that we could get back into a green state.
 The golden rule there being that we take the path of least resistance to get back 
-green, even if that step feels a little silly, if it completes another red green cycle it is the correct solution.
+green, even if that step feels a little silly, then it is the correct solution.
 We will simply form another cycle to deal with the silliness.
-
 -->
 
 ---
@@ -2501,9 +2484,8 @@ clicksStart: 3
 
 <!--
 Next where it would make sense we would take the time to refactor, this can be as simple as renaming a test
-into one that explained what the test was achieving OR it could end up being changes to code through refactoring
-the code under test or even the tests themselves
-
+OR it could end up being changes to code through refactoring
+our production code or even our unit tests themselves
 -->
 
 ---
@@ -2523,9 +2505,8 @@ clicksStart: 4
 
 <!--
 We took to using mocking to both validate the internal interactions of our unit and to also substitute
-out the results of calling into our mocks. By doing so we were able to exercise the app to it's fullest and
+out the results of calling into our unimplemented interfaces. By doing so we were able to exercise the app to it's fullest and
 ensure that every edge case inside our unit was working as expected.
-
 -->
 
 ---
@@ -2558,12 +2539,11 @@ layout: center
 
 <!--
 Coming into this session I am sure we have had a bunch of differently experienced developers. From the new to testing,
-those who begrudgingly add test around their code to keep SonarQube happy and maybe even a few people who have a whole
+those who begrudgingly add test around their code and maybe even a few people who have a whole
 lot of testing experience.
 
 For those who are new, I hope that this can serve as some inspiration to look deeper into the concepts of red, green
 refactor.
-
 -->
 
 ---
@@ -2574,7 +2554,7 @@ layout: center
 
 <!--
 Those of us out there who know their way around a tdd cycle but never saw the point, I hope that this gets you excited
-to give a more structured approach a go, check out Kent Becks book on it if you can get the chance.
+to give a more structured approach a go, check out Kent Becks book on testing if you can get the chance.
 
 Finally to those out there who are experienced test driven developers, I am sure many of you have dismissed mocking
 approach of London School. I really hope that you can use the concepts of adapters and fluent mocking frameworks
@@ -2590,6 +2570,8 @@ layout: center
 Questions (time permitting)
 
 <!--
+Thank You
+
 **REMINDER**
 
 Move to sponsor slide after questions
