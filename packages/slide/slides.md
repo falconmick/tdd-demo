@@ -442,6 +442,8 @@ For this reason, when jumping into an **existing codebase**, **Detroit** might b
 -->
 
 ---
+clicksStart: 1
+---
 
 # Why should I use the London School?
 
@@ -455,6 +457,7 @@ For this reason, when jumping into an **existing codebase**, **Detroit** might b
 <!--
 **Bias warning**—I love the **London approach**.  
 
+{click}
 The **London school** is, by far, much harder to sell without first experiencing it. 
 But I can only say—it's worth taking the time to try it out and see **where the code takes you**.  
 
@@ -544,9 +547,9 @@ layout: two-cols
 dragPos:
   harry: 115,398,161,161
   kiara: 661,395,161,161
-  "'foo'": 394,290,40,40
-  "'circleTwo'": 825,284,40,40
-  "'bar'": 697,431,89,74
+  "'foo'": 394,295,40,40
+  "'circleTwo'": 825,290,40,40
+  "'bar'": 697,441,89,74
   "'crossTwo'": 145,441,96,79
 ---
 
@@ -909,8 +912,8 @@ This approach is known as stutter testing and can often be used in conjugation w
 ---
 layout: default
 dragPos:
-  "'circleTwo'": 364,273,30,30
-  "'circleOne'": 281,213,40,40
+  "'circleTwo'": 362,281,30,30
+  "'circleOne'": 281,216,40,40
 ---
 
 # REFACTOR
@@ -938,7 +941,7 @@ that code in.
 
 {click}
 In this specific instance our refactoring is required to remove duplication between our test which defines 4 as the
-expected result and our implementation which just parrots it back to us. 
+expected result and our implementation which just parrots it back to us.
 -->
 
 ---
@@ -1051,7 +1054,8 @@ allowing us to define inline to our test what that call will return OR even allo
 
 ---
 dragPos:
-  "'dragons'": 266,347,425,128,-27
+  "'dragons'": 433,306,425,128,-38
+  "'dragonsInvis'": 418,333,407,98,49
 ---
 
 # Mocking
@@ -1059,6 +1063,7 @@ dragPos:
 - ## Concrete Implementation of Interfaces
 - ## Substitution Frameworks
 
+<v-drag pos="'dragonsInvis'"><h1 style="color: #ffffff00">Here be Dragons</h1></v-drag>
 <v-drag pos="'dragons'"><h1>Here be Dragons</h1></v-drag>
 
 <!--
@@ -1661,8 +1666,10 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break {click}
-either our production code OR test suite. This is the good scenario test, as we add more tests to our codebase this
+Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break either our production code OR test suite. 
+
+{click}
+This is the good scenario test, as we add more tests to our codebase this
 one test will quite often act as the starting point for a new test and will contain all required mocking setup code to 
 achieve a passing good scenario
 
@@ -1735,8 +1742,8 @@ re-write that code anyway.
 
 ---
 dragPos:
-  "'circleOne'": 521,292,168,40
-  "'circleTwo'": 672,167,168,40
+  "'circleOne'": 521,310,168,40
+  "'circleTwo'": 674,178,168,40
 ---
 
 ````md magic-move
