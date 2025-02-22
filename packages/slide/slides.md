@@ -6,7 +6,7 @@ dimBackground: false
 ---
 
 <!--
-First and foremost! Thank you to all the sponsors, without them such an open an inclusive event just isn’t possible
+First and foremost! **Thank you** to all the **sponsors**, without them such an **open and inclusive event** just isn’t possible.  
 -->
 
 ---
@@ -18,11 +18,11 @@ layout: cover
 ## Seamless Solutions with TDD You Didn't Know You Needed
 
 <!-- 
-Test Driven Development has largely being dismissed by large swaths of developers, and in some cases, it's applied 
-without a clear understanding of when; and how; to use its varying tools effectively. 
-In this session I will go into the origins test-driven development;
-my personal approach;
-and how you can fully leverage its powers become a better developer. 
+**Test Driven Development** has largely been dismissed by large swaths of **developers**, and in some cases, it's applied 
+without a clear understanding of **when** and **how** to use its varying **tools** effectively.  
+In this session, I will go into the **origins** of **test-driven development**;  
+my **personal approach**;  
+and how you can fully **leverage** its powers to become a better **developer**.
 -->
 
 ---
@@ -34,7 +34,7 @@ dimBackground: false
 <!--
 Also don’t forget, sponsor bingo… Maybe after my talk though!
 
-Firstly, who am I?
+Firstly, **who am I**?
 -->
 
 ---
@@ -53,11 +53,11 @@ social3: github.com/falconmick
 ---
 
 <!--
-Hi
-I’m Michael!
-I am a full stack developer from Perth who spends his most of his days working with dotnet as a glorious virtual data plumber.
-I would like to see myself as an overly passionate tech who can’t stop getting excited about tech, 
-You can find me under the handle falconmick just about everywhere where I talk mostly about coding and console modding.
+**Hi!**  
+I’m **Michael!**  
+I am a **full stack developer** from **Perth** who spends most of his days working with **dotnet** as a glorious **virtual data plumber**.  
+I like to see myself as an **overly passionate tech nerd** who can’t stop getting **excited about tech**.  
+You can find me under the handle **falconmick** just about everywhere, where I talk mostly about **coding** and **console modding**.  
 -->
 
 ---
@@ -76,11 +76,11 @@ social3: github.com/falconmick
 ---
 
 <!--
-Throughout my career; with all the teams I have had the opportunity to work with; I have found the following to always be
-true: If you want to deliver high quality software testing your code is; without a doubt; the key deciding factor on
-how likely you are to succeed. It is not the quality or quantity of developer that matters, but instead the discipline that the
-team takes to ensure they validate their code with tests that can be run with as minimal friction in both speed and 
-resilience to change.
+Throughout my **career**; with all the **teams** I have had the opportunity to work with; I have found the following to always be 
+true: If you want to deliver **high-quality software**, **testing your code** is, without a doubt, the **key deciding factor** in how likely you are to **succeed**.  
+It is not the **quality** or **quantity** of developers that matters, but instead the **discipline** the 
+team takes to ensure they **validate** their code with **tests** that can be run with **minimal friction** in both **speed** and 
+**resilience to change**.
 -->
 
 ---
@@ -90,15 +90,14 @@ layout: center
 # A Tale as old as time
 
 <!--
-Now before I start going over the basics of what test-driven development is I thought it might be best to go over why?
-More specifically why did I get sucked into the world of testing in the first place!
+Now before I start going over the **basics** of what **test-driven development** is, I thought it might be best to go over **why**.  
+More specifically, **why** did I get sucked into the world of **testing** in the first place!  
 
-Like most of you I started out with a surface level appreciation but at the same time a slight disdain for tests. 
+Like most of you, I started out with a **surface-level appreciation** but at the same time a slight **disdain** for **tests**.  
 
-A Theoretical for us to consider:
-After spending the last day or two on your PR, the very last thing you wanted to see at 5pm on a friday was the 
-60% coverage was not acceptable to the automated code coverage overlord **SonarQube**.
-
+A **theoretical** for us to consider:  
+After spending the last **day or two** on your **PR**, the very last thing you wanted to see at **5 PM on a Friday** was that  
+**60% coverage** was not acceptable to the automated code coverage overlord, **SonarQube**.
 -->
 
 ---
@@ -109,16 +108,15 @@ layout: center
 <h2 v-click style="position: absolute;top: 60%;">PR Failed</h2>
 
 <!--
-Nevertheless, you work late and add some basic tests that would cover all the new code, check in the PR and head
-home for a late start to the weekend. It didn't help morale when you came early that next monday and the first thing you
-see is a review the for obvious bug that was missed. 
+Nevertheless, you **work late** and add some **basic tests** to cover all the new **code**, check in the **PR**, and head 
+home for a **late start** to the weekend. It didn’t help **morale** when you came in **early Monday** and the first thing you 
+see is a **review** for an **obvious bug** that was **missed**.  
 
-{click}
+{click}  
 
-It feels like you shouldn't have bothered staying late as now the PR is now going to take a hot
-minute to fix and by then all the other developers will be busy working on their changes so this pull request
-isn't seeing any more reviews until well into the afternoon.
-
+It feels like you **shouldn’t have bothered** staying late, as now the **PR** is going to take a **hot minute** to fix.  
+By then, all the other **developers** will be busy working on their **changes**, so this **pull request** 
+isn’t seeing any more **reviews** until well into the **afternoon**.
 -->
 
 ---
@@ -128,12 +126,12 @@ layout: center
 # A New Hope?
 
 <!--
-At times like this it can feel like test are there purely for the metrics and not to make my codebase any better.
-Not much good that tests was; when It didnt catch that simple mistake
+At times like this it can feel like **tests** are there purely for the **metrics** and not to make my **codebase** any better.  
+Not much good that **test** was; when it didn’t catch that **simple mistake**.  
 
-I have had my fair share of experiences like this up until one day when I was on a new team and I had the great opportunity to
-work with Paul, a seasoned veteran of the London School of Test Driven development. Having
-been around in the London development scene during the rise of the London approach as those ideas were first maturing.
+I have had my fair share of **experiences** like this up until one day when I was on a **new team** and I had the great opportunity to 
+work with **Paul**, a seasoned veteran of the **London School** of **Test Driven Development**. 
+He had been around in the **London development scene** during the rise of the **London approach** as those ideas were first maturing.
 
 -->
 
@@ -150,22 +148,21 @@ been around in the London development scene during the rise of the London approa
 </v-clicks>
 
 <!--
-There were three main tools he handed over to me that completely changed how I would approach writing code moving forward.
-Those three tools were:
+There were **three main tools** he handed over to me that completely changed how I would **approach writing code** moving forward.  
+Those **three tools** were:  
 
-{click}
+{click}  
 
-Red, Green, Refactor, which is the practice of never writing a single line of production code that doesn't first have
-a failing test.
+**Red, Green, Refactor**, which is the practice of never writing a single line of **production code** that doesn't first have a **failing test**.  
 
-{click}
+{click}  
 
-Mocking, which enabled the most valuable design tool in my utility belt
+**Mocking**, which enabled the most valuable **design tool** in my **utility belt**.  
 
-{click}
+{click}  
 
-and finally Adapters, the practice of taking third party code that doesn't line up with your teams patterns and
-making a small translation layer.
+And finally, **Adapters**, the practice of taking **third-party code** that doesn't line up with your **team’s patterns** and 
+making a small **translation layer**.
 
 -->
 
@@ -184,19 +181,19 @@ clicksStart: 1
 </v-clicks>
 
 <!--
-With these three tools I was also handed the task of writing a fairly mundane console app that would use third party
-API's to explore a series of file systems, parse the data within, re-arrange the structure including 
-sorting into a new storage approach and then persisting. Basically a data migration project with a few bells and whistles.
+With these **three tools**, I was also handed the task of writing a fairly **mundane console app** that would use **third-party APIs** 
+to explore a series of **file systems**, parse the **data within**, re-arrange the **structure** including 
+**sorting** into a **new storage approach**, and then **persisting**. Basically, a **data migration project** with a few bells and whistles.  
 
-{click}
+{click}  
 
-It was this project that I was first able to see the true power of Test Driven Development. Using mocking my code could
-be tested before it was complete. When I came across an impossible to
-mock third party API? Easy use an adapter to expose a more manageable interface.
+It was this **project** where I was first able to see the **true power** of **Test Driven Development**. Using **mocking**, my **code could 
+be tested** before it was **complete**. When I came across an **impossible** to 
+mock **third-party API**? **Easy—use an adapter** to expose a **more manageable interface**.  
 
-{click}
+{click}  
 
-Finally the most powerful tool and how every line of code was written:
+Finally, the **most powerful tool** and how **every line of code** was written:
 -->
 
 ---
@@ -213,18 +210,17 @@ class: spaced-h1
 </v-clicks>
 
 <!--
-{click}
+{click}  
 &nbsp;**RED**&nbsp;
-I would write a small test that I knew would fail
+I would write a **small test** that I knew would **fail**.  
 
-{click}
+{click}  
 &nbsp;**Green**&nbsp;
-I implement the fix with as little effort as possible but importantly made the failing test pass, then finally
+I implement the **fix** with as **little effort as possible**, but importantly, made the **failing test pass**. Then finally 
 
-{click}
+{click}  
 &nbsp;**Refactor**&nbsp;
-Now that my new feature has got its implementation
-I can take a short second to re-arrange and tidy up any mess left over by the previous two steps.
+Now that my **new feature** has got its **implementation**, I can take a **short second** to **rearrange** and **tidy up** any **mess** left over by the **previous two steps**.  
 
 -->
 
@@ -241,14 +237,16 @@ I can take a short second to re-arrange and tidy up any mess left over by the pr
 </v-clicks>
 
 <!--
-I took a small sample of our data and flawlessly executed this validation migration. 
+I took a **small sample** of our **data** and flawlessly executed this **validation migration**.  
 
-{click} I then took my backup of prod (still not quite believing the results), ran the tool and had a perfect migration. 
+{click}  
+I then took my **backup of prod** (still not quite **believing the results**), ran the **tool**, and had a **perfect migration**.  
 
-{click} No setting any breakpoints to debug a silly weird edge case, 
+{click}  
+No setting any **breakpoints** to **debug** a **silly weird edge case**.  
 
-{click} no last minute re-structuring after finding that the code just wasn't quite readable.
-
+{click}  
+No **last-minute restructuring** after finding that the **code just wasn't quite readable**.
 -->
 
 ---
@@ -258,10 +256,10 @@ layout: center
 # All Results; Zero Effort
 
 <!--
-It just worked. Perfectly. No effort. Only results.
+It just **worked**. **Perfectly**. No **effort**. Only **results**.  
 
-It was at that moment that I found out what all coding could look like;
-Welcome to the London School of Test-Driven Development.
+It was at that moment that I found out what all **coding** could look like;  
+Welcome to the **London School** of **Test-Driven Development**.
 -->
 
 ---
@@ -269,8 +267,8 @@ Welcome to the London School of Test-Driven Development.
 # Schools?
 
 <!-- 
-Before we go any further, what is all this school nonsense? Well the schools line up with the locations in which
-the approaches were first formalised.
+Before we go any further, what is all this **school nonsense**? Well, the **schools** line up with the **locations** in which  
+the **approaches** were first **formalised**.
 -->
 
 ---
@@ -280,10 +278,10 @@ the approaches were first formalised.
 - ## Detroit
 
 <!--
-the Detroit location came out of the C3 project, the Chrysler Comprehensive Compensation Project to be more precise, 
-a payroll re-write being taken on by a team including notably Kent Beck in which he founded extreme programming and went on to develop 
-both the books Extreme Programming Explained and Test-Driven Development by Example, of which that last book is coined
-as the origin of Detroit School.
+The **Detroit** location came out of the **C3 project**, the **Chrysler Comprehensive Compensation Project** to be more precise,  
+a **payroll re-write** being taken on by a **team** including notably **Kent Beck**, in which he founded **Extreme Programming** and went on to develop  
+both the books **Extreme Programming Explained** and **Test-Driven Development by Example**, of which that last book is **coined** 
+as the **origin** of **Detroit School**.
 -->
 
 ---
@@ -311,11 +309,10 @@ using **mocks**.
 - ## Comes naturally
 
 <!--
-Why would I pick the detroit school? Detroit just makes sense; if up until now you had been writing a few tests
-here and there around all the important stuff; or at least to make the metrics look good you almost certainly have been writing
-in this Detroit style. You were likely missing the red green part, but over all you made a point to take obvious
-chunks of functionality out of your codebase and made sure that they ended up working as you expected, 
-
+Why would I pick the **Detroit school**? **Detroit** just makes sense; if up until now you had been writing a few **tests**  
+here and there around all the **important stuff**; or at least to make the **metrics** look good you almost certainly have been writing  
+in this **Detroit style**. You were likely missing the **red green** part, but overall you made a point to take **obvious  
+chunks of functionality** out of your **codebase** and made sure that they ended up **working as you expected**.
 -->
 
 ---
@@ -326,10 +323,9 @@ chunks of functionality out of your codebase and made sure that they ended up wo
 - ## Test as a whole, mock the pain away
 
 <!--
-Say for example you had some logic that would take an existing item, merge some new state into it and then persisted it back
-to the database. There is a very good chance that this functionality would be wrapped in a set of nice test that
-mocked out the database out with an in-memory fake which you then asserted against in the final steps of your test methods.
-
+Say for example you had some **logic** that would take an **existing item**, **merge** some **new state** into it and then **persisted** it back  
+to the **database**. There is a very good chance that this **functionality** would be wrapped in a set of **nice tests** that  
+**mocked out** the **database** with an **in-memory fake** which you then **asserted against** in the final steps of your **test methods**.
 -->
 
 ---
@@ -361,10 +357,10 @@ And if you break that feature later while applying a fix, those **tests** you wr
 - ## Works wonders in some situations
 
 <!--
-Another time that the Detroit approach can really shine is when writing small self-contained utilities which have no side effects and 
-simply take incoming arguments and transform them into an output based off a series of known rules. Because of this
-code kata's as such as supermarket pricing examples or others can be a good way to practice Test driven development in
-the Detroit style. 
+Another time that the **Detroit approach** can really shine is when writing **small self-contained utilities** which have **no side effects** and  
+simply take **incoming arguments** and **transform them into an output** based off a series of **known rules**. Because of this,  
+**code katas** such as **supermarket pricing examples** or others can be a **good way to practice Test Driven Development** in  
+the **Detroit style**.
 
 -->
 
@@ -379,10 +375,10 @@ the Detroit style.
 - ## Pushes you to isolate complexity
 
 <!--
-From there you will find it easier to spot good sections of your codebase to treat as a unit for your
-testing. This will help guide your coding in such a way to push any required side effects to the edges of your codebases such
-that they are much easier to mock. This is showing us that testing not only can add reliability but also encourage us to
-write our code in such ways to isolate complexity.
+From there, you will find it easier to spot **good sections** of your **codebase** to treat as a **unit** for your  
+**testing**. This will help guide your **coding** in such a way to push any required **side effects** to the **edges** of your **codebase**  
+such that they are much easier to **mock**. This is showing us that **testing** not only can add **reliability** but also encourage us to  
+write our code in such ways to **isolate complexity**.
 -->
 
 ---
@@ -392,12 +388,11 @@ write our code in such ways to isolate complexity.
 - ## Test-Splosions
 
 <!--
-One reason why you might not want to use this style of testing is the dreaded 1 line change that breaks multiple test suites.
-When our unit under test combines multiple shared snippets of code there is a large chance that eventually you will be
-writing a new feature or fixing a bug and out of nowhere all your tests start failing. When this happens, especially if
-you accidentally forgot to keep your red green refactor iterations small; or worse yet; you were not doing so; the instant
-stress of having an entire set of test suites start failing can make it hard to find the code change that was at fault.
-
+One reason why you might **not** want to use this style of **testing** is the dreaded **1-line change** that breaks **multiple test suites**.  
+When our **unit under test** combines **multiple shared snippets of code**, there is a large chance that eventually you will be  
+writing a **new feature** or fixing a **bug**, and out of nowhere, **all your tests start failing**. When this happens, especially if  
+you accidentally forgot to keep your **red-green-refactor** iterations **small**; or worse yet, you were **not doing so**; the **instant  
+stress** of having an entire set of **test suites start failing** can make it hard to find the **code change** that was at **fault**.
 -->
 
 ---
@@ -495,16 +490,15 @@ tests that validate each **unique** and potentially **hard-to-reproduce** branch
 - ## Outside In code flow
 
 <!--
-This process repeats over and over, without any of the other downstream classes needing to be implemented, we instead
-focus purely on the branches and edge cases tracked by this class.
+This process **repeats over and over**, without any of the other **downstream classes** needing to be implemented. We instead  
+focus purely on the **branches** and **edge cases** tracked by this **class**.  
 
-This to most sane developers will sound outlandish, spending multiple coding iterations writing tests that prove
-obvious thing X was passed to other obvious thing Y, what exactly am I gaining??
+This, to most **sane developers**, will sound **outlandish** spending multiple **coding iterations** writing **tests** that prove  
+obvious thing **X** was passed to other obvious thing **Y**. **What exactly am I gaining??**  
 
-Well what you are gaining is software that is designed with an outside in style. I have found that if I work my way from 
-the outside of my code all the way in that I am able to discover shared responsibilities much sooner and can invest in 
-designing much more understandable API's as I develop rather than coming back and re-working them later.
-
+Well, what you are gaining is **software** that is designed with an **outside-in style**. I have found that if I work my way from  
+the **outside** of my **code** all the way **in**, I am able to discover **shared responsibilities** much sooner and can invest in  
+designing much more **understandable APIs** as I develop, rather than coming back and **re-working** them later.
 -->
 
 ---
@@ -535,11 +529,10 @@ layout: center
 # London's Calling
 
 <!--
-I would say the final and possibly most impactful tool that the London School gives you is that it makes splitting up
-your features into smaller tickets a much more manageable process. I have found that most teams that I work with who
-don't use the London approach will typically find themselves having a single developer delivering an entire feature
-from start to end even if the ticket is split up into multiple steps. 
-
+I would say the **final** and possibly **most impactful tool** that the **London School** gives you is that it makes **splitting up**  
+your **features** into **smaller tickets** a much more **manageable process**. I have found that most **teams** that I work with who  
+**don’t use** the **London approach** will typically find themselves having a **single developer** delivering an **entire feature**  
+from **start to end**, even if the **ticket** is split up into **multiple steps**.
 -->
 
 ---
@@ -639,14 +632,13 @@ layout: center
 # London's Calling 
 
 <!--
-This all could have been avoided if the priority was to deliver the domain models and interfaces at an earlier stage.
-So sometimes this will happen, a feature will have an initial ticket that defines the API endpoint and also sets up
-the basic interfaces as such as the validator, mappers and database layer. However because
-they write test in the detroit style they will not be able to write any tests for this code as
-we are yet to implement any of these interfaces. Now we are going to check in a lot of code with 0 code coverage
-as we cannot write any tests for this code yet as it is not implemented. This can often lead to code that doesn't
-play nice with testing later on as the hardest code to write tests for is that code which already exists.
-
+This all could have been avoided if the priority was to deliver the **domain models** and **interfaces** at an earlier stage.  
+So sometimes this will happen, a **feature** will have an initial **ticket** that defines the **API endpoint** and also sets up  
+the basic **interfaces** such as the **validator**, **mappers**, and **database layer**. However, because  
+they write tests in the **Detroit style**, they will not be able to write any **tests** for this code as  
+we are yet to implement any of these **interfaces**. Now we are going to check in a lot of code with **0 code coverage**  
+as we cannot write any **tests** for this code yet as it is not implemented. This can often lead to code that doesn't  
+play nice with **testing** later on, as the hardest **code to write tests for** is that **code which already exists**.
 -->
 
 ---
@@ -656,12 +648,11 @@ layout: center
 # London's Calling 
 
 <!--
-Instead of not testing this important upper layer what if we just for now mocked away all the mappers, validators and
-persistence calls? Well now if later down the line we find a bug in this layer of the codebase we know for a fact
-that we will be able to easily re-create the bug as a test and then fix it and validate the fix is good through that 
-test passing. The London approach forces us to at all times write code that has a failing test and it also makes each
-line we write more testable.
-
+Instead of **not testing** this important **upper layer**, what if we just, for now, **mocked away** all the **mappers**, **validators**, and  
+**persistence calls**? Well, now if later down the line we find a **bug** in this layer of the **codebase**, we know for a fact  
+that we will be able to easily **re-create the bug** as a **test**, then **fix it** and **validate** the fix is good through that  
+**test passing**. The **London approach** forces us to at all times **write code** that has a **failing test**, and it also makes each  
+line we write more **testable**.
 -->
 
 ---
@@ -675,10 +666,10 @@ dragPos:
 <img v-drag="'stopwatch'" src="/stopwatch.png" />
 
 <!--
-If your team is finding that their tickets are taking more
-than a day to complete this is a good sign that you most likely need to split up your tickets into smaller more
-bite sized tickets; that take at most half a day to complete, it is at that point that you also might find that
-swapping to the London approach will make all of that much manageable.
+If your **team** is finding that their **tickets** are taking **more 
+than a day** to complete, this is a good sign that you most likely need to **split up** your tickets into **smaller, 
+bite-sized tickets** that take at most **half a day** to complete. It is at that point that you also might find that 
+**swapping to the London approach** will make all of that much more **manageable**.
 -->
 
 ---
@@ -688,14 +679,13 @@ swapping to the London approach will make all of that much manageable.
 - ## Maintenance of Scaffolding
 
 <!--
-Maintenance is by in far the largest reason why Detroit might be a better pick for you and your team over London.
-When you write 40 tests for a single class and a bunch of em are basic scaffolding tests that don't really test much 
-you will find that a simple change that refactors a clump of code from one class into another can be excruciating to
-move.
+**Maintenance** is by far the largest reason why **Detroit** might be a **better pick** for you and your team over **London**.  
+When you write **40 tests** for a **single class**, and a bunch of them are **basic scaffolding tests** that don't really **test much**,  
+you will find that a **simple change** that **refactors** a clump of code from one **class** into another can be **excruciating** to move.  
 
-To do so correctly you would have to basically fully re-create the entire red green refactor for the entirety of the
-code being moved plus setup new tests in the old class to validate the refactored chunk of code's interface is being 
-correctly called.
+To do so **correctly**, you would have to basically fully **re-create** the entire **red-green-refactor** for the entirety of the  
+**code being moved**, plus **set up new tests** in the **old class** to validate that the **refactored chunk of code's interface** is being  
+**correctly called**.
 
 -->
 
@@ -707,10 +697,9 @@ correctly called.
 - ## Refactoring takes effort
 
 <!--
-When your simply trying to just clean up this can be burdensome and might lead to less time spent refactoring.
-There is a silver lining here in that it can help if your suffering from premature re-fac-tile dysfunctions but realistically
-making it this hard to get work done can be a problem.
-
+When you're simply trying to just **clean up**, this can be **burdensome** and might lead to **less time spent refactoring**.  
+There is a **silver lining** here in that it can help if you're suffering from **premature re-fac-tile dysfunction**,  
+but realistically, making it this **hard to get work done** can be a **problem**.
 -->
 
 ---
@@ -738,14 +727,13 @@ layout: center
 # Which one should I be following?
 
 <!--
-It can sometimes be hard to know what is the correct approach to take when writing tests for your codebase.
-Do I take the detroit approach which more closely matches up with how developers instinctively test
+It can sometimes be **hard to know** what is the **correct approach** to take when writing **tests** for your **codebase**.  
+Do I take the **Detroit approach**, which more closely matches up with how **developers instinctively test**,  
 
-OR
+**OR**  
 
-do I take a much more extreme route and allow my tests to define my API, choosing to chip away at the code one
-concern at a time through the isolation that mocking allows.
-
+do I take a much more **extreme route** and allow my **tests to define my API**, choosing to **chip away** at the **code** one  
+**concern at a time** through the **isolation** that **mocking** allows?
 -->
 
 ---
@@ -758,14 +746,14 @@ dragPos:
 <h1 style="text-wrap: nowrap" v-drag="'itDepends'">It Depends</h1>
 
 <!--
-The answer to this is everybody's favourite; it depends; however this time we get to complete that sentence by saying
-it depends on you team.
+The answer to this is everybody's favourite; **it depends**; however, this time we get to complete that sentence by saying  
+**it depends on your team**.  
 
-One of the biggest mistake any new developer, no matter the seniority, can make when joining a new team is to try and 
-uproot an established team coding approach and replace it with their own.
+One of the **biggest mistakes** any new developer, no matter the seniority, can make when joining a new team is to try and  
+**uproot an established team coding approach** and replace it with their own.  
 
-Does that mean if you join a team, and they have no real testing strategy, just a few tests here and there that
-that you cannot come in and improve things?
+Does that mean if you join a team, and they have **no real testing strategy**, just **a few tests here and there**, that  
+you cannot come in and **improve things**?
 -->
 
 ---
@@ -782,15 +770,15 @@ clicksStart: 1
 </v-clicks>
 
 <!--
-No it does not, what it means is you have a team who is open to the idea of testing, they just need a little help.
-What that also means is more involved practices like the London school are more than likely; a no-go, as chances are there are
-landmines straggled all throughout the codebase that will likely refuse to be isolated with mocking, so you will want to 
-minimise your mocking and focus less on writing unit tests and more on integration-ish tests.
+No, it does not. What it means is you have a team who is **open to the idea of testing**, they just need **a little help**.  
+What that also means is more **involved practices** like the **London school** are more than likely **a no-go**, as chances are there are  
+**landmines scattered throughout the codebase** that will likely **refuse to be isolated with mocking**, so you will want to  
+**minimise your mocking** and focus less on writing **unit tests** and more on **integration-ish tests**.  
 
-{click} It is important to talk with your colleagues, get their feedback on how code is being written and also to provide some
-ideas too on how things could be improved to see how that works for the team. Most developers know deep down they 
-should be writing tests but just struggle to justify their time doing so. If you come in help make testing the norm
-you will likely find they come with you willing and happy.
+{click} It is important to **talk with your colleagues**, get their **feedback** on how **code is being written** and also to provide  
+**some ideas** on how things **could be improved** to see how that **works for the team**. Most developers **know deep down** they  
+**should be writing tests** but just **struggle to justify their time** doing so. If you come in and **help make testing the norm**,  
+you will likely find they **come with you, willing and happy**.
 
 -->
 
@@ -809,11 +797,11 @@ clicksStart: 4
 </v-clicks>
 
 <!--
-What this all mostly boils down to is there is a high chance you should just use Detroit even if deep down you really 
-wish you could be writing London which has been my reality for most of my recent engagements. If a new project is coming
-up and your confident with the London approach, why not start out with heavy mocking and see how it works for your team
-you can always pivot to detroit if it's not working out. By that point hopefully even if you do have to remove the London
-style your codebase will already have a bunch of clarity from the outside-in work done so far.
+What this all mostly boils down to is there is a high chance you should just use **Detroit** even if deep down you really  
+wish you could be writing **London**, which has been my reality for most of my recent engagements. If a **new project** is coming  
+up and you're **confident** with the **London** approach, why not start out with **heavy mocking** and see how it works for your team?  
+You can always **pivot to Detroit** if it's not working out. By that point, hopefully, even if you do have to **remove the London  
+style**, your **codebase** will already have a bunch of **clarity** from the **outside-in work** done so far.  
 -->
 
 ---
@@ -823,9 +811,11 @@ layout: center
 # Going deeper
 
 <!--
-Now that we know about the different approaches to test driven development, now could be no better time than
-ever to go back to the techniques that we can apply to our coding and give some better explanations and examples
-of what it looks like to properly implement them. Starting with a Red Green Refactor example using javascript
+Now that we know about the **different approaches** to **Test Driven Development**, now could be no better time than  
+ever to go back to the **techniques** that we can apply to our **coding** and give some **better explanations** and **examples**  
+of what it looks like to **properly implement** them.  
+
+Starting with a **Red Green Refactor** example using **JavaScript**.  
 -->
 
 ---
@@ -863,12 +853,12 @@ it('Should sum 2 plus 2 to equal 4', () => {
 
 <!--
 
-First we write a test that will fail, it should be small and easy to write. 
+First, we write a **test** that will **fail**, it should be **small** and **easy to write**.  
 
-{click}
+{click}  
 
-It doesn't even have to compile, red can refer both to the test status bar or the syntax error caused by
-the non-existent sum function your test is referring to.
+It doesn't even have to **compile**, **red** can refer both to the **test status bar** or the **syntax error** caused by  
+the **non-existent sum function** your test is referring to.
 -->
 
 ---
@@ -896,17 +886,16 @@ const sum = (augend, addend) => 4
 ````
 
 <!--
-{click to undo highlight}
-Now we need to make the test work with the minimal amount of changes as possible
-;all sins permitted. Was your test that two plus two equals four? Great stub out the method with
-the two arguments then return four. 
+{click to undo highlight}  
+Now we need to make the test work with the **minimal amount of changes** as possible; **all sins permitted**.  
+Was your test that **two plus two equals four**? Great, **stub out the method** with the two arguments then **return four**.  
 
-{click}
+{click}  
 
-It does not matter that our implementation is obviously wrong, that is 100% ok!
-If you can look at an implementation and see that it is flawed that is a sign that you do not have
-enough tests yet, and you need to continue the red green refactor cycle until you come to a more concrete output.
-This approach is known as stutter testing and can often be used in conjugation with triangulation approaches.
+It does not matter that our **implementation is obviously wrong**, that is **100% ok**!  
+If you can look at an implementation and see that it is **flawed**, that is a sign that you **do not have enough tests yet**,  
+and you need to continue the **red-green-refactor cycle** until you come to a more **concrete output**.  
+This approach is known as **stutter testing** and can often be used in conjunction with **triangulation approaches**.  
 -->
 
 ---
@@ -934,14 +923,14 @@ const sum = (augend, addend) => 4
 <v-drag pos="'circleTwo'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
 
 <!--
-Refactor is a key part of the "design" aspect of test driven design. If you have been following TDD correctly
-your solution will be as minimalistic as possible. Does the world's most understandable and maintainable code
-come into existence for free? Normally not, so the refactor stage is to make code that you feel comfortable checking
-that code in.
+Refactor is a key part of the **design** aspect of test driven design.  
+If you have been following TDD correctly, your solution will be as **minimalistic** as possible.  
+Does the world's most **understandable and maintainable code** come into existence for free? Normally not,  
+so the **refactor stage** is to make code that you feel **comfortable** checking in.  
 
 {click}
-In this specific instance our refactoring is required to remove duplication between our test which defines 4 as the
-expected result and our implementation which just parrots it back to us.
+In this specific instance, our refactoring is required to **remove duplication**  
+between our test, which defines **4 as the expected result**, and our implementation, which just parrots it back to us.
 -->
 
 ---
@@ -971,10 +960,10 @@ const sum = (augend, addend) => augend + addend;
 ````
 
 <!--
-{click}
-This is a really minimalistic example which
-is why this might feel a bit silly, but the point of this example is that even if a solution feels wrong, if it
-satisfies the test it is correct. It is the point of the refactor step to remove duplication and tidy up
+{click}  
+This is a really **minimalistic** example which  
+is why this might feel a bit **silly**, but the point of this example is that even if a **solution feels wrong**, if it  
+**satisfies the test** it is **correct**. It is the point of the **refactor step** to remove **duplication** and **tidy up**.  
 -->
 
 ---
@@ -1009,15 +998,15 @@ same **rigor** as you would in your **production code**.
 - ## Concrete Implementation of Interfaces
 
 <!--
-Another tool that is invaluable is mocking, in particular extensive mocking.
+Another tool that is invaluable is **mocking**, in particular **extensive mocking**.
 
-Mocking sounds like a simple subject; but depending on how you approach it you can get vastly different results.
+**Mocking** sounds like a simple subject; but depending on how you **approach** it you can get vastly different **results**.
 
-One such approach is creating a new concrete implementation of an interface that is injected into your codebase that
-was designed purely for testing say for example a mock implementation of your databases. This implementation won't always
-be fully extensive but will allow us to simulate calling out to the real database Without any of the drawbacks
-of using a real database during testing. Through creating the mock by hand we also have the ability to embed test utilities as 
-such as data initialization or what ever other test utility we can put our minds to. 
+One such approach is creating a **new concrete implementation** of an **interface** that is **injected** into your **codebase** that 
+was designed purely for **testing**, say for example a **mock implementation** of your **database**. This implementation won't always 
+be fully **extensive** but will allow us to **simulate** calling out to the **real database** without any of the **drawbacks** 
+of using a **real database** during **testing**. Through creating the **mock by hand** we also have the ability to **embed test utilities** 
+such as **data initialization** or whatever other **test utility** we can put our minds to.
 
 -->
 
@@ -1046,10 +1035,9 @@ Alternatively, if we had used a **substitution framework** instead of a **handcr
 - ## Substitution Frameworks
 
 <!--
-Speaking of substitution frameworks; in C# we have Moq, fake it easy or n substitute just to name a few.
-These tools allow for expression to be written which get called in place of the interface we supply them,
-allowing us to define inline to our test what that call will return OR even allow us to assert that the call was made at all.
-
+Speaking of **substitution frameworks**; in **C#** we have **Moq**, **FakeItEasy**, or **NSubstitute** just to name a few.  
+These tools allow for **expressions** to be written which get **called in place** of the **interface** we supply them,  
+allowing us to **define inline** to our **test** what that **call will return** OR even allow us to **assert** that the **call was made at all**.
 -->
 
 ---
