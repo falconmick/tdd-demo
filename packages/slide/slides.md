@@ -1055,9 +1055,9 @@ dragPos:
 <v-drag pos="'dragons'"><h1>Here be Dragons</h1></v-drag>
 
 <!--
-The only thing to keep in mind here is even though these frameworks do have some support for classes in languages like C#, they are limited
-and a lot of the time a mock around a class will fail. It is for this reason that when using lots of mocking you tend
-to also need to be stricter with the separation of logic to data and also the usage of adapters on third party code.
+The only thing to keep in mind here is even though these **frameworks** do have some support for **classes** in languages like **C#**, they are **limited**  
+and a lot of the time a **mock around a class** will **fail**. It is for this reason that when using **lots of mocking** you tend  
+to also need to be **stricter** with the **separation of logic to data** and also the **usage of adapters** on **third-party code**.
 -->
 
 ---
@@ -1082,9 +1082,8 @@ and then executes it—all while keeping the interaction **simpler** and more **
 - ## Must be free from complexity
 
 <!--
-It is only important that this layer remain as simplistic as possible as it can often not be viable to test it 
-without integration testing, so if your adapter grows too much you will end up having dangerously uncovered section of code.
-
+It is only important that this **layer** remain as **simplistic as possible** as it can often not be **viable to test** it  
+without **integration testing**, so if your **adapter** grows too much you will end up having **dangerously uncovered** sections of **code**.
 -->
 
 ---
@@ -1096,8 +1095,8 @@ without integration testing, so if your adapter grows too much you will end up h
 - ## Essential in London School
 
 <!--
-When following the London approach of test driven development the use of adapters
-will be a lot more extensive than you might expect,
+When following the **London approach** of test driven development the use of **adapters**
+will be a lot **more extensive** than you might expect,
 -->
 
 ---
@@ -1110,10 +1109,10 @@ will be a lot more extensive than you might expect,
 - ## Enables fine-grain control of tests through mocking
 
 <!--
-I even adapted out DateTime, which gives our tests the ability to act as
-Pure functions which leads to less brittle testing and also makes testing edge cases a cakewalk as we have
-full control over how much the time changes between each call to Now. When I go over a detailed example of how I think
-TDD should be implemented in my C# example I will dig into adapters further.
+I even adapted out **DateTime**, which gives our tests the ability to act as  
+**Pure functions** which leads to **less brittle testing** and also makes testing **edge cases** a cakewalk as we have  
+**full control** over how much the time changes between each call to **Now**. When I go over a **detailed example** of how I think  
+**TDD** should be implemented in my **C# example**, I will dig into **adapters** further.
 -->
 
 ---
@@ -1123,10 +1122,10 @@ TDD should be implemented in my C# example I will dig into adapters further.
 - ## C# with the London School Approach
 
 <!--
-For this example I will use C# and the London School approach as this is my bread and butter, With this I will be able 
-to give a concrete example of how Test Driven Development can be implemented. 
-I will be taking all the three key concepts from today and combining
-them together to validate a record passed in and then return that result. If the validation failed I will also log that
+For this example, I will use **C#** and the **London School approach** as this is my **bread and butter**. With this, I will be able  
+to give a **concrete example** of how **Test Driven Development** can be implemented.  
+I will be taking **all three key concepts** from today and **combining them** 
+together to **validate a record** passed in and then **return that result**. If the **validation failed**, I will also **log that**.
 -->
 
 ---
@@ -1137,12 +1136,11 @@ them together to validate a record passed in and then return that result. If the
 - ## Nunit, FakeItEasy
 
 <!--
-To make this demo possible I am using the following tools:
+To make this **demo** possible I am using the following **tools**:  
 
-- NUnit, my test runner and assertion library
-- and FakeItEasy, a mocking library that allows for inline definitions of mocks and also exposes several
-useful tools to validate how our mocks have been interacted with
-
+- **NUnit**, my **test runner** and **assertion library**  
+- and **FakeItEasy**, a **mocking library** that allows for **inline definitions** of **mocks** and also exposes 
+**several useful tools** to **validate** how our **mocks** have been **interacted with**
 -->
 
 ---
@@ -1154,12 +1152,12 @@ useful tools to validate how our mocks have been interacted with
 - ## Live demo? More like live mistake!
 
 <!--
-Originally this was going to be live, but then I opened up my mac laptop and remembered all my bindings are windows
-based and I am 100% completely lost... So in the interest of not flapping around like a grounded fish for the next 10
-min, I will instead jump to my backup slides for this demo.
+Originally this was going to be **live**, but then I opened up my **Mac laptop** and remembered all my **bindings** are 
+**Windows-based** and I am **100% completely lost**... So in the interest of not **flapping around** like a **grounded fish** for the next 
+**10 min**, I will instead **jump to my backup slides** for this **demo**.  
 
-- Note to self: If I swap to Windows machine in the future, blame my macOS keybindings
-- note to self 2: Don't read above note out aloud
+- **Note to self**: If I **swap** to a **Windows machine** in the **future**, **blame my macOS keybindings**  
+- **Note to self 2**: **Don't read above note out aloud**
 -->
 
 ---
@@ -1204,19 +1202,19 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-First we start with our blank unit test, this is our starting point so we need a red
+First we start with our **blank unit test**, this is our **starting point** so we need a **red**  
 
-{click}
+{click}  
 
-Now we add in the handler which we will be testing `ValidateCarInfoCommandHandler`
+Now we add in the **handler** which we will be testing `ValidateCarInfoCommandHandler`  
 
-{click}
+{click}  
 
-The red phase of the cycle is in that this class does not exist. A compilation error is as valid of a red steps
-as a failing test is.
+The **red phase** of the cycle is in that this **class does not exist**. A **compilation error** is as valid of a **red step**  
+as a **failing test** is.  
 
-Our next step is green, which we will achieve through implementing the Update Car Info Command Handler
-with as little effort as possible
+Our next step is **green**, which we will achieve through implementing the **Update Car Info Command Handler**  
+with **as little effort as possible**
 -->
 
 ---
@@ -1234,9 +1232,9 @@ public interface IValidateCarInfoCommandHandler
 ````
 
 <!--
-And that's it
+And **that's it**  
 
-Note how all I need do to get into the green is simply define the interface and the implementation
+Note how all I need to do to get into the **green** is simply **define the interface** and the **implementation**
 -->
 
 ---
@@ -1283,12 +1281,12 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Next up we update our Test to call the method that we will be implementing called Handle Async
+Next up we **update our test** to call the **method** that we will be implementing called **HandleAsync**  
 
-{click}
+{click}  
 
-The only issue here is what do we place as the argument? In this situation we will be receiving a record type
-called CarInfo to pass in but how should we define this new CarInfo instance we are going to use
+The only issue here is **what do we place as the argument**? In this situation we will be receiving a **record type**  
+called **CarInfo** to pass in, but how should we **define this new CarInfo instance** we are going to use?  
 -->
 
 ---
@@ -1342,9 +1340,9 @@ public class ValidateCarInfoCommandHandler_Tests
 <!--
 {click}
 
-we don't know anything about CarInfo, however In this demo it's actually a pretty simple record, but there are times in which
-a data type object can get relatively complicated to construct with required and optional properties. To get around
-a situation like this we can actually a mock in place of the data type.
+We don't know anything about **CarInfo**, however in this demo it's actually a pretty **simple record**, but there are times in which  
+a **data type object** can get relatively **complicated to construct** with required and optional properties. To get around  
+a situation like this, we can actually use a **mock** in place of the **data type**.
 -->
 
 ---
@@ -1398,11 +1396,11 @@ public class ValidateCarInfoCommandHandler_Tests
 <!--
 {click}
 
-This might feel a bit silly, but once again it's our job as red green refactor-a-tors to take the simpliest steps possible
-to get from failing code to passing code. This includes in our test suites.
+This might feel a bit **silly**, but once again it's our job as **red green refactor-a-tors** to take the **simplest steps possible**  
+to get from **failing code** to **passing code**. This includes in our **test suites**.  
 
-A cool thing about this approach is we are still using a record type when we define a mock this way. This means that we 
-are able to use the records `with` syntax to modify individual properties
+A **cool thing** about this approach is we are still using a **record type** when we define a **mock** this way. This means that we  
+are able to use the **records `with` syntax** to modify **individual properties**.
 -->
 
 ---
@@ -1473,11 +1471,11 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-{click} In the past, I've found that constructing complicated record type... especially those with many nested structures 
-generated from a schema... can be a lot of work. I used to take a snapshot of what the data needed to look like, then 
-read that snapshot in as part of my test setup, followed by JSON decoding it into my test's starting record.
+{click} In the past, I've found that constructing **complicated record type**... especially those with **many nested structures**  
+generated from a **schema**... can be a lot of work. I used to take a **snapshot** of what the data needed to look like, then  
+read that snapshot in as part of my **test setup**, followed by **JSON decoding** it into my test's **starting record**.  
 
-But now all I have to do is define a simple little mock, then use the `with` keyword to customise
+But now all I have to do is define a **simple little mock**, then use the **`with` keyword** to customise  
 -->
 
 ---
@@ -1510,11 +1508,11 @@ public interface IValidateCarInfoCommandHandler
 ````
 
 <!--
-Now that we have a failing to compile test, all we need to do is
+Now that we have a **failing to compile test**, all we need to do is  
 
-{click}
+{click}  
 
-Add in our definition and with it our test will pass.
+Add in our **definition** and with it our **test will pass**.
 -->
 
 ---
@@ -1542,9 +1540,9 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-We have now seen the first and second steps of red and green, finally comes refactor. If we have a look at the boilerplate
-test we have been filling out we can see that some code cleaning up could be completed to improve upon the test suite
-we are working on. In this situation that change is to rename the test to explain what we are trying to achieve
+We have now seen the **first and second steps** of **red** and **green**, finally comes **refactor**. If we have a look at the **boilerplate test**  
+we have been filling out, we can see that some **code cleaning up** could be completed to **improve** upon the **test suite**  
+we are working on. In this situation, that change is to **rename the test** to **explain what we are trying to achieve**.  
 -->
 
 ---
@@ -1592,13 +1590,13 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-{click} We don't have to exclusively use the refactor step on our code implementation, quite often it makes sense
-to take the time to tidy up and maintain our tests. This can come from something as simple as renaming a method or variable
-to extracting shared functionality between tests so that it can be shared.
+{click} We don't have to exclusively use the **refactor step** on our **code implementation**, quite often it makes sense 
+to take the time to **tidy up and maintain our tests**. This can come from something as simple as **renaming a method or variable** 
+to **extracting shared functionality** between tests so that it can be shared.
 
-You can even go as far as extracting useful functionality of your test suites into utilities of which we write their 
-very own tests for! We won't be going this far for the example but the world is our oyster. Up next why don't we start 
-writing code towards our implementation!
+You can even go as far as **extracting useful functionality** of your **test suites** into **utilities** of which we write their 
+**very own tests** for! We won't be going this far for the example but **the world is our oyster**. Up next why don't we 
+**start writing code** towards **our implementation**!
 -->
 
 ---
@@ -1654,19 +1652,19 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Lets add in our new test, This one will be a cornerstone that makes sure that as we move forward we don't break either our production code OR test suite. 
+Lets add in our **new test**, This one will be a **cornerstone** that makes sure that as we move forward we don't break either our **production code OR test suite**. 
 
 {click}
-This is the good scenario test, as we add more tests to our codebase this
-one test will quite often act as the starting point for a new test and will contain all required mocking setup code to 
-achieve a passing good scenario
+This is the **good scenario test**, as we add more tests to our codebase this 
+one test will quite often act as the **starting point for a new test** and will contain all required **mocking setup code** to 
+achieve a **passing good scenario**.
 
-This test asserts that given an acceptable input, we expect the result to not
-be null and to have the Successful flag set to true!
+This test asserts that given an **acceptable input**, we expect the result to not 
+be **null** and to have the **Successful flag set to true**!
 
-As we move forward we will find that this test does need to be updated such that it will apply the basic mocks required to achieve
-a passing good scenario test. This shared setup code can either exist as a setup method we call at the top of each of our tests
-or we could use the setup method provided by our test runner.
+As we move forward we will find that this test does need to be updated such that it will apply the **basic mocks** required to achieve 
+a **passing good scenario test**. This **shared setup code** can either exist as a **setup method** we call at the top of each of our tests 
+or we could use the **setup method provided by our test runner**.
 -->
 
 ---
@@ -1686,7 +1684,7 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-Now that we have our failing test due to our implementation returning null what would be the correct implementation such that to get our test to pass?
+Now that we have our **failing test** due to our **implementation returning null** what would be the **correct implementation** such that to get our test to **pass**?
 -->
 
 ---
@@ -1718,14 +1716,14 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-{click} That's right, we find the solution that takes the least effort to satisfy all the existing tests. Which just so happens
-to mean we return a new result object with true pasted directly inside of it. We are taking the simplest approach
-because as much as we think we know the solution, as we add more and more tests to cover each requirement
-the actual end implementation will show itself.
+{click} That's right, we find the **solution** that takes the **least effort** to satisfy all the **existing tests**. Which just so happens 
+to mean we return a new **result object with true pasted directly** inside of it. We are taking the **simplest approach** 
+because as much as we think we know the solution, as we add more and more tests to cover each **requirement** 
+the **actual end implementation** will show itself.
 
-If we were to take a bigger leap and implement more of the code ahead of our tests, that would leave us with 
-un-covered functionality which can lead to bugs and often we will have incorrect assumptions and will have to
-re-write that code anyway.
+If we were to take a **bigger leap** and implement more of the **code ahead of our tests**, that would leave us with 
+**un-covered functionality** which can lead to **bugs** and often we will have **incorrect assumptions** and will have to 
+**re-write that code** anyway.
 -->
 
 ---
@@ -1762,14 +1760,14 @@ public class ValidateCarInfoCommandHandler_Tests
 <v-drag pos="'circleTwo'" v-mark="{ at: 1, color: '#934', type: 'circle' }"></v-drag>
 
 <!--
-We have successfully gone from red to green, so that means we now have another opportunity to refactor.
-Again we will be looking into the test suite itself to see what could be improved. 
+We have successfully gone from **red to green**, so that means we now have another opportunity to refactor.
+Again we will be looking into the **test suite** itself to see what could be improved.
 
-I can see both some duplication and some legibility improvements that could be made here
+I can see both some **duplication** and some **legibility improvements** that could be made here
 
 {click}
-For now the car info mock is still 100% acceptable, what isn't acceptable is that we have duplication
-in the repeated implementation of it as well as no solid story behind what does A Fake CarInfo even represent.
+For now the car info mock is still 100% acceptable, what isn't acceptable is that we have **duplication** 
+in the repeated implementation of it as well as **no solid story** behind what does A Fake CarInfo even represent.
 -->
 
 ---
@@ -1962,23 +1960,23 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-Our next test will be a scaffolding test 
+Our next test will be a **scaffolding test** 
 
 {click}
 
-to start writing the test I implement our new test scenario by copy pasting the good scenario into our new test
+to start writing the test I implement our **new test scenario** by copy pasting the **good scenario** into our new test
 
 {click}
 
-now I add in on an assertion that a new mock we are yet to define will have had it's Validate method called 
+now I add in on an assertion that a **new mock** we are yet to define will have had its **Validate method** called 
 
 {click}
 
-from there I add in the Validator field and set it up as a fake.
+from there I add in the **Validator field** and set it up as a **fake**.
 
 {click}
 
-And once again we have a red step as these lines won't compile as this interface doesn't exist.
+And once again we have a **red step** as these lines won't compile as this **interface doesn't exist**.
 -->
 
 ---
@@ -2050,19 +2048,19 @@ public class ValidateCarInfoCommandHandler : IValidateCarInfoCommandHandler
 ````
 
 <!--
-From here we now can implement the solution to our failing test. First we need to inject in our dependency
+From here we now can **implement the solution** to our **failing test**. First we need to **inject** in our dependency
 
 {click}
 
-of which I have also updated our test to pass in our mock to this constructor aswell. Then we need to come up with an
-ingenious solution... Not really
+of which I have also **updated our test to pass in our mock** to this constructor aswell. Then we need to come up with an
+**ingenious solution**... Not really
 
 {click}
 
-as prior, we just do what ever is the minimum amount of effort to make the test pass, which just so happens to be
-that we call our method and do nothing with the result!
+as prior, we just do what ever is the **minimum amount of effort** to make the test pass, which just so happens to be
+that we **call our method** and do nothing with the result!
 
-I will be skipping the refactor step, so we cycle back to red
+I will be **skipping the refactor step**, so we **cycle back to red**
 -->
 
 ---
@@ -2189,21 +2187,21 @@ public class ValidateCarInfoCommandHandler_Tests
 ````
 
 <!--
-turns our happy path test is now failing due to
+turns our **happy path test** is now **failing** due to
 
 {click}
 
-our Successful value actually is actually false!! This has happened because we had forgotten to update the happy path code
-to correctly set up to validate mock to return true. I have found that the happy case breaking upon completion of a red green cycle
-is just a part of a growing test suite and the best solution is to just amend the happy path as we go.
+our **Successful value actually is actually false**!! This has happened because we had **forgotten to update the happy path code**
+to correctly set up to **validate mock to return true**. I have found that the **happy case breaking** upon completion of a **red green cycle**
+is just a part of a growing test suite and the best solution is to just **amend the happy path** as we go.
 
 {click}
 
-I won't be doing any further refactoring here, but our mock setup code that we just added
-might be worth making reusable, in which we could extract out the setup into a method and then
-allow the caller to pass in true or false as to make this more convenient.
+I won't be doing any **further refactoring** here, but our **mock setup code** that we just added
+might be worth making **reusable**, in which we could extract out the setup into a **method** and then
+allow the caller to **pass in true or false** as to make this more convenient.
 
-For now I will just be happy with how it is.
+For now I will just be **happy with how it is**.
 -->
 
 ---
